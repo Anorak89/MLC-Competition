@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulator | BCA Bus Routing Challenge</title>
+    <meta name="description" content="Interactive visualization of AI-driven school bus routing on real road networks. Watch RL agents make routing decisions in real time.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/simulator.css">
+</head>
+<body>
+    <div class="sim-layout" id="sim-layout">
+
+        <div class="sim-topbar">
+            <div class="topbar-left">
+                <a href="index.html" class="topbar-logo"><span class="dot"></span> BCA ROUTING SIM</a>
+                <div class="topbar-divider"></div>
+                <div class="sim-clock">
+                    <span class="label">SIM TIME</span>
+                    <span id="clock-display">7:00 AM</span>
+                </div>
+                <div class="topbar-divider"></div>
+                <span id="status-badge" class="status-badge ready">READY</span>
+            </div>
+
+            <div class="topbar-center">
+                <button class="ctrl-btn" id="btn-reset" title="Reset">↺</button>
+                <button class="ctrl-btn" id="btn-step" title="Step">⏭</button>
+                <button class="ctrl-btn" id="btn-play" title="Play">▶</button>
+                <button class="ctrl-btn" id="btn-pause" title="Pause">⏸</button>
+                <select class="speed-select" id="speed-select" title="Speed">
+                    <option value="1">1×</option>
+                    <option value="2">2×</option>
+                    <option value="5" selected>5×</option>
+                    <option value="10">10×</option>
+                    <option value="25">25×</option>
+                    <option value="50">50×</option>
+                </select>
+                <div class="topbar-divider"></div>
+                <select class="agent-select" id="agent-select" title="Agent">
+                    <option value="rl">🤖 RL Agent</option>
+                    <option value="nn">📍 Nearest Neighbor</option>
+                    <option value="cw">📊 Clarke-Wright</option>
+                    <option value="ortools">⚙️ OR-Tools</option>
+                </select>
+                <div class="topbar-divider"></div>
+                <button class="ctrl-btn" id="btn-comparison" title="Comparison Mode">⚖</button>
+                <button class="ctrl-btn" id="btn-export" title="Export Episode">💾</button>
+            </div>
+
+            <div class="topbar-right">
+                <a href="index.html" class="back-link">← BACK TO MAIN</a>
+            </div>
+        </div>
+
+        <div id="map-container">
+            <div id="map"></div>
+            <div class="map-overlay map-overlay-topright" id="event-banners"></div>
+            <div id="comparison-container" style="display:none;position:absolute;top:0;right:0;width:50%;height:100%;z-index:5;border-left:2px solid var(--accent-cyan)">
+                <div id="map2" style="width:100%;height:100%"></div>
+            </div>
+        </div>
+
+        <div class="sim-sidebar">
+            <div class="sidebar-section" style="max-height:220px;overflow-y:auto">
+                <div class="section-header">Agent Decisions</div>
+                <div id="decision-display">
+                    <div class="decision-card">
+                        <div class="label">Awaiting Start</div>
+                        <div class="value">Press ▶ to begin simulation</div>
+                        <div class="sub">Select an agent and speed, then start</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section" style="max-height:200px;overflow-y:auto">
+                <div class="section-header">Bus Fleet</div>
+                <div id="bus-fleet"></div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="section-header">Event Log</div>
+                <div id="event-log" style="max-height:180px;overflow-y:auto"></div>
+            </div>
+        </div>
+
+        <div id="comparison-bar" class="comparison-bar" style="display:none">
+            <select class="agent-select" id="comp-agent-1"><option value="rl">🤖 RL Agent</option><option value="nn">📍 Nearest</option><option value="cw">📊 Clarke-Wright</option></select>
+            <span class="comparison-vs">VS</span>
+            <select class="agent-select" id="comp-agent-2"><option value="nn" selected>📍 Nearest</option><option value="rl">🤖 RL Agent</option><option value="cw">📊 Clarke-Wright</option></select>
+            <div class="topbar-divider"></div>
+            <span style="font-family:var(--mono);font-size:0.65rem;color:var(--text-muted)">AGENT 2:</span>
+            <span style="font-family:var(--mono);font-size:0.7rem"><span id="comp-delivered">0</span> delivered</span>
+            <span style="font-family:var(--mono);font-size:0.7rem;color:var(--accent-red)"><span id="comp-late">0</span> late</span>
+            <span style="font-family:var(--mono);font-size:0.7rem;color:var(--accent-cyan)">R: <span id="comp-reward">0</span></span>
+            <span style="font-family:var(--mono);font-size:0.7rem"><span id="comp-avg-ride">—</span></span>
+        </div>
+
+        <div class="sim-dashboard">
+            <div class="dash-panel">
+                <div class="panel-title">Operational</div>
+                <div class="metrics-row">
+                    <div class="metric-item"><div class="metric-label">Delivered</div><div class="metric-value" id="metric-delivered">0</div></div>
+                    <div class="metric-item"><div class="metric-label">Waiting</div><div class="metric-value" id="metric-waiting">—</div></div>
+                    <div class="metric-item"><div class="metric-label">Late</div><div class="metric-value" id="metric-late">0</div></div>
+                    <div class="metric-item"><div class="metric-label">Absent</div><div class="metric-value" id="metric-absent">0</div></div>
+                </div>
+                <div class="metrics-row" style="margin-top:0.4rem">
+                    <div class="metric-item"><div class="metric-label">Buses</div><div class="metric-value" id="metric-active-buses">—</div></div>
+                    <div class="metric-item"><div class="metric-label">Elapsed</div><div class="metric-value" id="metric-elapsed">0m</div></div>
+                    <div class="metric-item"><div class="metric-label">Progress</div><div class="metric-value" id="metric-progress">0%</div></div>
+                </div>
+            </div>
+
+            <div class="dash-panel">
+                <div class="panel-title">Constraints</div>
+                <div class="metrics-row">
+                    <div class="metric-item"><div class="metric-label">Avg Ride</div><div class="metric-value" id="metric-avg-ride">—</div></div>
+                    <div class="metric-item"><div class="metric-label">Max Ride</div><div class="metric-value" id="metric-max-ride">—</div></div>
+                    <div class="metric-item"><div class="metric-label">Cap. Viol.</div><div class="metric-value" id="metric-violations">0</div></div>
+                    <div class="metric-item"><div class="metric-label">Variance</div><div class="metric-value" id="metric-variance">—</div></div>
+                </div>
+                <div class="chart-container"><canvas id="chart-ridetime"></canvas></div>
+            </div>
+
+            <div class="dash-panel">
+                <div class="panel-title">RL Metrics</div>
+                <div class="metrics-row">
+                    <div class="metric-item"><div class="metric-label">Reward</div><div class="metric-value" id="metric-reward">0</div></div>
+                </div>
+                <div class="chart-container"><canvas id="chart-reward"></canvas></div>
+            </div>
+
+            <div class="dash-panel">
+                <div class="panel-title">Equity</div>
+                <div class="chart-container"><canvas id="chart-equity"></canvas></div>
+            </div>
+
+            <div class="dash-panel">
+                <div class="panel-title">Bus Occupancy</div>
+                <div class="chart-container"><canvas id="chart-occupancy"></canvas></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="js/sim-engine.js"></script>
+    <script src="js/agents.js"></script>
+    <script src="js/map-renderer.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/comparison.js"></script>
+
+    <script>
+        (async function main() {
+            const engine = new SimulationEngine();
+            engine.speed = 5;
+
+            const mapRenderer = new MapRenderer('map');
+            const dashboard = new Dashboard();
+            const controls = new Controls(engine);
+            const comparison = new ComparisonMode();
+
+            dashboard.init();
+            controls.init();
+
+            engine.setAgent(new RLAgent());
+
+            await engine.loadScenario('data/scenario_default.json');
+
+            const state = engine.getState();
+            mapRenderer.renderNetwork(state.network);
+            mapRenderer.renderSchool(state.school);
+            mapRenderer.renderStudents(state.students);
+            mapRenderer.renderBuses(state.buses);
+            renderBusFleet(state.buses);
+
+            window._simBuses = state.buses;
+
+            engine.on('tick', (state) => {
+                mapRenderer.renderStudents(state.students);
+                mapRenderer.renderBuses(state.buses);
+                mapRenderer.renderRoutes(state.buses, state.network);
+                mapRenderer.renderEvents(state.activeEvents);
+                mapRenderer.updateNetworkOverlay(state.network);
+                dashboard.update(state.metrics, state.time);
+                updateClock(state.time);
+                renderBusFleet(state.buses);
+                window._simBuses = state.buses;
+
+                if (comparison.active) {
+                    comparison.engine2.speed = engine.speed;
+                }
+            });
+
+            engine.on('decision', ({ bus, decision, time }) => {
+                renderDecision(bus, decision, time);
+                mapRenderer.renderDecision(decision, bus, state.network);
+            });
+
+            engine.on('event', ({ type, data }) => {
+                addEventBanner(type, data.desc, data.duration);
+                addEventLog(engine.formatTime(engine.currentTime), data.desc, type);
+                mapRenderer.updateNetworkOverlay(engine.network);
+            });
+
+            engine.on('pickup', ({ student, bus, time }) => {
+                addEventLog(engine.formatTime(time), `${bus.id} picked up ${student.id}`, 'pickup');
+            });
+
+            engine.on('delivery', ({ bus, count, time }) => {
+                addEventLog(engine.formatTime(time), `${bus.id} delivered ${count} students`, 'delivery');
+            });
+
+            engine.on('statusChange', (status) => {
+                controls.updateUI();
+                if (status === 'complete') {
+                    addEventLog(engine.formatTime(engine.currentTime), 'Simulation complete!', 'complete');
+                }
+            });
+
+            const origPlay = controls.play.bind(controls);
+            controls.play = function() { origPlay(); comparison.syncStart(); };
+            const origPause = controls.pause.bind(controls);
+            controls.pause = function() { origPause(); comparison.syncPause(); };
+            const origStep = controls.step.bind(controls);
+            controls.step = function() { origStep(); comparison.syncStep(); };
+
+            window._onReset = async () => {
+                dashboard.reset();
+                document.getElementById('event-log').innerHTML = '';
+                document.getElementById('event-banners').innerHTML = '';
+                document.getElementById('decision-display').innerHTML = '<div class="decision-card"><div class="label">Reset</div><div class="value">Press ▶ to begin</div></div>';
+                await engine.loadScenario('data/scenario_default.json');
+                const s = engine.getState();
+                mapRenderer.renderNetwork(s.network);
+                mapRenderer.renderSchool(s.school);
+                mapRenderer.renderStudents(s.students);
+                mapRenderer.renderBuses(s.buses);
+                renderBusFleet(s.buses);
+                window._simBuses = s.buses;
+                updateClock(420);
+                comparison.syncReset();
+            };
+
+            window._onAgentChange = (agent) => {
+                document.getElementById('decision-display').innerHTML = `<div class="decision-card"><div class="label">Agent Changed</div><div class="value">${agent.name}</div><div class="sub">Press ▶ or reset to apply</div></div>`;
+            };
+
+            window._toggleComparison = () => {
+                comparison.toggle();
+                setTimeout(() => { mapRenderer.map.invalidateSize(); }, 100);
+            };
+
+            document.getElementById('comp-agent-2')?.addEventListener('change', (e) => {
+                comparison.setAgent2(e.target.value);
+            });
+
+            function updateClock(time) {
+                const el = document.getElementById('clock-display');
+                if (el) el.textContent = engine.formatTime(time);
+            }
+
+            function renderDecision(bus, decision, time) {
+                const container = document.getElementById('decision-display');
+                const confPct = Math.round((decision.confidence || 0) * 100);
+                const confColor = confPct > 80 ? 'var(--accent-green)' : confPct > 50 ? 'var(--accent-yellow)' : 'var(--accent-red)';
+                let altsHtml = '';
+                if (decision.alternatives && decision.alternatives.length > 0) {
+                    altsHtml = `<div class="alternatives-list"><div style="font-family:var(--mono);font-size:0.6rem;color:var(--text-muted);margin-bottom:4px">ALTERNATIVES</div>`;
+                    for (const alt of decision.alternatives.slice(0, 3)) {
+                        const cls = alt.score < 0 ? 'negative' : '';
+                        altsHtml += `<div class="alt-item"><span>${alt.studentId || alt.node || '—'}</span><span>${alt.reason || ''}</span><span class="reward ${cls}">${alt.score}</span></div>`;
+                    }
+                    altsHtml += '</div>';
+                }
+
+                container.innerHTML = `
+                    <div class="decision-card" style="border-color:${bus.color}44">
+                        <div class="label" style="color:${bus.color}">${bus.id.toUpperCase()} · ${engine.formatTime(time)}</div>
+                        <div class="value">${decision.action === 'return' ? '🏫 Return to School' : '📍 Pickup ' + (decision.targetStudentId || '')}</div>
+                        <div class="sub">${decision.reasoning || ''}</div>
+                        <div style="display:flex;gap:0.8rem;margin-top:0.5rem">
+                            <div style="font-family:var(--mono);font-size:0.65rem"><span style="color:var(--text-muted)">CONF</span> <span style="color:${confColor}">${confPct}%</span></div>
+                            <div style="font-family:var(--mono);font-size:0.65rem"><span style="color:var(--text-muted)">EST.R</span> <span style="color:var(--accent-cyan)">${decision.rewardEstimate || 0}</span></div>
+                        </div>
+                        ${altsHtml}
+                    </div>
+                ` + container.innerHTML;
+
+                while (container.children.length > 8) {
+                    container.removeChild(container.lastChild);
+                }
+            }
+
+            function renderBusFleet(buses) {
+                const container = document.getElementById('bus-fleet');
+                if (!container) return;
+                container.innerHTML = buses.map(b => {
+                    const pct = b.capacity > 0 ? Math.round((b.occupancy / b.capacity) * 100) : 0;
+                    const fillColor = pct > 80 ? 'var(--accent-red)' : pct > 50 ? 'var(--accent-yellow)' : b.color;
+                    return `<div class="bus-card">
+                        <div class="bus-indicator" style="background:${b.color};box-shadow:0 0 6px ${b.color}"></div>
+                        <div class="bus-info">
+                            <div class="bus-name">${b.id.replace('_', ' ').toUpperCase()}</div>
+                            <div class="bus-status">${b.status}${b.status === 'broken' ? ' ⚠️' : ''}</div>
+                        </div>
+                        <div class="bus-occupancy">
+                            <div>${b.occupancy}/${b.capacity}</div>
+                            <div class="occupancy-bar"><div class="occupancy-fill" style="width:${pct}%;background:${fillColor}"></div></div>
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+
+            function addEventBanner(type, text, duration) {
+                const container = document.getElementById('event-banners');
+                const icons = { traffic_spike: '⚠️', road_closure: '🚧', bus_breakdown: '🔧', weather: '🌧️', student_absence: '👤' };
+                const cls = type.replace('_spike', '').replace('_', '').replace('student_absence', 'absence').replace('bus_breakdown', 'breakdown').replace('traffic', 'traffic').replace('road_closure', 'closure');
+                const banner = document.createElement('div');
+                banner.className = `event-banner ${cls}`;
+                banner.innerHTML = `<span>${icons[type] || '📢'}</span><span>${text}</span>`;
+                container.appendChild(banner);
+                if (duration) {
+                    setTimeout(() => { banner.style.opacity = '0'; setTimeout(() => banner.remove(), 300); }, Math.min(duration * 200, 8000));
+                } else {
+                    setTimeout(() => { banner.style.opacity = '0'; setTimeout(() => banner.remove(), 300); }, 5000);
+                }
+            }
+
+            function addEventLog(time, msg, type) {
+                const container = document.getElementById('event-log');
+                const item = document.createElement('div');
+                item.className = 'event-log-item';
+                const typeColors = { traffic_spike: 'var(--accent-yellow)', road_closure: 'var(--accent-red)', bus_breakdown: 'var(--accent-red)', weather: 'var(--accent-cyan)', pickup: 'var(--accent-green)', delivery: 'var(--accent-cyan)', complete: 'var(--accent-green)' };
+                item.innerHTML = `<span class="time">${time}</span><span class="msg" style="color:${typeColors[type] || 'var(--text-secondary)'}">${msg}</span>`;
+                container.insertBefore(item, container.firstChild);
+                while (container.children.length > 50) container.removeChild(container.lastChild);
+            }
+
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "district": "Paramus, NJ",
+    "center": [40.9448, -74.0718],
+    "bounds": [[40.930, -74.095], [40.960, -74.048]]
+  },
+  "school": {
+    "id": "school_1",
+    "name": "Bergen County Academies",
+    "location": [40.9419, -74.0687],
+    "bell_time": 480
+  },
+  "students": [
+    {"id":"s01","home":[40.9520,-74.0780],"pickup_window":[435,455],"attendance_prob":0.95,"special_needs":false,"neighborhood":"north"},
+    {"id":"s02","home":[40.9535,-74.0810],"pickup_window":[430,450],"attendance_prob":0.92,"special_needs":false,"neighborhood":"north"},
+    {"id":"s03","home":[40.9510,-74.0750],"pickup_window":[440,460],"attendance_prob":0.98,"special_needs":true,"neighborhood":"north"},
+    {"id":"s04","home":[40.9545,-74.0725],"pickup_window":[435,455],"attendance_prob":0.90,"special_needs":false,"neighborhood":"north"},
+    {"id":"s05","home":[40.9528,-74.0695],"pickup_window":[430,450],"attendance_prob":0.97,"special_needs":false,"neighborhood":"north"},
+    {"id":"s06","home":[40.9555,-74.0760],"pickup_window":[425,445],"attendance_prob":0.93,"special_needs":false,"neighborhood":"north"},
+    {"id":"s07","home":[40.9500,-74.0830],"pickup_window":[440,460],"attendance_prob":0.88,"special_needs":false,"neighborhood":"north"},
+    {"id":"s08","home":[40.9480,-74.0850],"pickup_window":[435,455],"attendance_prob":0.96,"special_needs":false,"neighborhood":"west"},
+    {"id":"s09","home":[40.9460,-74.0880],"pickup_window":[430,450],"attendance_prob":0.91,"special_needs":false,"neighborhood":"west"},
+    {"id":"s10","home":[40.9445,-74.0900],"pickup_window":[440,460],"attendance_prob":0.94,"special_needs":true,"neighborhood":"west"},
+    {"id":"s11","home":[40.9470,-74.0870],"pickup_window":[425,445],"attendance_prob":0.89,"special_needs":false,"neighborhood":"west"},
+    {"id":"s12","home":[40.9455,-74.0840],"pickup_window":[435,455],"attendance_prob":0.97,"special_needs":false,"neighborhood":"west"},
+    {"id":"s13","home":[40.9440,-74.0860],"pickup_window":[440,460],"attendance_prob":0.85,"special_needs":false,"neighborhood":"west"},
+    {"id":"s14","home":[40.9400,-74.0750],"pickup_window":[435,455],"attendance_prob":0.95,"special_needs":false,"neighborhood":"central"},
+    {"id":"s15","home":[40.9415,-74.0780],"pickup_window":[430,450],"attendance_prob":0.93,"special_needs":false,"neighborhood":"central"},
+    {"id":"s16","home":[40.9390,-74.0720],"pickup_window":[440,460],"attendance_prob":0.98,"special_needs":false,"neighborhood":"central"},
+    {"id":"s17","home":[40.9425,-74.0700],"pickup_window":[425,445],"attendance_prob":0.90,"special_needs":true,"neighborhood":"central"},
+    {"id":"s18","home":[40.9385,-74.0760],"pickup_window":[435,455],"attendance_prob":0.96,"special_needs":false,"neighborhood":"central"},
+    {"id":"s19","home":[40.9410,-74.0740],"pickup_window":[430,450],"attendance_prob":0.87,"special_needs":false,"neighborhood":"central"},
+    {"id":"s20","home":[40.9395,-74.0690],"pickup_window":[440,460],"attendance_prob":0.94,"special_needs":false,"neighborhood":"central"},
+    {"id":"s21","home":[40.9380,-74.0620],"pickup_window":[435,455],"attendance_prob":0.95,"special_needs":false,"neighborhood":"east"},
+    {"id":"s22","home":[40.9365,-74.0580],"pickup_window":[430,450],"attendance_prob":0.92,"special_needs":false,"neighborhood":"east"},
+    {"id":"s23","home":[40.9395,-74.0600],"pickup_window":[440,460],"attendance_prob":0.97,"special_needs":false,"neighborhood":"east"},
+    {"id":"s24","home":[40.9350,-74.0560],"pickup_window":[425,445],"attendance_prob":0.88,"special_needs":false,"neighborhood":"east"},
+    {"id":"s25","home":[40.9375,-74.0640],"pickup_window":[435,455],"attendance_prob":0.93,"special_needs":true,"neighborhood":"east"},
+    {"id":"s26","home":[40.9340,-74.0610],"pickup_window":[440,460],"attendance_prob":0.96,"special_needs":false,"neighborhood":"east"},
+    {"id":"s27","home":[40.9360,-74.0550],"pickup_window":[430,450],"attendance_prob":0.91,"special_needs":false,"neighborhood":"east"},
+    {"id":"s28","home":[40.9440,-74.0580],"pickup_window":[435,455],"attendance_prob":0.94,"special_needs":false,"neighborhood":"southeast"},
+    {"id":"s29","home":[40.9455,-74.0550],"pickup_window":[430,450],"attendance_prob":0.89,"special_needs":false,"neighborhood":"southeast"},
+    {"id":"s30","home":[40.9425,-74.0530],"pickup_window":[440,460],"attendance_prob":0.97,"special_needs":false,"neighborhood":"southeast"},
+    {"id":"s31","home":[40.9465,-74.0510],"pickup_window":[425,445],"attendance_prob":0.92,"special_needs":false,"neighborhood":"southeast"},
+    {"id":"s32","home":[40.9435,-74.0560],"pickup_window":[435,455],"attendance_prob":0.95,"special_needs":false,"neighborhood":"southeast"},
+    {"id":"s33","home":[40.9450,-74.0500],"pickup_window":[440,460],"attendance_prob":0.86,"special_needs":true,"neighborhood":"southeast"},
+    {"id":"s34","home":[40.9490,-74.0650],"pickup_window":[435,455],"attendance_prob":0.95,"special_needs":false,"neighborhood":"northwest"},
+    {"id":"s35","home":[40.9510,-74.0680],"pickup_window":[430,450],"attendance_prob":0.93,"special_needs":false,"neighborhood":"northwest"},
+    {"id":"s36","home":[40.9475,-74.0670],"pickup_window":[440,460],"attendance_prob":0.98,"special_needs":false,"neighborhood":"northwest"},
+    {"id":"s37","home":[40.9505,-74.0710],"pickup_window":[425,445],"attendance_prob":0.90,"special_needs":false,"neighborhood":"northwest"},
+    {"id":"s38","home":[40.9485,-74.0690],"pickup_window":[435,455],"attendance_prob":0.96,"special_needs":false,"neighborhood":"northwest"},
+    {"id":"s39","home":[40.9520,-74.0660],"pickup_window":[440,460],"attendance_prob":0.87,"special_needs":false,"neighborhood":"northwest"},
+    {"id":"s40","home":[40.9495,-74.0640],"pickup_window":[430,450],"attendance_prob":0.94,"special_needs":true,"neighborhood":"northwest"}
+  ],
+  "buses": [
+    {"id":"bus_1","capacity":12,"speed":25,"depot":[40.9419,-74.0687],"color":"#00d4ff"},
+    {"id":"bus_2","capacity":10,"speed":28,"depot":[40.9419,-74.0687],"color":"#ff6b35"},
+    {"id":"bus_3","capacity":12,"speed":25,"depot":[40.9419,-74.0687],"color":"#7ddf64"},
+    {"id":"bus_4","capacity":8,"speed":30,"depot":[40.9419,-74.0687],"color":"#c084fc"},
+    {"id":"bus_5","capacity":10,"speed":26,"depot":[40.9419,-74.0687],"color":"#fbbf24"}
+  ],
+  "neighborhoods": {
+    "north":{"name":"North Paramus","color":"#00d4ff"},
+    "west":{"name":"West Paramus","color":"#ff6b35"},
+    "central":{"name":"Central Paramus","color":"#7ddf64"},
+    "east":{"name":"East Paramus","color":"#c084fc"},
+    "southeast":{"name":"Southeast Paramus","color":"#fbbf24"},
+    "northwest":{"name":"Northwest Paramus","color":"#f472b6"}
+  },
+  "events": [
+    {"type":"traffic_spike","time":445,"duration":15,"location":[40.946,-74.072],"radius":0.005,"multiplier":2.5,"desc":"Heavy traffic on Route 17"},
+    {"type":"road_closure","time":450,"duration":20,"edge":[[40.944,-74.080],[40.945,-74.078]],"desc":"Accident on Midland Ave"},
+    {"type":"student_absence","time":0,"student_id":"s07","desc":"Student A7 absent"},
+    {"type":"student_absence","time":0,"student_id":"s13","desc":"Student B6 absent"},
+    {"type":"bus_breakdown","time":455,"bus_id":"bus_4","desc":"Bus 4 mechanical failure"},
+    {"type":"weather","time":440,"duration":30,"multiplier":1.4,"desc":"Light rain"},
+    {"type":"traffic_spike","time":460,"duration":10,"location":[40.938,-74.060],"radius":0.004,"multiplier":1.8,"desc":"School zone congestion"},
+    {"type":"student_absence","time":0,"student_id":"s24","desc":"Student D4 absent"},
+    {"type":"road_closure","time":465,"duration":15,"edge":[[40.950,-74.070],[40.951,-74.068]],"desc":"Water main break"}
+  ]
+}
