@@ -88,7 +88,8 @@ class Controls {
         const status = this.engine.status;
         const badge = document.getElementById('status-badge');
         if (badge) {
-            badge.className = `status-badge ${status}`;
+            const prefix = badge.classList.contains('sim-badge') || badge.className.includes('sim-badge') ? 'sim-badge' : 'status-badge';
+            badge.className = `${prefix} ${status}`;
             badge.textContent = status.toUpperCase();
         }
 

@@ -5,10 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>BCA Bus Routing Challenge</title>
+    <title>Project OmniBus</title>
 
     <meta name="description"
-        content="Bergen County Academies machine learning competition focused on school bus routing and reinforcement learning." />
+        content="A global machine learning competition focused on school bus routing and reinforcement learning." />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +16,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
         :root {
@@ -671,6 +672,509 @@
                 text-align: center;
             }
         }
+
+        /* ── Embedded Simulator ── */
+
+        .sim-intro {
+            color: var(--muted);
+            max-width: 620px;
+            margin: 1.5rem 0 0;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .sim-embed {
+            margin-top: 2.5rem;
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            overflow: hidden;
+            background: #faf7f2;
+        }
+
+        .sim-embed-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 1rem;
+            background: var(--cream);
+            border-bottom: 1px solid var(--rule);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .sim-embed-toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .sim-embed-toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .sim-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--rule);
+            background: transparent;
+            border-radius: 3px;
+            color: var(--muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .sim-btn:hover {
+            border-color: var(--ink);
+            color: var(--ink);
+        }
+
+        .sim-btn.active {
+            background: var(--ink);
+            color: var(--cream);
+            border-color: var(--ink);
+        }
+
+        .sim-select {
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            background: transparent;
+            border: 1px solid var(--rule);
+            border-radius: 3px;
+            color: var(--ink);
+            padding: 0.35rem 0.5rem;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .sim-select:hover {
+            border-color: var(--ink);
+        }
+
+        .sim-toolbar-sep {
+            width: 1px;
+            height: 20px;
+            background: var(--rule);
+            margin: 0 0.3rem;
+        }
+
+        .sim-clock-label {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .sim-clock-val {
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            color: var(--ink);
+            letter-spacing: 0.03em;
+        }
+
+        .sim-badge {
+            font-family: var(--mono);
+            font-size: 0.62rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 2px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .sim-badge.ready {
+            background: rgba(34, 130, 80, 0.08);
+            color: #2a7a50;
+            border: 1px solid rgba(34, 130, 80, 0.2);
+        }
+
+        .sim-badge.running {
+            background: rgba(200, 75, 47, 0.08);
+            color: var(--accent);
+            border: 1px solid rgba(200, 75, 47, 0.2);
+        }
+
+        .sim-badge.paused {
+            background: rgba(180, 150, 50, 0.08);
+            color: #8a7530;
+            border: 1px solid rgba(180, 150, 50, 0.2);
+        }
+
+        .sim-badge.complete {
+            background: rgba(34, 130, 80, 0.08);
+            color: #2a7a50;
+            border: 1px solid rgba(34, 130, 80, 0.2);
+        }
+
+        .sim-embed-body {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            height: 480px;
+        }
+
+        .sim-embed-map-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sim-embed-map-wrap #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sim-embed-map-wrap .leaflet-container {
+            background: #f0ece4 !important;
+        }
+
+        .sim-embed-map-wrap .leaflet-control-zoom a {
+            background: rgba(245, 240, 232, 0.9) !important;
+            color: var(--ink) !important;
+            border-color: var(--rule) !important;
+        }
+
+        .sim-embed-map-wrap .leaflet-popup-content-wrapper {
+            background: #faf7f2 !important;
+            color: var(--ink) !important;
+            border: 1px solid var(--rule) !important;
+            border-radius: 4px !important;
+            box-shadow: 0 4px 16px rgba(26, 23, 20, 0.1) !important;
+            font-family: var(--mono) !important;
+            font-size: 0.72rem !important;
+        }
+
+        .sim-embed-map-wrap .leaflet-popup-tip {
+            background: #faf7f2 !important;
+        }
+
+        .map-overlay {
+            position: absolute;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .map-overlay-topright {
+            top: 10px;
+            right: 10px;
+            pointer-events: auto;
+        }
+
+        .event-banner {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            padding: 0.4rem 0.7rem;
+            border-radius: 3px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            backdrop-filter: blur(8px);
+            animation: slide-in 0.3s ease;
+            transition: opacity 0.3s;
+        }
+
+        .event-banner.traffic {
+            background: rgba(180, 140, 30, 0.12);
+            border: 1px solid rgba(180, 140, 30, 0.3);
+            color: #8a7020;
+        }
+
+        .event-banner.closure {
+            background: rgba(200, 75, 47, 0.1);
+            border: 1px solid rgba(200, 75, 47, 0.3);
+            color: var(--accent);
+        }
+
+        .event-banner.weather {
+            background: rgba(70, 130, 180, 0.1);
+            border: 1px solid rgba(70, 130, 180, 0.3);
+            color: #4682b4;
+        }
+
+        .event-banner.breakdown {
+            background: rgba(200, 75, 47, 0.1);
+            border: 1px solid rgba(200, 75, 47, 0.3);
+            color: var(--accent);
+        }
+
+        .event-banner.absence {
+            background: rgba(122, 113, 104, 0.1);
+            border: 1px solid rgba(122, 113, 104, 0.2);
+            color: var(--muted);
+        }
+
+        @keyframes slide-in {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .sim-embed-panel {
+            border-left: 1px solid var(--rule);
+            background: var(--cream);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sim-panel-section {
+            padding: 0.8rem 0.9rem;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .sim-panel-section-grow {
+            flex: 1;
+            border-bottom: none;
+            overflow-y: auto;
+        }
+
+        .sim-panel-header {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sim-panel-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--rule);
+        }
+
+        .sim-metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem;
+        }
+
+        .sim-metric {
+            background: rgba(26, 23, 20, 0.02);
+            border: 1px solid var(--rule);
+            border-radius: 3px;
+            padding: 0.4rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sim-metric-val {
+            font-family: var(--mono);
+            font-size: 0.95rem;
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .sim-metric-val.good { color: #2a7a50; }
+        .sim-metric-val.warn { color: #8a7530; }
+        .sim-metric-val.bad { color: var(--accent); }
+
+        .sim-metric-label {
+            font-family: var(--mono);
+            font-size: 0.52rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .bus-card {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.5rem;
+            border-radius: 3px;
+            border: 1px solid var(--rule);
+            background: rgba(26, 23, 20, 0.02);
+            margin-bottom: 0.3rem;
+            transition: border-color 0.2s;
+        }
+
+        .bus-card:hover {
+            border-color: var(--muted);
+        }
+
+        .bus-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .bus-card .bus-info { flex: 1; min-width: 0; }
+
+        .bus-card .bus-name {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            color: var(--ink);
+        }
+
+        .bus-card .bus-status {
+            font-size: 0.58rem;
+            color: var(--muted);
+        }
+
+        .bus-card .bus-occupancy {
+            font-family: var(--mono);
+            font-size: 0.62rem;
+            color: var(--muted);
+            text-align: right;
+        }
+
+        .occupancy-bar {
+            width: 40px;
+            height: 3px;
+            background: var(--rule);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 2px;
+        }
+
+        .occupancy-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        .sim-event-log {
+            max-height: 140px;
+            overflow-y: auto;
+        }
+
+        .event-log-item {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.35rem 0;
+            border-bottom: 1px solid rgba(216, 209, 196, 0.5);
+            font-size: 0.65rem;
+            animation: fade-in 0.3s ease;
+        }
+
+        .event-log-item:last-child { border-bottom: none; }
+
+        .event-log-item .time {
+            font-family: var(--mono);
+            color: var(--muted);
+            flex-shrink: 0;
+            width: 40px;
+        }
+
+        .event-log-item .msg {
+            color: var(--ink);
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(-3px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .student-marker {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 10px;
+            border: 2px solid;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .student-marker.waiting {
+            background: rgba(200, 160, 40, 0.15);
+            border-color: #b8942a;
+        }
+
+        .student-marker.picked-up {
+            background: rgba(42, 122, 80, 0.15);
+            border-color: #2a7a50;
+        }
+
+        .student-marker.late {
+            background: rgba(200, 75, 47, 0.15);
+            border-color: var(--accent);
+            animation: pulse-marker 1s ease-in-out infinite;
+        }
+
+        .student-marker.absent {
+            background: rgba(122, 113, 104, 0.15);
+            border-color: var(--muted);
+            opacity: 0.5;
+        }
+
+        @keyframes pulse-marker {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .bus-marker-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+            border: 2px solid;
+            box-shadow: 0 1px 4px rgba(26, 23, 20, 0.15);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .bus-marker-icon.en-route { animation: bus-pulse 2s ease-in-out infinite; }
+        .bus-marker-icon.loading { animation: bus-loading 0.5s ease-in-out infinite; }
+        .bus-marker-icon.broken { opacity: 0.4; filter: grayscale(1); }
+
+        @keyframes bus-pulse {
+            0%, 100% { box-shadow: 0 1px 4px rgba(26, 23, 20, 0.15); }
+            50% { box-shadow: 0 2px 10px rgba(200, 75, 47, 0.2); }
+        }
+
+        @keyframes bus-loading {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .school-marker {
+            width: 30px;
+            height: 30px;
+            background: rgba(200, 75, 47, 0.12);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .sim-embed-body {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .sim-embed-map-wrap {
+                height: 320px;
+            }
+
+            .sim-embed-panel {
+                border-left: none;
+                border-top: 1px solid var(--rule);
+                max-height: 300px;
+            }
+
+            .sim-embed-toolbar-left {
+                flex-wrap: wrap;
+            }
+        }
     </style>
 </head>
 
@@ -681,14 +1185,14 @@
     <nav>
 
         <div class="nav-logo">
-            <img src="bca-logo.png" alt="BCA Logo" class="logo" onerror="this.style.display='none'">
-            <span>BCA Bus Routing Challenge</span>
+            <img src="bca-logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
+            <span>Project OmniBus</span>
         </div>
 
         <ul class="nav-links">
             <li><a href="#problem">Problem</a></li>
             <li><a href="#details">Details</a></li>
-            <li><a href="simulator.html" style="color:var(--accent)">Simulator</a></li>
+            <li><a href="#simulator" style="color:var(--accent)">Simulator</a></li>
             <li><a href="standings.html">Standings</a></li>
             <li><a href="#sponsors">Sponsors</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -704,20 +1208,23 @@
             style="display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; width: 100%; max-width: 1200px; margin: 0 auto;">
             <div style="flex: 1; padding-bottom: 2rem;">
                 <div class="hero-eyebrow">
-                    BERGEN COUNTY ACADEMIES — ML COMPETITION
+                    GLOBAL MACHINE LEARNING COMPETITION
                 </div>
 
                 <h1>
-                    Reinforcement<br>
-                    learning for<br>
-                    school bus<br>
-                    routing.
+                    Project<br>
+                    OmniBus.
                 </h1>
 
                 <p class="hero-sub">
-                    A machine learning competition focused on dynamic school bus routing,
+                    Reinforcement learning for dynamic school bus routing,
                     scheduling, and real-time replanning.
                 </p>
+
+                <div class="hero-actions">
+                    <a href="#simulator" style="text-decoration: none;"><button class="btn-primary">Try Simulator</button></a>
+                    <a href="#details" style="text-decoration: none;"><button class="btn-ghost">Read Details</button></a>
+                </div>
             </div>
 
             <div
@@ -785,9 +1292,42 @@
         </div>
     </section>
 
+    <!-- WHAT IS RL -->
+    <section id="rl-info" style="background: rgba(26, 23, 20, 0.02);">
+        <div class="section-label">02 / AI Basics</div>
+        <h2>What is Reinforcement Learning?</h2>
+        
+        <div class="why-list">
+            <div class="why-item">
+                <div class="why-num">01</div>
+                <div class="why-title">Learning by Doing</div>
+                <div class="why-desc">
+                    Unlike traditional programming where we give the computer exact rules to follow, or supervised learning where we show the AI examples of the "right answer," <strong>Reinforcement Learning (RL)</strong> is about learning through trial and error. <br><br>
+                    Imagine training a dog: you don't tell the dog how to move its muscles to sit. You say "sit," and when the dog accidentally sits, you give it a treat (a reward). Over time, the dog figures out that sitting earns a reward.
+                </div>
+            </div>
+
+            <div class="why-item">
+                <div class="why-num">02</div>
+                <div class="why-title">Agents and Environments</div>
+                <div class="why-desc">
+                    In RL, we create an <strong>Agent</strong> (the AI) and place it in an <strong>Environment</strong> (the simulated city map). The agent doesn't know anything at first. It takes random <strong>Actions</strong> (like sending a bus to a stop) and observes the new <strong>State</strong> of the city (where the bus is now).
+                </div>
+            </div>
+
+            <div class="why-item" style="border-bottom: none; padding-bottom: 0;">
+                <div class="why-num">03</div>
+                <div class="why-title">Rewards and Penalties</div>
+                <div class="why-desc">
+                    After every action, the agent receives a <strong>Reward</strong>. If it picks up students efficiently, the reward is positive. If it takes too long or students are late, it gets a negative reward (a penalty). By playing thousands of simulated mornings, the agent's neural network updates to maximize its total score, discovering complex routing strategies that human programmers could never hard-code.
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- DETAILS -->
     <section id="details">
-        <div class="section-label">02 / Details</div>
+        <div class="section-label">03 / Details</div>
         <h2>Everything You Need to Know</h2>
 
         <div class="problem-grid">
@@ -819,41 +1359,100 @@
         </div>
     </section>
 
-    <!-- SIMULATOR PREVIEW -->
-    <section id="simulator-preview" style="text-align:center;max-width:1100px">
+    <!-- SIMULATOR -->
+    <section id="simulator" style="max-width:1200px">
         <div class="section-label">Interactive Demo</div>
-        <h2>Watch the AI Think</h2>
-        <p style="color:var(--muted);max-width:620px;margin:1.5rem auto 0;line-height:1.8;font-weight:300">
-            Our interactive simulator lets you watch a trained RL agent make routing decisions in real time
-            on real road networks. Compare agents, inspect decisions, and understand the tradeoffs.
+        <h2>Try the Routing Simulator</h2>
+        <p class="sim-intro">
+            Pick a routing agent, press play, and watch it make decisions in real time on a
+            real road network. See how different algorithms compare on the same scenario.
         </p>
-        <div style="margin-top:2.5rem;padding:2.5rem;border:1px solid var(--rule);background:rgba(26,23,20,0.02);position:relative;overflow:hidden">
-            <div style="display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem">
-                <div style="text-align:center">
-                    <div style="font-family:var(--mono);font-size:2rem;color:var(--accent)">40</div>
-                    <div style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">Students</div>
+
+        <div class="sim-embed">
+            <div class="sim-embed-toolbar">
+                <div class="sim-embed-toolbar-left">
+                    <button class="sim-btn" id="btn-reset" title="Reset">↺</button>
+                    <button class="sim-btn" id="btn-step" title="Step">⏭</button>
+                    <button class="sim-btn" id="btn-play" title="Play">▶</button>
+                    <button class="sim-btn" id="btn-pause" title="Pause">⏸</button>
+                    <select class="sim-select" id="speed-select" title="Speed">
+                        <option value="1">1×</option>
+                        <option value="2">2×</option>
+                        <option value="5" selected>5×</option>
+                        <option value="10">10×</option>
+                        <option value="25">25×</option>
+                    </select>
+                    <span class="sim-toolbar-sep"></span>
+                    <select class="sim-select" id="agent-select" title="Agent">
+                        <option value="rl">RL Agent</option>
+                        <option value="nn">Nearest Neighbor</option>
+                        <option value="cw">Clarke-Wright</option>
+                        <option value="ortools">OR-Tools</option>
+                    </select>
                 </div>
-                <div style="text-align:center">
-                    <div style="font-family:var(--mono);font-size:2rem;color:var(--accent)">5</div>
-                    <div style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">Buses</div>
-                </div>
-                <div style="text-align:center">
-                    <div style="font-family:var(--mono);font-size:2rem;color:var(--accent)">4</div>
-                    <div style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">Agents</div>
-                </div>
-                <div style="text-align:center">
-                    <div style="font-family:var(--mono);font-size:2rem;color:var(--accent)">∞</div>
-                    <div style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">Scenarios</div>
+                <div class="sim-embed-toolbar-right">
+                    <span class="sim-clock-label">Sim</span>
+                    <span class="sim-clock-val" id="clock-display">7:00 AM</span>
+                    <span id="status-badge" class="sim-badge ready">READY</span>
                 </div>
             </div>
-            <p style="color:var(--muted);font-size:0.9rem;margin-bottom:2rem">Real roads · Dynamic events · Live metrics · Side-by-side agent comparison</p>
-            <a href="simulator.html" class="btn-primary" style="text-decoration:none;display:inline-block">Launch Simulator →</a>
+
+            <div class="sim-embed-body">
+                <div class="sim-embed-map-wrap">
+                    <div id="map"></div>
+                    <div class="map-overlay map-overlay-topright" id="event-banners"></div>
+                </div>
+
+                <div class="sim-embed-panel">
+                    <div class="sim-panel-section">
+                        <div class="sim-panel-header">Metrics</div>
+                        <div class="sim-metrics-grid">
+                            <div class="sim-metric">
+                                <span class="sim-metric-val" id="metric-delivered">0</span>
+                                <span class="sim-metric-label">Delivered</span>
+                            </div>
+                            <div class="sim-metric">
+                                <span class="sim-metric-val" id="metric-waiting">—</span>
+                                <span class="sim-metric-label">Waiting</span>
+                            </div>
+                            <div class="sim-metric">
+                                <span class="sim-metric-val" id="metric-late">0</span>
+                                <span class="sim-metric-label">Late</span>
+                            </div>
+                            <div class="sim-metric">
+                                <span class="sim-metric-val" id="metric-reward">0</span>
+                                <span class="sim-metric-label">Reward</span>
+                            </div>
+                        </div>
+                        <div class="sim-metrics-grid" style="margin-top:0.4rem">
+                            <div class="sim-metric">
+                                <span class="sim-metric-val" id="metric-avg-ride">—</span>
+                                <span class="sim-metric-label">Avg Ride</span>
+                            </div>
+                            <div class="sim-metric">
+                                <span class="sim-metric-val" id="metric-progress">0%</span>
+                                <span class="sim-metric-label">Progress</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sim-panel-section">
+                        <div class="sim-panel-header">Bus Fleet</div>
+                        <div id="bus-fleet"></div>
+                    </div>
+
+                    <div class="sim-panel-section sim-panel-section-grow">
+                        <div class="sim-panel-header">Event Log</div>
+                        <div id="event-log" class="sim-event-log"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- SPONSORS -->
     <section id="sponsors">
-        <div class="section-label">03 / Sponsors</div>
+        <div class="section-label">04 / Sponsors</div>
         <h2>Our Sponsors</h2>
         <div class="sponsor-grid">
             <div class="sponsor-card">
@@ -867,7 +1466,7 @@
 
     <!-- CONTACT -->
     <section id="contact" style="padding-bottom: 6rem;">
-        <div class="section-label">04 / Contact</div>
+        <div class="section-label">05 / Contact</div>
         <h2>Get in Touch</h2>
         <div class="contact-grid">
             <div class="contact-card" style="grid-column: span 3; text-align: center;">
@@ -879,9 +1478,163 @@
     </section>
 
     <footer>
-        <span>&copy; 2026 BCA Machine Learning Club</span>
-        <span>Bergen County Academies</span>
+        <span>&copy; 2026 Project OmniBus</span>
+        <span>Global Machine Learning Competition</span>
     </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/sim-engine.js"></script>
+    <script src="js/agents.js"></script>
+    <script src="js/map-renderer.js"></script>
+    <script src="js/controls.js"></script>
+
+    <script>
+        (async function initSimulator() {
+            const engine = new SimulationEngine();
+            engine.speed = 5;
+
+            const mapRenderer = new MapRenderer('map', { theme: 'light' });
+            const controls = new Controls(engine);
+            controls.init();
+
+            engine.setAgent(new RLAgent());
+            await engine.loadScenario('data/scenario_default.json');
+
+            const state = engine.getState();
+            mapRenderer.renderNetwork(state.network);
+            mapRenderer.renderSchool(state.school);
+            mapRenderer.renderStudents(state.students);
+            mapRenderer.renderBuses(state.buses);
+            renderBusFleet(state.buses);
+            window._simBuses = state.buses;
+
+            engine.on('tick', (st) => {
+                mapRenderer.renderStudents(st.students);
+                mapRenderer.renderBuses(st.buses);
+                mapRenderer.renderRoutes(st.buses, st.network);
+                mapRenderer.renderEvents(st.activeEvents);
+                mapRenderer.updateNetworkOverlay(st.network);
+                updateMetrics(st.metrics);
+                updateClock(st.time);
+                renderBusFleet(st.buses);
+                window._simBuses = st.buses;
+            });
+
+            engine.on('event', ({ type, data }) => {
+                addEventBanner(type, data.desc, data.duration);
+                addEventLog(engine.formatTime(engine.currentTime), data.desc, type);
+                mapRenderer.updateNetworkOverlay(engine.network);
+            });
+
+            engine.on('pickup', ({ student, bus, time }) => {
+                addEventLog(engine.formatTime(time), `${bus.id} picked up ${student.id}`, 'pickup');
+            });
+
+            engine.on('delivery', ({ bus, count, time }) => {
+                addEventLog(engine.formatTime(time), `${bus.id} delivered ${count} students`, 'delivery');
+            });
+
+            engine.on('statusChange', (status) => {
+                controls.updateUI();
+                if (status === 'complete') {
+                    addEventLog(engine.formatTime(engine.currentTime), 'Simulation complete!', 'complete');
+                }
+            });
+
+            window._onReset = async () => {
+                document.getElementById('event-log').innerHTML = '';
+                document.getElementById('event-banners').innerHTML = '';
+                await engine.loadScenario('data/scenario_default.json');
+                const s = engine.getState();
+                mapRenderer.renderNetwork(s.network);
+                mapRenderer.renderSchool(s.school);
+                mapRenderer.renderStudents(s.students);
+                mapRenderer.renderBuses(s.buses);
+                renderBusFleet(s.buses);
+                window._simBuses = s.buses;
+                updateClock(420);
+                resetMetrics();
+            };
+
+            window._onAgentChange = () => {};
+
+            function updateClock(time) {
+                const el = document.getElementById('clock-display');
+                if (el) el.textContent = engine.formatTime(time);
+            }
+
+            function setVal(id, val, cls) {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.textContent = val;
+                if (cls !== undefined) el.className = 'sim-metric-val ' + cls;
+            }
+
+            function updateMetrics(m) {
+                setVal('metric-delivered', m.delivered);
+                setVal('metric-waiting', m.waiting, m.waiting > 10 ? 'warn' : '');
+                setVal('metric-late', m.late, m.late > 0 ? 'bad' : '');
+                setVal('metric-reward', m.reward, m.reward > 0 ? 'good' : m.reward < 0 ? 'bad' : '');
+                setVal('metric-avg-ride', m.avgRideTime ? m.avgRideTime.toFixed(1) + 'm' : '—');
+                const pct = m.totalStudents > 0 ? Math.round((m.delivered / (m.totalStudents - m.absent)) * 100) : 0;
+                setVal('metric-progress', pct + '%', pct >= 100 ? 'good' : '');
+            }
+
+            function resetMetrics() {
+                setVal('metric-delivered', '0');
+                setVal('metric-waiting', '—');
+                setVal('metric-late', '0');
+                setVal('metric-reward', '0');
+                setVal('metric-avg-ride', '—');
+                setVal('metric-progress', '0%');
+            }
+
+            function renderBusFleet(buses) {
+                const container = document.getElementById('bus-fleet');
+                if (!container) return;
+                container.innerHTML = buses.map(b => {
+                    const pct = b.capacity > 0 ? Math.round((b.occupancy / b.capacity) * 100) : 0;
+                    const fillColor = pct > 80 ? '#c84b2f' : pct > 50 ? '#b8942a' : b.color;
+                    return `<div class="bus-card">
+                        <div class="bus-indicator" style="background:${b.color}"></div>
+                        <div class="bus-info">
+                            <div class="bus-name">${b.id.replace('_', ' ').toUpperCase()}</div>
+                            <div class="bus-status">${b.status}${b.status === 'broken' ? ' ⚠️' : ''}</div>
+                        </div>
+                        <div class="bus-occupancy">
+                            <div>${b.occupancy}/${b.capacity}</div>
+                            <div class="occupancy-bar"><div class="occupancy-fill" style="width:${pct}%;background:${fillColor}"></div></div>
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+
+            function addEventBanner(type, text, duration) {
+                const container = document.getElementById('event-banners');
+                const icons = { traffic_spike: '⚠️', road_closure: '🚧', bus_breakdown: '🔧', weather: '🌧️', student_absence: '👤' };
+                const cls = type.replace('_spike', '').replace('_', '').replace('student_absence', 'absence').replace('bus_breakdown', 'breakdown').replace('traffic', 'traffic').replace('road_closure', 'closure');
+                const banner = document.createElement('div');
+                banner.className = `event-banner ${cls}`;
+                banner.innerHTML = `<span>${icons[type] || '📢'}</span><span>${text}</span>`;
+                container.appendChild(banner);
+                const timeout = duration ? Math.min(duration * 200, 8000) : 5000;
+                setTimeout(() => { banner.style.opacity = '0'; setTimeout(() => banner.remove(), 300); }, timeout);
+            }
+
+            function addEventLog(time, msg, type) {
+                const container = document.getElementById('event-log');
+                const item = document.createElement('div');
+                item.className = 'event-log-item';
+                const typeColors = {
+                    traffic_spike: '#8a7020', road_closure: 'var(--accent)', bus_breakdown: 'var(--accent)',
+                    weather: '#4682b4', pickup: '#2a7a50', delivery: '#4682b4', complete: '#2a7a50'
+                };
+                item.innerHTML = `<span class="time">${time}</span><span class="msg" style="color:${typeColors[type] || 'var(--muted)'}">${msg}</span>`;
+                container.insertBefore(item, container.firstChild);
+                while (container.children.length > 30) container.removeChild(container.lastChild);
+            }
+        })();
+    </script>
 
 </body>
 

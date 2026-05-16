@@ -1,14 +1,16 @@
 class MapRenderer {
-    constructor(containerId) {
+    constructor(containerId, options = {}) {
+        this.theme = options.theme || 'dark';
         this.map = L.map(containerId, {
             zoomControl: true,
             attributionControl: false,
             preferCanvas: true
         }).setView([40.9448, -74.0718], 14);
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            maxZoom: 19
-        }).addTo(this.map);
+        const tileUrl = this.theme === 'light'
+            ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+            : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+        L.tileLayer(tileUrl, { maxZoom: 19 }).addTo(this.map);
 
         this.roadLayer = L.layerGroup().addTo(this.map);
         this.studentLayer = L.layerGroup().addTo(this.map);
@@ -26,12 +28,13 @@ class MapRenderer {
 
     renderNetwork(network) {
         this.roadLayer.clearLayers();
+        const defaultRoadColor = this.theme === 'light' ? 'rgba(26, 23, 20, 0.12)' : 'rgba(71, 85, 105, 0.35)';
         for (const [eId, edge] of network.edges) {
             const from = network.nodes.get(edge.from);
             const to = network.nodes.get(edge.to);
             const isClosed = network.closedEdges.has(eId);
             const hasTraffic = network.trafficMultipliers.has(eId);
-            let color = 'rgba(71, 85, 105, 0.35)';
+            let color = defaultRoadColor;
             let weight = 1.5;
             if (hasTraffic) { color = 'rgba(251, 191, 36, 0.6)'; weight = 2.5; }
             if (isClosed) { color = 'rgba(239, 68, 68, 0.7)'; weight = 3; }
@@ -238,12 +241,13 @@ class MapRenderer {
     }
 
     updateNetworkOverlay(network) {
+        const defaultRoadColor = this.theme === 'light' ? 'rgba(26, 23, 20, 0.12)' : 'rgba(71, 85, 105, 0.35)';
         this.roadLayer.eachLayer(layer => {
             if (layer._edgeId) {
                 const eId = layer._edgeId;
                 const isClosed = network.closedEdges.has(eId);
                 const hasTraffic = network.trafficMultipliers.has(eId);
-                let color = 'rgba(71, 85, 105, 0.35)';
+                let color = defaultRoadColor;
                 let weight = 1.5;
                 if (hasTraffic) { color = 'rgba(251, 191, 36, 0.6)'; weight = 2.5; }
                 if (isClosed) { color = 'rgba(239, 68, 68, 0.7)'; weight = 3; }
