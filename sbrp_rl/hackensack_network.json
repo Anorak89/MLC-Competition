@@ -1,0 +1,1794 @@
+{
+  "meta": {
+    "city": "Hackensack, NJ",
+    "lat_bounds": [
+      40.87,
+      40.91
+    ],
+    "lng_bounds": [
+      -74.06,
+      -74.03
+    ]
+  },
+  "nodes": {
+    "node_0": {
+      "id": "node_0",
+      "lat": 40.870139,
+      "lng": -74.060475,
+      "name": "Summit Ave & Passaic St",
+      "neighborhood": "Hillers"
+    },
+    "node_1": {
+      "id": "node_1",
+      "lat": 40.869775,
+      "lng": -74.054277,
+      "name": "State St & Passaic St",
+      "neighborhood": "Hillers"
+    },
+    "node_2": {
+      "id": "node_2",
+      "lat": 40.870236,
+      "lng": -74.047823,
+      "name": "Main St & Passaic St",
+      "neighborhood": "Hillers"
+    },
+    "node_3": {
+      "id": "node_3",
+      "lat": 40.870392,
+      "lng": -74.042413,
+      "name": "River Rd & Passaic St",
+      "neighborhood": "Maple Hill"
+    },
+    "node_4": {
+      "id": "node_4",
+      "lat": 40.869922,
+      "lng": -74.03647,
+      "name": "Polifly Rd & Passaic St",
+      "neighborhood": "Maple Hill"
+    },
+    "node_5": {
+      "id": "node_5",
+      "lat": 40.869719,
+      "lng": -74.029995,
+      "name": "Hackensack Ave & Passaic St",
+      "neighborhood": "Maple Hill"
+    },
+    "node_6": {
+      "id": "node_6",
+      "lat": 40.877527,
+      "lng": -74.060301,
+      "name": "Summit Ave & Essex St",
+      "neighborhood": "Hillers"
+    },
+    "node_7": {
+      "id": "node_7",
+      "lat": 40.87815,
+      "lng": -74.053955,
+      "name": "State St & Essex St",
+      "neighborhood": "Hillers"
+    },
+    "node_8": {
+      "id": "node_8",
+      "lat": 40.87772,
+      "lng": -74.047911,
+      "name": "Main St & Essex St",
+      "neighborhood": "Hillers"
+    },
+    "node_9": {
+      "id": "node_9",
+      "lat": 40.878309,
+      "lng": -74.042494,
+      "name": "River Rd & Essex St",
+      "neighborhood": "Maple Hill"
+    },
+    "node_10": {
+      "id": "node_10",
+      "lat": 40.878306,
+      "lng": -74.035802,
+      "name": "Polifly Rd & Essex St",
+      "neighborhood": "Maple Hill"
+    },
+    "node_11": {
+      "id": "node_11",
+      "lat": 40.87784,
+      "lng": -74.030345,
+      "name": "Hackensack Ave & Essex St",
+      "neighborhood": "Maple Hill"
+    },
+    "node_12": {
+      "id": "node_12",
+      "lat": 40.886457,
+      "lng": -74.060163,
+      "name": "Summit Ave & Central Ave",
+      "neighborhood": "Central Hackensack"
+    },
+    "node_13": {
+      "id": "node_13",
+      "lat": 40.885593,
+      "lng": -74.054403,
+      "name": "State St & Central Ave",
+      "neighborhood": "Central Hackensack"
+    },
+    "node_14": {
+      "id": "node_14",
+      "lat": 40.886347,
+      "lng": -74.047896,
+      "name": "Main St & Central Ave",
+      "neighborhood": "Central Hackensack"
+    },
+    "node_15": {
+      "id": "node_15",
+      "lat": 40.886307,
+      "lng": -74.04177,
+      "name": "River Rd & Central Ave",
+      "neighborhood": "Central Hackensack"
+    },
+    "node_16": {
+      "id": "node_16",
+      "lat": 40.886036,
+      "lng": -74.035527,
+      "name": "Polifly Rd & Central Ave",
+      "neighborhood": "Central Hackensack"
+    },
+    "node_17": {
+      "id": "node_17",
+      "lat": 40.885879,
+      "lng": -74.029948,
+      "name": "Hackensack Ave & Central Ave",
+      "neighborhood": "Central Hackensack"
+    },
+    "node_18": {
+      "id": "node_18",
+      "lat": 40.894329,
+      "lng": -74.059881,
+      "name": "Summit Ave & Beech St",
+      "neighborhood": "Central Hackensack"
+    },
+    "node_19": {
+      "id": "node_19",
+      "lat": 40.894362,
+      "lng": -74.053923,
+      "name": "State St & Beech St",
+      "neighborhood": "Central Hackensack"
+    },
+    "node_20": {
+      "id": "node_20",
+      "lat": 40.894205,
+      "lng": -74.048454,
+      "name": "Main St & Beech St",
+      "neighborhood": "Central Hackensack"
+    },
+    "node_21": {
+      "id": "node_21",
+      "lat": 40.893728,
+      "lng": -74.042211,
+      "name": "River Rd & Beech St",
+      "neighborhood": "Central Hackensack"
+    },
+    "node_22": {
+      "id": "node_22",
+      "lat": 40.89358,
+      "lng": -74.036267,
+      "name": "Polifly Rd & Beech St",
+      "neighborhood": "Central Hackensack"
+    },
+    "node_23": {
+      "id": "node_23",
+      "lat": 40.893601,
+      "lng": -74.030222,
+      "name": "Hackensack Ave & Beech St",
+      "neighborhood": "Central Hackensack"
+    },
+    "node_24": {
+      "id": "node_24",
+      "lat": 40.902136,
+      "lng": -74.060135,
+      "name": "Summit Ave & Temple Ave",
+      "neighborhood": "Fairmount"
+    },
+    "node_25": {
+      "id": "node_25",
+      "lat": 40.90187,
+      "lng": -74.05429,
+      "name": "State St & Temple Ave",
+      "neighborhood": "Fairmount"
+    },
+    "node_26": {
+      "id": "node_26",
+      "lat": 40.901767,
+      "lng": -74.047563,
+      "name": "Main St & Temple Ave",
+      "neighborhood": "Fairmount"
+    },
+    "node_27": {
+      "id": "node_27",
+      "lat": 40.902148,
+      "lng": -74.041891,
+      "name": "River Rd & Temple Ave",
+      "neighborhood": "Hackensack Commons"
+    },
+    "node_28": {
+      "id": "node_28",
+      "lat": 40.901671,
+      "lng": -74.035771,
+      "name": "Polifly Rd & Temple Ave",
+      "neighborhood": "Hackensack Commons"
+    },
+    "node_29": {
+      "id": "node_29",
+      "lat": 40.901663,
+      "lng": -74.030121,
+      "name": "Hackensack Ave & Temple Ave",
+      "neighborhood": "Hackensack Commons"
+    },
+    "node_30": {
+      "id": "node_30",
+      "lat": 40.91049,
+      "lng": -74.05986,
+      "name": "Summit Ave & Route 4",
+      "neighborhood": "Fairmount"
+    },
+    "node_31": {
+      "id": "node_31",
+      "lat": 40.910057,
+      "lng": -74.053815,
+      "name": "State St & Route 4",
+      "neighborhood": "Fairmount"
+    },
+    "node_32": {
+      "id": "node_32",
+      "lat": 40.910343,
+      "lng": -74.047724,
+      "name": "Main St & Route 4",
+      "neighborhood": "Fairmount"
+    },
+    "node_33": {
+      "id": "node_33",
+      "lat": 40.909729,
+      "lng": -74.042468,
+      "name": "River Rd & Route 4",
+      "neighborhood": "Hackensack Commons"
+    },
+    "node_34": {
+      "id": "node_34",
+      "lat": 40.909815,
+      "lng": -74.036232,
+      "name": "Polifly Rd & Route 4",
+      "neighborhood": "Hackensack Commons"
+    },
+    "node_35": {
+      "id": "node_35",
+      "lat": 40.909711,
+      "lng": -74.029557,
+      "name": "Hackensack Ave & Route 4",
+      "neighborhood": "Hackensack Commons"
+    }
+  },
+  "edges": [
+    {
+      "id": "node_0_node_1",
+      "from": "node_0",
+      "to": "node_1",
+      "distance_miles": 0.3248,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.78,
+      "street_type": "local"
+    },
+    {
+      "id": "node_1_node_0",
+      "from": "node_1",
+      "to": "node_0",
+      "distance_miles": 0.3248,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.78,
+      "street_type": "local"
+    },
+    {
+      "id": "node_0_node_6",
+      "from": "node_0",
+      "to": "node_6",
+      "distance_miles": 0.5105,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.225,
+      "street_type": "local"
+    },
+    {
+      "id": "node_6_node_0",
+      "from": "node_6",
+      "to": "node_0",
+      "distance_miles": 0.5105,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.225,
+      "street_type": "local"
+    },
+    {
+      "id": "node_1_node_2",
+      "from": "node_1",
+      "to": "node_2",
+      "distance_miles": 0.3387,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.813,
+      "street_type": "local"
+    },
+    {
+      "id": "node_2_node_1",
+      "from": "node_2",
+      "to": "node_1",
+      "distance_miles": 0.3387,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.813,
+      "street_type": "local"
+    },
+    {
+      "id": "node_1_node_7",
+      "from": "node_1",
+      "to": "node_7",
+      "distance_miles": 0.5789,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.389,
+      "street_type": "local"
+    },
+    {
+      "id": "node_7_node_1",
+      "from": "node_7",
+      "to": "node_1",
+      "distance_miles": 0.5789,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.389,
+      "street_type": "local"
+    },
+    {
+      "id": "node_2_node_3",
+      "from": "node_2",
+      "to": "node_3",
+      "distance_miles": 0.2829,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.679,
+      "street_type": "local"
+    },
+    {
+      "id": "node_3_node_2",
+      "from": "node_3",
+      "to": "node_2",
+      "distance_miles": 0.2829,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.679,
+      "street_type": "local"
+    },
+    {
+      "id": "node_2_node_8",
+      "from": "node_2",
+      "to": "node_8",
+      "distance_miles": 0.5171,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.886,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_8_node_2",
+      "from": "node_8",
+      "to": "node_2",
+      "distance_miles": 0.5171,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.886,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_3_node_4",
+      "from": "node_3",
+      "to": "node_4",
+      "distance_miles": 0.3122,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.749,
+      "street_type": "local"
+    },
+    {
+      "id": "node_4_node_3",
+      "from": "node_4",
+      "to": "node_3",
+      "distance_miles": 0.3122,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.749,
+      "street_type": "local"
+    },
+    {
+      "id": "node_3_node_9",
+      "from": "node_3",
+      "to": "node_9",
+      "distance_miles": 0.547,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.313,
+      "street_type": "local"
+    },
+    {
+      "id": "node_9_node_3",
+      "from": "node_9",
+      "to": "node_3",
+      "distance_miles": 0.547,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.313,
+      "street_type": "local"
+    },
+    {
+      "id": "node_4_node_5",
+      "from": "node_4",
+      "to": "node_5",
+      "distance_miles": 0.3386,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.813,
+      "street_type": "local"
+    },
+    {
+      "id": "node_5_node_4",
+      "from": "node_5",
+      "to": "node_4",
+      "distance_miles": 0.3386,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.813,
+      "street_type": "local"
+    },
+    {
+      "id": "node_4_node_10",
+      "from": "node_4",
+      "to": "node_10",
+      "distance_miles": 0.5803,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.393,
+      "street_type": "local"
+    },
+    {
+      "id": "node_10_node_4",
+      "from": "node_10",
+      "to": "node_4",
+      "distance_miles": 0.5803,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.393,
+      "street_type": "local"
+    },
+    {
+      "id": "node_5_node_11",
+      "from": "node_5",
+      "to": "node_11",
+      "distance_miles": 0.5614,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.962,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_11_node_5",
+      "from": "node_11",
+      "to": "node_5",
+      "distance_miles": 0.5614,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.962,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_6_node_7",
+      "from": "node_6",
+      "to": "node_7",
+      "distance_miles": 0.3343,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.573,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_7_node_6",
+      "from": "node_7",
+      "to": "node_6",
+      "distance_miles": 0.3343,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.573,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_6_node_12",
+      "from": "node_6",
+      "to": "node_12",
+      "distance_miles": 0.6171,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.481,
+      "street_type": "local"
+    },
+    {
+      "id": "node_12_node_6",
+      "from": "node_12",
+      "to": "node_6",
+      "distance_miles": 0.6171,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.481,
+      "street_type": "local"
+    },
+    {
+      "id": "node_7_node_8",
+      "from": "node_7",
+      "to": "node_8",
+      "distance_miles": 0.3171,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.544,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_8_node_7",
+      "from": "node_8",
+      "to": "node_7",
+      "distance_miles": 0.3171,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.544,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_7_node_13",
+      "from": "node_7",
+      "to": "node_13",
+      "distance_miles": 0.5148,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.236,
+      "street_type": "local"
+    },
+    {
+      "id": "node_13_node_7",
+      "from": "node_13",
+      "to": "node_7",
+      "distance_miles": 0.5148,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.236,
+      "street_type": "local"
+    },
+    {
+      "id": "node_8_node_9",
+      "from": "node_8",
+      "to": "node_9",
+      "distance_miles": 0.2859,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.49,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_9_node_8",
+      "from": "node_9",
+      "to": "node_8",
+      "distance_miles": 0.2859,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.49,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_8_node_14",
+      "from": "node_8",
+      "to": "node_14",
+      "distance_miles": 0.5961,
+      "speed_mph": 35.0,
+      "travel_time_mins": 1.022,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_14_node_8",
+      "from": "node_14",
+      "to": "node_8",
+      "distance_miles": 0.5961,
+      "speed_mph": 35.0,
+      "travel_time_mins": 1.022,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_9_node_10",
+      "from": "node_9",
+      "to": "node_10",
+      "distance_miles": 0.3496,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.599,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_10_node_9",
+      "from": "node_10",
+      "to": "node_9",
+      "distance_miles": 0.3496,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.599,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_9_node_15",
+      "from": "node_9",
+      "to": "node_15",
+      "distance_miles": 0.5539,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.329,
+      "street_type": "local"
+    },
+    {
+      "id": "node_15_node_9",
+      "from": "node_15",
+      "to": "node_9",
+      "distance_miles": 0.5539,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.329,
+      "street_type": "local"
+    },
+    {
+      "id": "node_10_node_11",
+      "from": "node_10",
+      "to": "node_11",
+      "distance_miles": 0.2869,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.492,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_11_node_10",
+      "from": "node_11",
+      "to": "node_10",
+      "distance_miles": 0.2869,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.492,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_10_node_16",
+      "from": "node_10",
+      "to": "node_16",
+      "distance_miles": 0.5343,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.282,
+      "street_type": "local"
+    },
+    {
+      "id": "node_16_node_10",
+      "from": "node_16",
+      "to": "node_10",
+      "distance_miles": 0.5343,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.282,
+      "street_type": "local"
+    },
+    {
+      "id": "node_11_node_17",
+      "from": "node_11",
+      "to": "node_17",
+      "distance_miles": 0.5558,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.953,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_17_node_11",
+      "from": "node_17",
+      "to": "node_11",
+      "distance_miles": 0.5558,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.953,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_12_node_13",
+      "from": "node_12",
+      "to": "node_13",
+      "distance_miles": 0.3067,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.736,
+      "street_type": "local"
+    },
+    {
+      "id": "node_13_node_12",
+      "from": "node_13",
+      "to": "node_12",
+      "distance_miles": 0.3067,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.736,
+      "street_type": "local"
+    },
+    {
+      "id": "node_12_node_18",
+      "from": "node_12",
+      "to": "node_18",
+      "distance_miles": 0.5441,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.306,
+      "street_type": "local"
+    },
+    {
+      "id": "node_18_node_12",
+      "from": "node_18",
+      "to": "node_12",
+      "distance_miles": 0.5441,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.306,
+      "street_type": "local"
+    },
+    {
+      "id": "node_13_node_14",
+      "from": "node_13",
+      "to": "node_14",
+      "distance_miles": 0.3439,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.825,
+      "street_type": "local"
+    },
+    {
+      "id": "node_14_node_13",
+      "from": "node_14",
+      "to": "node_13",
+      "distance_miles": 0.3439,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.825,
+      "street_type": "local"
+    },
+    {
+      "id": "node_13_node_19",
+      "from": "node_13",
+      "to": "node_19",
+      "distance_miles": 0.6064,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.455,
+      "street_type": "local"
+    },
+    {
+      "id": "node_19_node_13",
+      "from": "node_19",
+      "to": "node_13",
+      "distance_miles": 0.6064,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.455,
+      "street_type": "local"
+    },
+    {
+      "id": "node_14_node_15",
+      "from": "node_14",
+      "to": "node_15",
+      "distance_miles": 0.32,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.768,
+      "street_type": "local"
+    },
+    {
+      "id": "node_15_node_14",
+      "from": "node_15",
+      "to": "node_14",
+      "distance_miles": 0.32,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.768,
+      "street_type": "local"
+    },
+    {
+      "id": "node_14_node_20",
+      "from": "node_14",
+      "to": "node_20",
+      "distance_miles": 0.5437,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.932,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_20_node_14",
+      "from": "node_20",
+      "to": "node_14",
+      "distance_miles": 0.5437,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.932,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_15_node_16",
+      "from": "node_15",
+      "to": "node_16",
+      "distance_miles": 0.3266,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.784,
+      "street_type": "local"
+    },
+    {
+      "id": "node_16_node_15",
+      "from": "node_16",
+      "to": "node_15",
+      "distance_miles": 0.3266,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.784,
+      "street_type": "local"
+    },
+    {
+      "id": "node_15_node_21",
+      "from": "node_15",
+      "to": "node_21",
+      "distance_miles": 0.5133,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.232,
+      "street_type": "local"
+    },
+    {
+      "id": "node_21_node_15",
+      "from": "node_21",
+      "to": "node_15",
+      "distance_miles": 0.5133,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.232,
+      "street_type": "local"
+    },
+    {
+      "id": "node_16_node_17",
+      "from": "node_16",
+      "to": "node_17",
+      "distance_miles": 0.2916,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.7,
+      "street_type": "local"
+    },
+    {
+      "id": "node_17_node_16",
+      "from": "node_17",
+      "to": "node_16",
+      "distance_miles": 0.2916,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.7,
+      "street_type": "local"
+    },
+    {
+      "id": "node_16_node_22",
+      "from": "node_16",
+      "to": "node_22",
+      "distance_miles": 0.5227,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.254,
+      "street_type": "local"
+    },
+    {
+      "id": "node_22_node_16",
+      "from": "node_22",
+      "to": "node_16",
+      "distance_miles": 0.5227,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.254,
+      "street_type": "local"
+    },
+    {
+      "id": "node_17_node_23",
+      "from": "node_17",
+      "to": "node_23",
+      "distance_miles": 0.5337,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.915,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_23_node_17",
+      "from": "node_23",
+      "to": "node_17",
+      "distance_miles": 0.5337,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.915,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_18_node_19",
+      "from": "node_18",
+      "to": "node_19",
+      "distance_miles": 0.3112,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.747,
+      "street_type": "local"
+    },
+    {
+      "id": "node_19_node_18",
+      "from": "node_19",
+      "to": "node_18",
+      "distance_miles": 0.3112,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.747,
+      "street_type": "local"
+    },
+    {
+      "id": "node_18_node_24",
+      "from": "node_18",
+      "to": "node_24",
+      "distance_miles": 0.5396,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.295,
+      "street_type": "local"
+    },
+    {
+      "id": "node_24_node_18",
+      "from": "node_24",
+      "to": "node_18",
+      "distance_miles": 0.5396,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.295,
+      "street_type": "local"
+    },
+    {
+      "id": "node_19_node_20",
+      "from": "node_19",
+      "to": "node_20",
+      "distance_miles": 0.2858,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.686,
+      "street_type": "local"
+    },
+    {
+      "id": "node_20_node_19",
+      "from": "node_20",
+      "to": "node_19",
+      "distance_miles": 0.2858,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.686,
+      "street_type": "local"
+    },
+    {
+      "id": "node_19_node_25",
+      "from": "node_19",
+      "to": "node_25",
+      "distance_miles": 0.5191,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.246,
+      "street_type": "local"
+    },
+    {
+      "id": "node_25_node_19",
+      "from": "node_25",
+      "to": "node_19",
+      "distance_miles": 0.5191,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.246,
+      "street_type": "local"
+    },
+    {
+      "id": "node_20_node_21",
+      "from": "node_20",
+      "to": "node_21",
+      "distance_miles": 0.3277,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.787,
+      "street_type": "local"
+    },
+    {
+      "id": "node_21_node_20",
+      "from": "node_21",
+      "to": "node_20",
+      "distance_miles": 0.3277,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.787,
+      "street_type": "local"
+    },
+    {
+      "id": "node_20_node_26",
+      "from": "node_20",
+      "to": "node_26",
+      "distance_miles": 0.5246,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.899,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_26_node_20",
+      "from": "node_26",
+      "to": "node_20",
+      "distance_miles": 0.5246,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.899,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_21_node_22",
+      "from": "node_21",
+      "to": "node_22",
+      "distance_miles": 0.3106,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.745,
+      "street_type": "local"
+    },
+    {
+      "id": "node_22_node_21",
+      "from": "node_22",
+      "to": "node_21",
+      "distance_miles": 0.3106,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.745,
+      "street_type": "local"
+    },
+    {
+      "id": "node_21_node_27",
+      "from": "node_21",
+      "to": "node_27",
+      "distance_miles": 0.582,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.397,
+      "street_type": "local"
+    },
+    {
+      "id": "node_27_node_21",
+      "from": "node_27",
+      "to": "node_21",
+      "distance_miles": 0.582,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.397,
+      "street_type": "local"
+    },
+    {
+      "id": "node_22_node_23",
+      "from": "node_22",
+      "to": "node_23",
+      "distance_miles": 0.3157,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.758,
+      "street_type": "local"
+    },
+    {
+      "id": "node_23_node_22",
+      "from": "node_23",
+      "to": "node_22",
+      "distance_miles": 0.3157,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.758,
+      "street_type": "local"
+    },
+    {
+      "id": "node_22_node_28",
+      "from": "node_22",
+      "to": "node_28",
+      "distance_miles": 0.5596,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.343,
+      "street_type": "local"
+    },
+    {
+      "id": "node_28_node_22",
+      "from": "node_28",
+      "to": "node_22",
+      "distance_miles": 0.5596,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.343,
+      "street_type": "local"
+    },
+    {
+      "id": "node_23_node_29",
+      "from": "node_23",
+      "to": "node_29",
+      "distance_miles": 0.5571,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.955,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_29_node_23",
+      "from": "node_29",
+      "to": "node_23",
+      "distance_miles": 0.5571,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.955,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_24_node_25",
+      "from": "node_24",
+      "to": "node_25",
+      "distance_miles": 0.3058,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.734,
+      "street_type": "local"
+    },
+    {
+      "id": "node_25_node_24",
+      "from": "node_25",
+      "to": "node_24",
+      "distance_miles": 0.3058,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.734,
+      "street_type": "local"
+    },
+    {
+      "id": "node_24_node_30",
+      "from": "node_24",
+      "to": "node_30",
+      "distance_miles": 0.5774,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.386,
+      "street_type": "local"
+    },
+    {
+      "id": "node_30_node_24",
+      "from": "node_30",
+      "to": "node_24",
+      "distance_miles": 0.5774,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.386,
+      "street_type": "local"
+    },
+    {
+      "id": "node_25_node_26",
+      "from": "node_25",
+      "to": "node_26",
+      "distance_miles": 0.3514,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.843,
+      "street_type": "local"
+    },
+    {
+      "id": "node_26_node_25",
+      "from": "node_26",
+      "to": "node_25",
+      "distance_miles": 0.3514,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.843,
+      "street_type": "local"
+    },
+    {
+      "id": "node_25_node_31",
+      "from": "node_25",
+      "to": "node_31",
+      "distance_miles": 0.5662,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.359,
+      "street_type": "local"
+    },
+    {
+      "id": "node_31_node_25",
+      "from": "node_31",
+      "to": "node_25",
+      "distance_miles": 0.5662,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.359,
+      "street_type": "local"
+    },
+    {
+      "id": "node_26_node_27",
+      "from": "node_26",
+      "to": "node_27",
+      "distance_miles": 0.2974,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.714,
+      "street_type": "local"
+    },
+    {
+      "id": "node_27_node_26",
+      "from": "node_27",
+      "to": "node_26",
+      "distance_miles": 0.2974,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.714,
+      "street_type": "local"
+    },
+    {
+      "id": "node_26_node_32",
+      "from": "node_26",
+      "to": "node_32",
+      "distance_miles": 0.5926,
+      "speed_mph": 35.0,
+      "travel_time_mins": 1.016,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_32_node_26",
+      "from": "node_32",
+      "to": "node_26",
+      "distance_miles": 0.5926,
+      "speed_mph": 35.0,
+      "travel_time_mins": 1.016,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_27_node_28",
+      "from": "node_27",
+      "to": "node_28",
+      "distance_miles": 0.3213,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.771,
+      "street_type": "local"
+    },
+    {
+      "id": "node_28_node_27",
+      "from": "node_28",
+      "to": "node_27",
+      "distance_miles": 0.3213,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.771,
+      "street_type": "local"
+    },
+    {
+      "id": "node_27_node_33",
+      "from": "node_27",
+      "to": "node_33",
+      "distance_miles": 0.5247,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.259,
+      "street_type": "local"
+    },
+    {
+      "id": "node_33_node_27",
+      "from": "node_33",
+      "to": "node_27",
+      "distance_miles": 0.5247,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.259,
+      "street_type": "local"
+    },
+    {
+      "id": "node_28_node_29",
+      "from": "node_28",
+      "to": "node_29",
+      "distance_miles": 0.2951,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.708,
+      "street_type": "local"
+    },
+    {
+      "id": "node_29_node_28",
+      "from": "node_29",
+      "to": "node_28",
+      "distance_miles": 0.2951,
+      "speed_mph": 25.0,
+      "travel_time_mins": 0.708,
+      "street_type": "local"
+    },
+    {
+      "id": "node_28_node_34",
+      "from": "node_28",
+      "to": "node_34",
+      "distance_miles": 0.5632,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.352,
+      "street_type": "local"
+    },
+    {
+      "id": "node_34_node_28",
+      "from": "node_34",
+      "to": "node_28",
+      "distance_miles": 0.5632,
+      "speed_mph": 25.0,
+      "travel_time_mins": 1.352,
+      "street_type": "local"
+    },
+    {
+      "id": "node_29_node_35",
+      "from": "node_29",
+      "to": "node_35",
+      "distance_miles": 0.5568,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.955,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_35_node_29",
+      "from": "node_35",
+      "to": "node_29",
+      "distance_miles": 0.5568,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.955,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_30_node_31",
+      "from": "node_30",
+      "to": "node_31",
+      "distance_miles": 0.3171,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.544,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_31_node_30",
+      "from": "node_31",
+      "to": "node_30",
+      "distance_miles": 0.3171,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.544,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_31_node_32",
+      "from": "node_31",
+      "to": "node_32",
+      "distance_miles": 0.3187,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.546,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_32_node_31",
+      "from": "node_32",
+      "to": "node_31",
+      "distance_miles": 0.3187,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.546,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_32_node_33",
+      "from": "node_32",
+      "to": "node_33",
+      "distance_miles": 0.2777,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.476,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_33_node_32",
+      "from": "node_33",
+      "to": "node_32",
+      "distance_miles": 0.2777,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.476,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_33_node_34",
+      "from": "node_33",
+      "to": "node_34",
+      "distance_miles": 0.3257,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.558,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_34_node_33",
+      "from": "node_34",
+      "to": "node_33",
+      "distance_miles": 0.3257,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.558,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_34_node_35",
+      "from": "node_34",
+      "to": "node_35",
+      "distance_miles": 0.3486,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.598,
+      "street_type": "arterial"
+    },
+    {
+      "id": "node_35_node_34",
+      "from": "node_35",
+      "to": "node_34",
+      "distance_miles": 0.3486,
+      "speed_mph": 35.0,
+      "travel_time_mins": 0.598,
+      "street_type": "arterial"
+    }
+  ],
+  "schools": {
+    "school_hhs": {
+      "id": "school_hhs",
+      "name": "Hackensack High School",
+      "node": "node_26",
+      "bell_time": 480.0,
+      "type": "high"
+    },
+    "school_hms": {
+      "id": "school_hms",
+      "name": "Hackensack Middle School",
+      "node": "node_22",
+      "bell_time": 510.0,
+      "type": "middle"
+    },
+    "school_fes": {
+      "id": "school_fes",
+      "name": "Fairmount Elementary School",
+      "node": "node_31",
+      "bell_time": 540.0,
+      "type": "elementary"
+    }
+  },
+  "depots": {
+    "depot_1": {
+      "id": "depot_1",
+      "name": "Hackensack Bus Yard",
+      "node": "node_1"
+    }
+  },
+  "students": [
+    {
+      "id": "s01",
+      "name": "Student 1",
+      "home_node": "node_21",
+      "school_id": "school_hhs",
+      "pickup_window": [
+        436.0,
+        451.0
+      ],
+      "attendance_prob": 0.95,
+      "neighborhood": "Central Hackensack",
+      "special_needs": false
+    },
+    {
+      "id": "s02",
+      "name": "Student 2",
+      "home_node": "node_33",
+      "school_id": "school_hms",
+      "pickup_window": [
+        464.0,
+        479.0
+      ],
+      "attendance_prob": 0.92,
+      "neighborhood": "Hackensack Commons",
+      "special_needs": false
+    },
+    {
+      "id": "s03",
+      "name": "Student 3",
+      "home_node": "node_17",
+      "school_id": "school_fes",
+      "pickup_window": [
+        503.0,
+        518.0
+      ],
+      "attendance_prob": 0.97,
+      "neighborhood": "Central Hackensack",
+      "special_needs": false
+    },
+    {
+      "id": "s04",
+      "name": "Student 4",
+      "home_node": "node_15",
+      "school_id": "school_hhs",
+      "pickup_window": [
+        434.0,
+        449.0
+      ],
+      "attendance_prob": 0.94,
+      "neighborhood": "Central Hackensack",
+      "special_needs": true
+    },
+    {
+      "id": "s05",
+      "name": "Student 5",
+      "home_node": "node_4",
+      "school_id": "school_hms",
+      "pickup_window": [
+        463.0,
+        478.0
+      ],
+      "attendance_prob": 0.91,
+      "neighborhood": "Maple Hill",
+      "special_needs": false
+    },
+    {
+      "id": "s06",
+      "name": "Student 6",
+      "home_node": "node_30",
+      "school_id": "school_fes",
+      "pickup_window": [
+        492.0,
+        507.0
+      ],
+      "attendance_prob": 0.93,
+      "neighborhood": "Fairmount",
+      "special_needs": false
+    },
+    {
+      "id": "s07",
+      "name": "Student 7",
+      "home_node": "node_33",
+      "school_id": "school_hhs",
+      "pickup_window": [
+        438.0,
+        453.0
+      ],
+      "attendance_prob": 0.98,
+      "neighborhood": "Hackensack Commons",
+      "special_needs": false
+    },
+    {
+      "id": "s08",
+      "name": "Student 8",
+      "home_node": "node_0",
+      "school_id": "school_hms",
+      "pickup_window": [
+        463.0,
+        478.0
+      ],
+      "attendance_prob": 0.95,
+      "neighborhood": "Hillers",
+      "special_needs": false
+    },
+    {
+      "id": "s09",
+      "name": "Student 9",
+      "home_node": "node_18",
+      "school_id": "school_fes",
+      "pickup_window": [
+        500.0,
+        515.0
+      ],
+      "attendance_prob": 0.91,
+      "neighborhood": "Central Hackensack",
+      "special_needs": false
+    },
+    {
+      "id": "s10",
+      "name": "Student 10",
+      "home_node": "node_33",
+      "school_id": "school_hhs",
+      "pickup_window": [
+        430.0,
+        445.0
+      ],
+      "attendance_prob": 0.98,
+      "neighborhood": "Hackensack Commons",
+      "special_needs": false
+    },
+    {
+      "id": "s11",
+      "name": "Student 11",
+      "home_node": "node_17",
+      "school_id": "school_hms",
+      "pickup_window": [
+        465.0,
+        480.0
+      ],
+      "attendance_prob": 0.94,
+      "neighborhood": "Central Hackensack",
+      "special_needs": true
+    },
+    {
+      "id": "s12",
+      "name": "Student 12",
+      "home_node": "node_20",
+      "school_id": "school_fes",
+      "pickup_window": [
+        496.0,
+        511.0
+      ],
+      "attendance_prob": 0.91,
+      "neighborhood": "Central Hackensack",
+      "special_needs": false
+    },
+    {
+      "id": "s13",
+      "name": "Student 13",
+      "home_node": "node_0",
+      "school_id": "school_hhs",
+      "pickup_window": [
+        440.0,
+        455.0
+      ],
+      "attendance_prob": 0.94,
+      "neighborhood": "Hillers",
+      "special_needs": true
+    },
+    {
+      "id": "s14",
+      "name": "Student 14",
+      "home_node": "node_25",
+      "school_id": "school_hms",
+      "pickup_window": [
+        469.0,
+        484.0
+      ],
+      "attendance_prob": 0.92,
+      "neighborhood": "Fairmount",
+      "special_needs": false
+    },
+    {
+      "id": "s15",
+      "name": "Student 15",
+      "home_node": "node_6",
+      "school_id": "school_fes",
+      "pickup_window": [
+        492.0,
+        507.0
+      ],
+      "attendance_prob": 0.96,
+      "neighborhood": "Hillers",
+      "special_needs": false
+    },
+    {
+      "id": "s16",
+      "name": "Student 16",
+      "home_node": "node_9",
+      "school_id": "school_hhs",
+      "pickup_window": [
+        434.0,
+        449.0
+      ],
+      "attendance_prob": 0.95,
+      "neighborhood": "Maple Hill",
+      "special_needs": false
+    },
+    {
+      "id": "s17",
+      "name": "Student 17",
+      "home_node": "node_11",
+      "school_id": "school_hms",
+      "pickup_window": [
+        468.0,
+        483.0
+      ],
+      "attendance_prob": 0.94,
+      "neighborhood": "Maple Hill",
+      "special_needs": false
+    },
+    {
+      "id": "s18",
+      "name": "Student 18",
+      "home_node": "node_14",
+      "school_id": "school_fes",
+      "pickup_window": [
+        496.0,
+        511.0
+      ],
+      "attendance_prob": 0.96,
+      "neighborhood": "Central Hackensack",
+      "special_needs": false
+    },
+    {
+      "id": "s19",
+      "name": "Student 19",
+      "home_node": "node_25",
+      "school_id": "school_hhs",
+      "pickup_window": [
+        444.0,
+        459.0
+      ],
+      "attendance_prob": 0.97,
+      "neighborhood": "Fairmount",
+      "special_needs": false
+    },
+    {
+      "id": "s20",
+      "name": "Student 20",
+      "home_node": "node_16",
+      "school_id": "school_hms",
+      "pickup_window": [
+        467.0,
+        482.0
+      ],
+      "attendance_prob": 0.91,
+      "neighborhood": "Central Hackensack",
+      "special_needs": true
+    },
+    {
+      "id": "s21",
+      "name": "Student 21",
+      "home_node": "node_15",
+      "school_id": "school_fes",
+      "pickup_window": [
+        497.0,
+        512.0
+      ],
+      "attendance_prob": 0.9,
+      "neighborhood": "Central Hackensack",
+      "special_needs": false
+    },
+    {
+      "id": "s22",
+      "name": "Student 22",
+      "home_node": "node_4",
+      "school_id": "school_hhs",
+      "pickup_window": [
+        437.0,
+        452.0
+      ],
+      "attendance_prob": 0.91,
+      "neighborhood": "Maple Hill",
+      "special_needs": true
+    },
+    {
+      "id": "s23",
+      "name": "Student 23",
+      "home_node": "node_23",
+      "school_id": "school_hms",
+      "pickup_window": [
+        462.0,
+        477.0
+      ],
+      "attendance_prob": 0.94,
+      "neighborhood": "Central Hackensack",
+      "special_needs": false
+    },
+    {
+      "id": "s24",
+      "name": "Student 24",
+      "home_node": "node_35",
+      "school_id": "school_fes",
+      "pickup_window": [
+        496.0,
+        511.0
+      ],
+      "attendance_prob": 0.94,
+      "neighborhood": "Hackensack Commons",
+      "special_needs": false
+    },
+    {
+      "id": "s25",
+      "name": "Student 25",
+      "home_node": "node_34",
+      "school_id": "school_hhs",
+      "pickup_window": [
+        437.0,
+        452.0
+      ],
+      "attendance_prob": 0.96,
+      "neighborhood": "Hackensack Commons",
+      "special_needs": false
+    },
+    {
+      "id": "s26",
+      "name": "Student 26",
+      "home_node": "node_13",
+      "school_id": "school_hms",
+      "pickup_window": [
+        463.0,
+        478.0
+      ],
+      "attendance_prob": 0.91,
+      "neighborhood": "Central Hackensack",
+      "special_needs": false
+    },
+    {
+      "id": "s27",
+      "name": "Student 27",
+      "home_node": "node_30",
+      "school_id": "school_fes",
+      "pickup_window": [
+        503.0,
+        518.0
+      ],
+      "attendance_prob": 0.94,
+      "neighborhood": "Fairmount",
+      "special_needs": false
+    },
+    {
+      "id": "s28",
+      "name": "Student 28",
+      "home_node": "node_7",
+      "school_id": "school_hhs",
+      "pickup_window": [
+        431.0,
+        446.0
+      ],
+      "attendance_prob": 0.93,
+      "neighborhood": "Hillers",
+      "special_needs": false
+    },
+    {
+      "id": "s29",
+      "name": "Student 29",
+      "home_node": "node_7",
+      "school_id": "school_hms",
+      "pickup_window": [
+        467.0,
+        482.0
+      ],
+      "attendance_prob": 0.92,
+      "neighborhood": "Hillers",
+      "special_needs": false
+    },
+    {
+      "id": "s30",
+      "name": "Student 30",
+      "home_node": "node_9",
+      "school_id": "school_fes",
+      "pickup_window": [
+        503.0,
+        518.0
+      ],
+      "attendance_prob": 0.91,
+      "neighborhood": "Maple Hill",
+      "special_needs": false
+    }
+  ],
+  "buses": [
+    {
+      "id": "bus_1",
+      "name": "School Bus 1",
+      "depot_id": "depot_1",
+      "capacity": 12,
+      "color": "#fbbf24"
+    },
+    {
+      "id": "bus_2",
+      "name": "School Bus 2",
+      "depot_id": "depot_1",
+      "capacity": 12,
+      "color": "#3b82f6"
+    },
+    {
+      "id": "bus_3",
+      "name": "School Bus 3",
+      "depot_id": "depot_1",
+      "capacity": 12,
+      "color": "#10b981"
+    }
+  ]
+}
