@@ -218,15 +218,51 @@ class SimulationEngine {
     async loadScenario(url) {
         const res = await fetch(url);
         const data = await res.json();
-        this.network.generateForBounds(data.meta.bounds, 14);
-        this.school = {
-            ...data.school,
-            node: this.network.findNearestNode(data.school.location[0], data.school.location[1])
-        };
-        this.schoolNode = this.school.node;
+
+        if (data.nodes && data.edges) {
+            this.network.nodes = new Map();
+            this.network.edges = new Map();
+            this.network.adjacency = new Map();
+            for (const [id, n] of Object.entries(data.nodes)) {
+                this.network.nodes.set(id, { id, lat: n.lat, lng: n.lng, name: n.name });
+                this.network.adjacency.set(id, []);
+            }
+            for (const e of data.edges) {
+                const edgeId = e.id || `${e.from}-${e.to}`;
+                this.network.edges.set(edgeId, {
+                    id: edgeId, from: e.from, to: e.to, distance: e.distance_miles, speed: e.speed_mph, travelTime: e.travel_time_mins, isOneWay: false
+                });
+                this.network.adjacency.get(e.from).push({ node: e.to, edge: edgeId });
+                this.network.adjacency.get(e.to).push({ node: e.from, edge: edgeId }); // assuming undirected for Hackensack edges array
+            }
+        } else {
+            this.network.generateForBounds(data.meta.bounds, 14);
+        }
+
+        this.schools = {};
+        if (data.schools) {
+            for (const [schId, sch] of Object.entries(data.schools)) {
+                const nodeData = this.network.nodes.get(sch.node);
+                this.schools[schId] = {
+                    ...sch,
+                    lat: nodeData ? nodeData.lat : 40.87,
+                    lng: nodeData ? nodeData.lng : -74.05
+                };
+            }
+        } else if (data.school) {
+            const node = this.network.findNearestNode(data.school.location[0], data.school.location[1]);
+            const nodeData = this.network.nodes.get(node);
+            this.schools['school_1'] = {
+                ...data.school,
+                node: node,
+                lat: nodeData ? nodeData.lat : data.school.location[0],
+                lng: nodeData ? nodeData.lng : data.school.location[1]
+            };
+        }
+        this.schoolNode = Object.values(this.schools)[0].node;
 
         this.students = data.students.map(s => {
-            const node = this.network.findNearestNode(s.home[0], s.home[1]);
+            const node = s.home_node || this.network.findNearestNode(s.home[0], s.home[1]);
             const nodeData = this.network.nodes.get(node);
             return {
                 ...s,
@@ -237,21 +273,29 @@ class SimulationEngine {
                 pickupTime: null,
                 deliveryTime: null,
                 rideTime: 0,
-                busId: null
+                busId: null,
+                pickup_window: s.pickup_window || [420, 480],
+                school_id: s.school_id || Object.keys(this.schools)[0]
             };
         });
 
-        const absentIds = new Set(data.events.filter(e => e.type === 'student_absence').map(e => e.student_id));
+        const absentIds = new Set((data.events || []).filter(e => e.type === 'student_absence').map(e => e.student_id));
         this.students.forEach(s => {
             if (absentIds.has(s.id)) {
-                if (Math.random() < (1 - s.attendance_prob) * 3 + 0.3) {
+                if (Math.random() < (1 - (s.attendance_prob || 1.0)) * 3 + 0.3) {
                     s.status = 'absent';
                 }
+            } else if (s.attendance_prob && Math.random() > s.attendance_prob) {
+                if (Math.random() < 0.3) s.status = 'absent';
+                else s._isActuallyAbsent = true; 
             }
         });
 
         this.buses = data.buses.map(b => {
-            const node = this.network.findNearestNode(b.depot[0], b.depot[1]);
+            let node;
+            if (data.depots && data.depots.depot_1) node = data.depots.depot_1.node;
+            else if (b.depot) node = this.network.findNearestNode(b.depot[0], b.depot[1]);
+            else node = this.network.nodes.keys().next().value;
             const nodeData = this.network.nodes.get(node);
             return {
                 ...b,
@@ -272,7 +316,7 @@ class SimulationEngine {
             };
         });
 
-        this.events = data.events.filter(e => e.type !== 'student_absence');
+        this.events = (data.events || []).filter(e => e.type !== 'student_absence');
         this.currentTime = 420;
         this.status = 'ready';
         this.history = [];
@@ -325,9 +369,9 @@ class SimulationEngine {
         this.emit('statusChange', 'ready');
     }
 
-    _runLoop() {
+    async _runLoop() {
         if (this.status !== 'running') return;
-        this._tick();
+        await this._tick();
         this.emit('tick', this.getState());
         if (this.status === 'running') {
             const delay = this.tickRate / this.speed;
@@ -335,7 +379,7 @@ class SimulationEngine {
         }
     }
 
-    _tick() {
+    async _tick() {
         this.currentTime += 0.25;
         this._processEvents();
         this._expireEvents();
@@ -344,7 +388,7 @@ class SimulationEngine {
             for (const bus of this.buses) {
                 if (bus.status === 'broken') continue;
                 if (bus.currentPath.length <= 1) {
-                    const decision = this.agent.decide(bus, this.getState());
+                    const decision = await this.agent.decide(bus, this.getState());
                     if (decision) {
                         this._applyDecision(bus, decision);
                         this.decisionLog.push({
@@ -469,32 +513,47 @@ class SimulationEngine {
 
         for (const s of studentsAtNode) {
             if (bus.occupancy < bus.capacity) {
-                s.status = 'picked-up';
-                s.pickupTime = this.currentTime;
-                s.busId = bus.id;
-                bus.passengers.push(s.id);
-                bus.occupancy++;
-                if (this.currentTime > s.pickup_window[1]) {
-                    s.status = 'late';
+                if (s._isActuallyAbsent && s.status !== 'absent') {
+                    s.status = 'absent';
+                    this.emit('event', { type: 'student_absence', data: { desc: `Student ${s.id} was a no-show.` } });
+                } else {
+                    s.status = 'picked-up';
+                    s.pickupTime = this.currentTime;
+                    s.busId = bus.id;
+                    bus.passengers.push(s.id);
+                    bus.occupancy++;
+                    if (this.currentTime > s.pickup_window[1]) {
+                        s.status = 'late';
+                    }
+                    this.emit('pickup', { student: s, bus, time: this.currentTime });
                 }
-                this.emit('pickup', { student: s, bus, time: this.currentTime });
             }
         }
 
-        if (bus.node === this.schoolNode && bus.occupancy > 0) {
-            for (const sid of bus.passengers) {
-                const s = this.students.find(st => st.id === sid);
-                if (s) {
-                    s.deliveryTime = this.currentTime;
-                    s.rideTime = s.deliveryTime - s.pickupTime;
-                    if (s.status !== 'late' && this.currentTime <= this.school.bell_time) {
-                        s.status = 'delivered';
+        for (const [schId, sch] of Object.entries(this.schools)) {
+            if (bus.node === sch.node && bus.occupancy > 0) {
+                const deliveredIds = [];
+                for (const sid of bus.passengers) {
+                    const s = this.students.find(st => st.id === sid);
+                    if (s && s.school_id === schId) {
+                        s.deliveryTime = this.currentTime;
+                        s.rideTime = s.deliveryTime - s.pickupTime;
+                        if (s.status !== 'late' && this.currentTime <= sch.bell_time) {
+                            s.status = 'delivered';
+                        }
+                        deliveredIds.push(sid);
                     }
                 }
+                if (deliveredIds.length > 0) {
+                    this.emit('delivery', { bus, count: deliveredIds.length, time: this.currentTime });
+                    bus.passengers = bus.passengers.filter(id => !deliveredIds.includes(id));
+                    bus.occupancy = bus.passengers.length;
+                }
             }
-            this.emit('delivery', { bus, count: bus.passengers.length, time: this.currentTime });
-            bus.passengers = [];
-            bus.occupancy = 0;
+        }
+
+        if (bus.occupancy === 0 && bus.currentPath.length <= 1 && bus.node === this.schoolNode) {
+            // idle handling if needed
         }
     }
 

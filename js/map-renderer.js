@@ -47,16 +47,22 @@ class MapRenderer {
         }
     }
 
-    renderSchool(school) {
-        if (this.schoolMarker) this.map.removeLayer(this.schoolMarker);
-        const icon = L.divIcon({
-            className: '',
-            html: `<div class="school-marker">🏫</div>`,
-            iconSize: [32, 32],
-            iconAnchor: [16, 16]
-        });
-        this.schoolMarker = L.marker(school.location, { icon }).addTo(this.map);
-        this.schoolMarker.bindPopup(`<div style="font-family:var(--mono);font-size:12px"><b>${school.name}</b><br>Bell: ${this._fmtTime(school.bell_time)}</div>`);
+    renderSchools(schools) {
+        if (this.schoolMarkers) {
+            this.schoolMarkers.forEach(m => this.map.removeLayer(m));
+        }
+        this.schoolMarkers = [];
+        for (const [id, school] of Object.entries(schools)) {
+            const icon = L.divIcon({
+                className: '',
+                html: `<div class="school-marker">🏫</div>`,
+                iconSize: [32, 32],
+                iconAnchor: [16, 16]
+            });
+            const marker = L.marker([school.lat, school.lng], { icon }).addTo(this.map);
+            marker.bindPopup(`<div style="font-family:var(--mono);font-size:12px"><b>${school.name}</b><br>Bell: ${this._fmtTime(school.bell_time)}</div>`);
+            this.schoolMarkers.push(marker);
+        }
     }
 
     renderStudents(students) {
