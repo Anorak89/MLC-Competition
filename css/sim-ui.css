@@ -1,0 +1,42 @@
+:root {
+  --bg-dark: #0f172a;
+  --accent-teal: #38bdf8;
+  --text-light: #f8fafc;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
+
+.glass-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--text-light);
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.75rem;
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s, background 0.2s;
+  font-weight: 600;
+  cursor: pointer;
+}
+.glass-btn:hover {
+  background: rgba(255,255,255,0.12);
+  transform: scale(1.03);
+}
+
+.sim-wrapper {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  animation: fadeIn 0.4s ease;
+}
+
+.hidden { display: none; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

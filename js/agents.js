@@ -6,108 +6,77 @@ class BaseAgent {
 
 class RLAgent extends BaseAgent {
     constructor() {
-        super('RL Agent');
-        this.weights = { distance: -2.0, timeWindow: 3.0, occupancy: -1.5, clustering: 2.5, urgency: 4.0, specialNeeds: 3.0, schoolReturn: 5.0 };
+        super('RL Agent (PyTorch)');
+        this.apiEndpoint = 'http://127.0.0.1:5000/decide';
     }
 
-    decide(bus, state) {
-        const candidates = this._getCandidates(bus, state);
-        if (candidates.length === 0) {
-            if (bus.occupancy > 0) {
-                return this._returnToSchool(bus, state);
+    async decide(bus, state) {
+        try {
+            // Send JS state directly to Python API
+            const payload = {
+                time: state.time,
+                active_bus_id: bus.id,
+                buses: state.buses.map(b => ({
+                    id: b.id,
+                    lat: b.lat,
+                    lng: b.lng,
+                    status: b.status,
+                    passengers: b.passengers,
+                    node: b.node,
+                    capacity: b.capacity,
+                    time_remaining: b.currentPathTimeRemaining || 0,
+                    destination: b.currentPath.length > 0 ? b.currentPath[b.currentPath.length - 1] : b.node
+                })),
+                students: state.students.map(s => ({
+                    id: s.id,
+                    lat: s.lat,
+                    lng: s.lng,
+                    status: s.status
+                })),
+                network: {
+                    trafficMultipliers: Object.fromEntries(state.network.trafficMultipliers || new Map()),
+                    closedEdges: Array.from(state.network.closedEdges || new Set())
+                }
+            };
+
+            const response = await fetch(this.apiEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status}`);
+            }
+
+            const decision = await response.json();
+            
+            if (decision.error) {
+                console.error("Python API Error:", decision.error);
+                return null;
+            }
+
+            return {
+                targetNode: decision.targetNode,
+                targetStudentId: decision.targetStudentId,
+                action: decision.action,
+                score: 100.0,
+                confidence: 0.95,
+                reasoning: `PyTorch DQN Output (Action ID: ${decision.rawActionIndex})`,
+                alternatives: [],
+                rewardEstimate: 0.0
+            };
+
+        } catch (error) {
+            console.error("Failed to reach Python RL API. Ensure api.py is running on port 5000.", error);
+            // Fallback to random if API is down
+            const waiting = state.students.filter(s => s.status === 'waiting');
+            if (waiting.length > 0) {
+                const s = waiting[Math.floor(Math.random() * waiting.length)];
+                return { targetNode: s.node, targetStudentId: s.id, action: 'pickup', score: 0, confidence: 0, reasoning: 'API Offline (Fallback Random)', alternatives: [] };
             }
             return null;
         }
-
-        const scored = candidates.map(c => ({ ...c, score: this._score(c, bus, state) }));
-        scored.sort((a, b) => b.score - a.score);
-        const chosen = scored[0];
-        const alternatives = scored.slice(1, 5).map(a => ({
-            studentId: a.studentId,
-            node: a.node,
-            score: Math.round(a.score * 10) / 10,
-            reason: a.reason
-        }));
-
-        return {
-            targetNode: chosen.node,
-            targetStudentId: chosen.studentId,
-            action: 'pickup',
-            score: Math.round(chosen.score * 10) / 10,
-            confidence: this._confidence(scored),
-            reasoning: chosen.reason,
-            alternatives,
-            rewardEstimate: Math.round(chosen.score * 0.8 * 10) / 10
-        };
-    }
-
-    _getCandidates(bus, state) {
-        const waiting = state.students.filter(s => s.status === 'waiting');
-        const assigned = new Set();
-        state.buses.forEach(b => {
-            if (b.id !== bus.id) b.assignedStudents.forEach(sid => assigned.add(sid));
-        });
-
-        return waiting
-            .filter(s => !assigned.has(s.id))
-            .map(s => {
-                const path = state.network.dijkstra(bus.node, s.node);
-                return { studentId: s.id, node: s.node, travelTime: path.time, student: s, reason: '' };
-            })
-            .filter(c => c.travelTime < Infinity);
-    }
-
-    _score(candidate, bus, state) {
-        let score = 0;
-        const s = candidate.student;
-        const distPenalty = candidate.travelTime * this.weights.distance;
-        score += distPenalty;
-
-        const timeUntilLate = s.pickup_window[1] - state.time;
-        if (timeUntilLate < 10) {
-            score += this.weights.urgency * (10 - timeUntilLate);
-            candidate.reason = `Urgent: ${Math.round(timeUntilLate)}min to window close`;
-        }
-        if (timeUntilLate < 5) score += this.weights.urgency * 2;
-
-        if (s.special_needs) {
-            score += this.weights.specialNeeds;
-            candidate.reason = candidate.reason || 'Special needs priority';
-        }
-
-        const nearbyWaiting = state.students.filter(st =>
-            st.status === 'waiting' && st.id !== s.id &&
-            Math.abs(st.lat - s.lat) < 0.003 && Math.abs(st.lng - s.lng) < 0.003
-        ).length;
-        score += nearbyWaiting * this.weights.clustering;
-        if (nearbyWaiting >= 2 && !candidate.reason) {
-            candidate.reason = `Cluster: ${nearbyWaiting + 1} students nearby`;
-        }
-
-        if (bus.occupancy >= bus.capacity * 0.8) {
-            score += this.weights.occupancy * bus.occupancy;
-        }
-
-        if (!candidate.reason) candidate.reason = 'Optimal distance-time balance';
-        return score;
-    }
-
-    _returnToSchool(bus, state) {
-        return {
-            targetNode: state.school.node,
-            action: 'return',
-            score: 50,
-            confidence: 0.95,
-            reasoning: `Returning to school with ${bus.occupancy} students`,
-            alternatives: [],
-            rewardEstimate: bus.occupancy * 8
-        };
-    }
-
-    _confidence(scored) {
-        if (scored.length < 2) return 0.99;
-        const gap = scored[0].score - scored[1].score;
-        return Math.min(0.99, 0.5 + gap / 20);
     }
 }
 

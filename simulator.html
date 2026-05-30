@@ -7,15 +7,19 @@
     <meta name="description" content="Interactive visualization of AI-driven school bus routing on real road networks. Watch RL agents make routing decisions in real time.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="css/simulator.css">
+    <link rel="stylesheet" href="css/sim-ui.css">
 </head>
 <body>
     <div class="sim-layout" id="sim-layout">
 
         <div class="sim-topbar">
             <div class="topbar-left">
+                <button id="launch-sim" class="glass-btn">Start Simulation</button>
                 <a href="index.html" class="topbar-logo"><span class="dot"></span> BCA ROUTING SIM</a>
                 <div class="topbar-divider"></div>
                 <div class="sim-clock">
@@ -57,6 +61,7 @@
         </div>
 
         <div id="map-container">
+            <div id="sim-container" class="sim-wrapper"></div>
             <div id="map"></div>
             <div class="map-overlay map-overlay-topright" id="event-banners"></div>
             <div id="comparison-container" style="display:none;position:absolute;top:0;right:0;width:50%;height:100%;z-index:5;border-left:2px solid var(--accent-cyan)">
@@ -155,6 +160,7 @@
     <script src="js/dashboard.js"></script>
     <script src="js/controls.js"></script>
     <script src="js/comparison.js"></script>
+    <script src="js/web_visualizer.js"></script>
 
     <script>
         (async function main() {
@@ -169,13 +175,14 @@
             dashboard.init();
             controls.init();
 
-            engine.setAgent(new RLAgent());
+            // engine.setAgent(new RLAgent()); // Agent will be set on launch
+    window._engine = engine; // expose for web_visualizer
 
-            await engine.loadScenario('data/scenario_default.json');
+            await engine.loadScenario('sbrp_rl/hackensack_network.json');
 
             const state = engine.getState();
             mapRenderer.renderNetwork(state.network);
-            mapRenderer.renderSchool(state.school);
+            mapRenderer.renderSchools(state.schools);
             mapRenderer.renderStudents(state.students);
             mapRenderer.renderBuses(state.buses);
             renderBusFleet(state.buses);
@@ -236,10 +243,10 @@
                 document.getElementById('event-log').innerHTML = '';
                 document.getElementById('event-banners').innerHTML = '';
                 document.getElementById('decision-display').innerHTML = '<div class="decision-card"><div class="label">Reset</div><div class="value">Press ▶ to begin</div></div>';
-                await engine.loadScenario('data/scenario_default.json');
+                await engine.loadScenario('sbrp_rl/hackensack_network.json');
                 const s = engine.getState();
                 mapRenderer.renderNetwork(s.network);
-                mapRenderer.renderSchool(s.school);
+                mapRenderer.renderSchools(s.schools);
                 mapRenderer.renderStudents(s.students);
                 mapRenderer.renderBuses(s.buses);
                 renderBusFleet(s.buses);
