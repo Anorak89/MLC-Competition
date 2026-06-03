@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Standings | BCA Bus Routing Challenge</title>
+    <link rel="icon" type="image/jpeg" href="logo.jpg" />
+    <meta property="og:image" content="logo.jpg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,6 +69,12 @@
             color: var(--ink);
             font-weight: 500;
             text-decoration: none;
+        }
+
+        .logo {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
         }
 
         .nav-links {
@@ -143,6 +151,7 @@
 <body>
     <nav>
         <a href="index.html" class="nav-logo">
+            <img src="bca-logo.png" alt="BCA Logo" class="logo" onerror="this.style.display='none'">
             <span>BCA Bus Routing Challenge</span>
         </a>
         <ul class="nav-links">

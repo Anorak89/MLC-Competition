@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Project OmniBus</title>
+    <link rel="icon" type="image/jpeg" href="logo.jpg" />
+    <meta property="og:image" content="logo.jpg" />
 
     <meta name="description"
         content="A global machine learning competition focused on school bus routing and reinforcement learning." />
@@ -82,8 +84,8 @@
         }
 
         .logo {
-            width: 34px;
-            height: 34px;
+            width: 54px;
+            height: 54px;
             object-fit: contain;
         }
 
@@ -1185,7 +1187,7 @@
     <nav>
 
         <div class="nav-logo">
-            <img src="bca-logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
+            <img src="bca-logo.png" alt="BCA Logo" class="logo" onerror="this.style.display='none'">
             <span>Project OmniBus</span>
         </div>
 
@@ -1205,33 +1207,26 @@
     <div class="hero" style="padding-top:6rem">
 
         <div
-            style="display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; width: 100%; max-width: 1200px; margin: 0 auto;">
-            <div style="flex: 1; padding-bottom: 2rem;">
-                <div class="hero-eyebrow">
-                    GLOBAL MACHINE LEARNING COMPETITION
-                </div>
-
-                <h1>
-                    Project<br>
-                    OmniBus.
-                </h1>
-
-                <p class="hero-sub">
-                    Reinforcement learning for dynamic school bus routing,
-                    scheduling, and real-time replanning.
-                </p>
-
-                <div class="hero-actions">
-                    <a href="#simulator" style="text-decoration: none;"><button class="btn-primary">Try Simulator</button></a>
-                    <a href="#details" style="text-decoration: none;"><button class="btn-ghost">Read Details</button></a>
-                </div>
+            style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 1200px; margin: 0 auto; text-align: center; padding-bottom: 4rem;">
+            
+            <div class="hero-eyebrow" style="margin-bottom: 0; position: relative; top: 1.5rem;">
+                GLOBAL MACHINE LEARNING COMPETITION
             </div>
 
-            <div
-                style="flex: 1.2; display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: -2rem; transform: translate(100px, 30px);">
-                <img src="bus.png" alt="School Bus"
-                    style="width: 160%; max-width: 950px; object-fit: contain; opacity: 0; animation: rise 0.9s ease forwards 0.8s;" />
+            <div style="opacity: 0; animation: rise 0.9s ease forwards 0.4s; width: 100%; display: flex; justify-content: center; margin-top: -1rem; margin-bottom: -1rem;">
+                <img src="logo.png" alt="Official Logo" style="width: 100%; max-width: 750px; object-fit: contain; mix-blend-mode: multiply;">
             </div>
+
+            <p class="hero-sub" style="margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto; opacity: 0; animation: rise 0.9s ease forwards 0.6s;">
+                Reinforcement learning for dynamic school bus routing,
+                scheduling, and real-time replanning.
+            </p>
+
+            <div class="hero-actions" style="justify-content: center; margin-top: 2.5rem; width: 100%; opacity: 0; animation: rise 0.9s ease forwards 0.8s;">
+                <a href="#simulator" style="text-decoration: none;"><button class="btn-primary">Try Simulator</button></a>
+                <a href="#details" style="text-decoration: none;"><button class="btn-ghost">Read Details</button></a>
+            </div>
+            
         </div>
 
     </div>
@@ -1455,10 +1450,9 @@
         <div class="section-label">04 / Sponsors</div>
         <h2>Our Sponsors</h2>
         <div class="sponsor-grid">
-            <div class="sponsor-card">
-                <img src="kaggle-logo.webp" alt="Kaggle Logo" style="height: 40px; width: auto;">
+            <div class="sponsor-card" style="border: 1px dashed var(--rule); background: transparent;">
                 <span>
-                    <h3>Kaggle</h3>
+                    <h3>Sponsorships Available</h3>
                 </span>
             </div>
         </div>
