@@ -217,7 +217,9 @@
         }
 
         .btn-primary,
-        .btn-ghost {
+        .btn-accent,
+        .btn-ghost,
+        .btn-register {
             font-family: var(--mono);
 
             font-size: 0.8rem;
@@ -240,6 +242,16 @@
             background: var(--accent);
         }
 
+        .btn-accent {
+            background: var(--accent);
+            color: var(--cream);
+            border: none;
+        }
+
+        .btn-accent:hover {
+            background: var(--ink);
+        }
+
         .btn-ghost {
             background: transparent;
             color: var(--ink);
@@ -248,6 +260,18 @@
 
         .btn-ghost:hover {
             border-color: var(--ink);
+        }
+
+        .btn-register {
+            background: rgba(200, 75, 47, 0.05);
+            color: var(--accent);
+            border: 1px dashed var(--accent);
+        }
+
+        .btn-register:hover {
+            background: var(--accent);
+            color: var(--cream);
+            border-style: solid;
         }
 
         .auth-buttons {
@@ -328,6 +352,14 @@
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+
+            margin-top: 3rem;
+        }
+
+        .contact-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
 
             margin-top: 3rem;
@@ -652,7 +684,8 @@
 
             .problem-grid,
             .sponsor-grid,
-            .contact-grid {
+            .contact-grid,
+            .contact-grid-2 {
                 grid-template-columns: 1fr;
             }
 
@@ -1192,9 +1225,10 @@
         </div>
 
         <ul class="nav-links">
+            <li><a href="https://www.codabench.org/competitions/16945/" target="_blank" rel="noopener noreferrer" style="color:var(--accent); font-weight: 500;">Competition ↗</a></li>
             <li><a href="#problem">Problem</a></li>
             <li><a href="#details">Details</a></li>
-            <li><a href="#simulator" style="color:var(--accent)">Simulator</a></li>
+            <li><a href="#simulator">Simulator</a></li>
             <li><a href="standings.html">Standings</a></li>
             <li><a href="#sponsors">Sponsors</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -1222,9 +1256,15 @@
                 scheduling, and real-time replanning.
             </p>
 
-            <div class="hero-actions" style="justify-content: center; margin-top: 2.5rem; width: 100%; opacity: 0; animation: rise 0.9s ease forwards 0.8s;">
-                <a href="#simulator" style="text-decoration: none;"><button class="btn-primary">Try Simulator</button></a>
-                <a href="#details" style="text-decoration: none;"><button class="btn-ghost">Read Details</button></a>
+            <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 680px; margin: 2.5rem auto 0 auto; opacity: 0; animation: rise 0.9s ease forwards 0.8s;">
+                <div class="hero-actions" style="display: flex; width: 100%; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 0; margin-bottom: 1rem; opacity: 1; animation: none;">
+                    <a href="https://www.codabench.org/competitions/16945/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-accent" style="width: 100%;">Enter Competition</button></a>
+                    <a href="#simulator" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-primary" style="width: 100%;">Try Simulator</button></a>
+                    <a href="#details" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-ghost" style="width: 100%;">Read Details</button></a>
+                </div>
+                <a href="https://forms.gle/woD4Tzpib9aafzK36" target="_blank" rel="noopener noreferrer" style="text-decoration: none; width: 100%;">
+                    <button class="btn-register" style="width: 100%;">Register / Sign Up Here ↗</button>
+                </a>
             </div>
             
         </div>
@@ -1465,11 +1505,16 @@
     <section id="contact" style="padding-bottom: 6rem;">
         <div class="section-label">05 / Contact</div>
         <h2>Get in Touch</h2>
-        <div class="contact-grid">
-            <div class="contact-card" style="grid-column: span 3; text-align: center;">
+        <div class="contact-grid-2">
+            <div class="contact-card" style="text-align: center;">
                 <h3>Email Us</h3>
                 <p><a href="mailto:machinelearningclubbca@bergen.org"
                         style="font-size: 1.2rem;">machinelearningclubbca@bergen.org</a></p>
+            </div>
+            <div class="contact-card" style="text-align: center;">
+                <h3>Machine Learning Club</h3>
+                <p><a href="https://bcamlc.com" target="_blank" rel="noopener noreferrer"
+                        style="font-size: 1.2rem;">Click here to learn more about the Machine Learning Club</a></p>
             </div>
         </div>
     </section>
