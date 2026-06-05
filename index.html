@@ -672,6 +672,149 @@
             transform: translateY(0);
         }
 
+        /* ── Countdown Banner ── */
+
+        .countdown-wrapper {
+            width: 100%;
+            max-width: 680px;
+            margin: 1.5rem auto 0;
+            opacity: 0;
+            animation: rise 0.9s ease forwards 1s;
+        }
+
+        .competition-dates {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .competition-dates .dates-sep {
+            width: 28px;
+            height: 1px;
+            background: var(--rule);
+        }
+
+        .competition-dates .dates-accent {
+            color: var(--accent);
+        }
+
+        .countdown-card {
+            border: 1px solid var(--rule);
+            background: rgba(200, 75, 47, 0.03);
+            padding: 1.4rem 1.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .countdown-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .countdown-pulse {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse-dot 1.4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        .countdown-units {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 56px;
+        }
+
+        .countdown-val {
+            font-family: var(--serif);
+            font-size: 2.4rem;
+            line-height: 1;
+            color: var(--ink);
+            letter-spacing: -0.02em;
+            transition: opacity 0.15s;
+        }
+
+        .countdown-lbl {
+            font-family: var(--mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 0.3rem;
+        }
+
+        .countdown-colon {
+            font-family: var(--serif);
+            font-size: 2.4rem;
+            color: var(--rule);
+            line-height: 1;
+            margin-bottom: 1rem;
+            animation: blink-colon 1s step-end infinite;
+        }
+
+        @keyframes blink-colon {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        .countdown-live {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #2a7a50;
+            padding: 0.3rem 0.8rem;
+            border: 1px solid rgba(42, 122, 80, 0.25);
+            background: rgba(42, 122, 80, 0.06);
+            border-radius: 2px;
+        }
+
+        .countdown-live-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #2a7a50;
+            animation: pulse-dot 1.2s ease-in-out infinite;
+        }
+
+        .countdown-ended {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
         @media (max-width: 768px) {
 
             nav {
@@ -1275,6 +1418,44 @@
                     <button class="btn-register" style="width: 100%;">Register / Sign Up Here ↗</button>
                 </a>
             </div>
+
+            <!-- COUNTDOWN -->
+            <div class="countdown-wrapper" id="countdown-wrapper">
+                <div class="competition-dates">
+                    <span class="dates-accent">Competition</span>
+                    <span class="dates-sep"></span>
+                    <span>Jun 8, 2026</span>
+                    <span>→</span>
+                    <span>Jun 30, 2026</span>
+                </div>
+                <div class="countdown-card" id="countdown-card">
+                    <div class="countdown-header">
+                        <div class="countdown-pulse" id="countdown-pulse"></div>
+                        <span id="countdown-label">Competition starts in</span>
+                    </div>
+                    <div class="countdown-units" id="countdown-units">
+                        <div class="countdown-unit">
+                            <span class="countdown-val" id="cd-days">--</span>
+                            <span class="countdown-lbl">Days</span>
+                        </div>
+                        <span class="countdown-colon">:</span>
+                        <div class="countdown-unit">
+                            <span class="countdown-val" id="cd-hours">--</span>
+                            <span class="countdown-lbl">Hours</span>
+                        </div>
+                        <span class="countdown-colon">:</span>
+                        <div class="countdown-unit">
+                            <span class="countdown-val" id="cd-mins">--</span>
+                            <span class="countdown-lbl">Mins</span>
+                        </div>
+                        <span class="countdown-colon">:</span>
+                        <div class="countdown-unit">
+                            <span class="countdown-val" id="cd-secs">--</span>
+                            <span class="countdown-lbl">Secs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
         </div>
 
@@ -1692,6 +1873,64 @@
                 container.insertBefore(item, container.firstChild);
                 while (container.children.length > 30) container.removeChild(container.lastChild);
             }
+        })();
+    </script>
+
+    <script>
+        /* ── Live countdown to June 8 2026 12:00 AM EDT ── */
+        (function initCountdown() {
+            const START = new Date('2026-06-08T04:00:00Z');   // Jun 8 12:00 AM EDT (UTC-4)
+            const END   = new Date('2026-07-01T03:59:59Z');   // Jun 30 11:59 PM EDT (UTC-4)
+
+            const daysEl  = document.getElementById('cd-days');
+            const hoursEl = document.getElementById('cd-hours');
+            const minsEl  = document.getElementById('cd-mins');
+            const secsEl  = document.getElementById('cd-secs');
+            const label   = document.getElementById('countdown-label');
+            const unitsEl = document.getElementById('countdown-units');
+            const pulse   = document.getElementById('countdown-pulse');
+
+            function pad(n) { return String(n).padStart(2, '0'); }
+
+            function tick() {
+                const now  = new Date();
+                const msToStart = START - now;
+                const msToEnd   = END   - now;
+
+                if (msToStart > 0) {
+                    /* --- Pre-competition: countdown to start --- */
+                    const totalSecs = Math.floor(msToStart / 1000);
+                    const d = Math.floor(totalSecs / 86400);
+                    const h = Math.floor((totalSecs % 86400) / 3600);
+                    const m = Math.floor((totalSecs % 3600) / 60);
+                    const s = totalSecs % 60;
+
+                    daysEl.textContent  = pad(d);
+                    hoursEl.textContent = pad(h);
+                    minsEl.textContent  = pad(m);
+                    secsEl.textContent  = pad(s);
+
+                    label.textContent = 'Competition starts in';
+                    unitsEl.style.display = 'flex';
+                    pulse.style.background = 'var(--accent)';
+
+                } else if (msToEnd > 0) {
+                    /* --- During competition: show LIVE badge --- */
+                    unitsEl.innerHTML = '<div class="countdown-live"><div class="countdown-live-dot"></div>Competition is LIVE</div>';
+                    label.textContent = 'Running Jun 8 – Jun 30, 2026';
+                    pulse.style.background = '#2a7a50';
+
+                } else {
+                    /* --- Competition ended --- */
+                    unitsEl.innerHTML = '<div class="countdown-ended">Competition ended Jun 30, 2026</div>';
+                    label.textContent = 'Thank you to all participants!';
+                    pulse.style.background = 'var(--muted)';
+                    pulse.style.animation = 'none';
+                }
+            }
+
+            tick();
+            setInterval(tick, 1000);
         })();
     </script>
 
