@@ -534,13 +534,15 @@
             color: #a09880;
         }
 
-        .sponsor-card,
         .contact-card {
             border: 1px solid var(--rule);
             background: rgba(26, 23, 20, 0.015);
+            padding: 2rem;
         }
 
         .sponsor-card {
+            border: 1px dashed var(--rule);
+            background: transparent;
             height: 140px;
 
             display: flex;
@@ -548,6 +550,13 @@
             align-items: center;
             justify-content: center;
             gap: 0.8rem;
+
+            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+        }
+
+        .sponsor-card:hover {
+            background: rgba(26, 23, 20, 0.04);
+            border-color: var(--accent);
         }
 
         .sponsor-card span {
@@ -1491,10 +1500,18 @@
         <h2>Our Sponsors</h2>
         <div class="sponsor-grid">
             <a href="prospectus.pdf" target="_blank" style="text-decoration: none; color: inherit; display: block;">
-                <div class="sponsor-card" style="border: 1px dashed var(--rule); background: transparent; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(26,23,20,0.03)'" onmouseout="this.style.background='transparent'">
+                <div class="sponsor-card">
                     <span style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
                         <h3>Sponsorships Available</h3>
                         <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase;">View Prospectus ↗</span>
+                    </span>
+                </div>
+            </a>
+            <a href="https://forms.gle/E51645fgagFCjVtc6" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block;">
+                <div class="sponsor-card">
+                    <span style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                        <h3>Interested?</h3>
+                        <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase;">Click Here ↗</span>
                     </span>
                 </div>
             </a>
