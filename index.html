@@ -1424,9 +1424,9 @@
                 <div class="competition-dates">
                     <span class="dates-accent">Competition</span>
                     <span class="dates-sep"></span>
-                    <span>Jun 8, 2026</span>
+                    <span>Jun 10, 2026</span>
                     <span>→</span>
-                    <span>Jun 30, 2026</span>
+                    <span>Jul 10, 2026</span>
                 </div>
                 <div class="countdown-card" id="countdown-card">
                     <div class="countdown-header">
@@ -1879,8 +1879,8 @@
     <script>
         /* ── Live countdown to June 8 2026 12:00 AM EDT ── */
         (function initCountdown() {
-            const START = new Date('2026-06-08T04:00:00Z');   // Jun 8 12:00 AM EDT (UTC-4)
-            const END   = new Date('2026-07-01T03:59:59Z');   // Jun 30 11:59 PM EDT (UTC-4)
+            const START = new Date('2026-06-10T04:00:00Z');   // Jun 10 12:00 AM EST (UTC-5)
+            const END   = new Date('2026-07-11T04:59:59Z');   // Jul 10 11:59 PM EST (UTC-5)
 
             const daysEl  = document.getElementById('cd-days');
             const hoursEl = document.getElementById('cd-hours');
@@ -1917,12 +1917,12 @@
                 } else if (msToEnd > 0) {
                     /* --- During competition: show LIVE badge --- */
                     unitsEl.innerHTML = '<div class="countdown-live"><div class="countdown-live-dot"></div>Competition is LIVE</div>';
-                    label.textContent = 'Running Jun 8 – Jun 30, 2026';
+                    label.textContent = 'Running Jun 10 – Jul 10, 2026';
                     pulse.style.background = '#2a7a50';
 
                 } else {
                     /* --- Competition ended --- */
-                    unitsEl.innerHTML = '<div class="countdown-ended">Competition ended Jun 30, 2026</div>';
+                    unitsEl.innerHTML = '<div class="countdown-ended">Competition ended Jul 10, 2026</div>';
                     label.textContent = 'Thank you to all participants!';
                     pulse.style.background = 'var(--muted)';
                     pulse.style.animation = 'none';
