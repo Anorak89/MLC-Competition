@@ -1272,39 +1272,25 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .student-marker {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 20px;
-            height: 20px;
+        .stop-demand-marker {
             border-radius: 50%;
-            font-size: 10px;
-            border: 2px solid;
-            transition: all 0.3s;
+            background: rgba(58, 112, 198, 0.28);
+            border: 2px solid rgba(58, 112, 198, 0.9);
+            box-shadow: 0 1px 5px rgba(26, 23, 20, 0.18);
+            transition: width 0.25s, height 0.25s, opacity 0.25s, transform 0.25s;
             cursor: pointer;
         }
 
-        .student-marker.waiting {
-            background: rgba(200, 160, 40, 0.15);
-            border-color: #b8942a;
+        .stop-demand-marker.empty {
+            background: rgba(58, 112, 198, 0.06);
+            border-color: rgba(58, 112, 198, 0.35);
+            opacity: 0.45;
         }
 
-        .student-marker.picked-up {
-            background: rgba(42, 122, 80, 0.15);
-            border-color: #2a7a50;
-        }
-
-        .student-marker.late {
-            background: rgba(200, 75, 47, 0.15);
+        .stop-demand-marker.late {
+            background: rgba(200, 75, 47, 0.16);
             border-color: var(--accent);
             animation: pulse-marker 1s ease-in-out infinite;
-        }
-
-        .student-marker.absent {
-            background: rgba(122, 113, 104, 0.15);
-            border-color: var(--muted);
-            opacity: 0.5;
         }
 
         @keyframes pulse-marker {
@@ -1315,11 +1301,12 @@
         .bus-marker-icon {
             width: 26px;
             height: 26px;
-            border-radius: 5px;
+            border-radius: 3px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
+            font-family: var(--mono);
+            font-size: 11px;
             font-weight: bold;
             border: 2px solid;
             box-shadow: 0 1px 4px rgba(26, 23, 20, 0.15);
@@ -1342,15 +1329,59 @@
         }
 
         .school-marker {
-            width: 30px;
-            height: 30px;
-            background: rgba(200, 75, 47, 0.12);
-            border: 2px solid var(--accent);
-            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            background: var(--accent);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 56%, 79% 91%, 50% 70%, 21% 91%, 32% 56%, 2% 35%, 39% 35%);
+            filter: drop-shadow(0 1px 4px rgba(26, 23, 20, 0.2));
+        }
+
+        .sim-map-legend {
+            background: rgba(245, 240, 232, 0.92);
+            border: 1px solid var(--rule);
+            padding: 0.75rem 0.85rem;
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            box-shadow: 0 6px 18px rgba(26, 23, 20, 0.08);
+        }
+
+        .sim-map-legend div {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 14px;
+            gap: 0.45rem;
+            margin-top: 0.4rem;
+        }
+
+        .sim-map-legend div:first-child {
+            margin-top: 0;
+        }
+
+        .legend-school,
+        .legend-stop,
+        .legend-bus {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            flex: 0 0 12px;
+        }
+
+        .legend-school {
+            background: var(--accent);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 56%, 79% 91%, 50% 70%, 21% 91%, 32% 56%, 2% 35%, 39% 35%);
+        }
+
+        .legend-stop {
+            border-radius: 50%;
+            background: rgba(58, 112, 198, 0.35);
+            border: 1px solid rgba(58, 112, 198, 0.9);
+        }
+
+        .legend-bus {
+            border-radius: 2px;
+            background: rgba(42, 122, 80, 0.2);
+            border: 2px solid #2a7a50;
         }
 
         @media (max-width: 768px) {
@@ -1474,7 +1505,7 @@
 
     <!-- SPONSORS -->
     <section id="sponsors">
-        <div class="section-label">00 / Sponsors</div>
+        <div class="section-label">01 / Sponsors</div>
         <h2>Our Sponsors</h2>
         <h3 style="margin-top: 2vh">Our sponsors make Project OmniBus possible by providing resources, mentorship, and opportunities for all participants.</h3>
         <div class="sponsor-grid">
@@ -1483,6 +1514,36 @@
                 <div class="sponsor-card sponsor-card--real">
                     <img src="AoPS_Main_Logo.png" alt="Art of Problem Solving" style="max-width: 160px; max-height: 70px; object-fit: contain;">
                     <span style="font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;">Art of Problem Solving</span>
+                </div>
+            </a>
+            <a href="https://saily.com/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block;">
+                <div class="sponsor-card sponsor-card--real">
+                    <img src="Saily.png" alt="Saily" style="max-width: 160px; max-height: 70px; object-fit: contain;">
+                    <span style="font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;">Saily</span>
+                </div>
+            </a>
+            <a href="https://nordvpn.com/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block;">
+                <div class="sponsor-card sponsor-card--real">
+                    <img src="NordVPN.png" alt="NordVPN" style="max-width: 180px; max-height: 70px; object-fit: contain;">
+                    <span style="font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;">NordVPN</span>
+                </div>
+            </a>
+            <a href="https://nordpass.com/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block;">
+                <div class="sponsor-card sponsor-card--real">
+                    <img src="NordPass.png" alt="NordPass" style="max-width: 180px; max-height: 70px; object-fit: contain;">
+                    <span style="font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;">NordPass</span>
+                </div>
+            </a>
+            <a href="https://nordprotect.com/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block;">
+                <div class="sponsor-card sponsor-card--real">
+                    <img src="NordProtect.png" alt="NordProtect" style="max-width: 190px; max-height: 70px; object-fit: contain;">
+                    <span style="font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;">NordProtect</span>
+                </div>
+            </a>
+            <a href="https://incogni.com/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block;">
+                <div class="sponsor-card sponsor-card--real">
+                    <img src="Incogni.png" alt="Incogni" style="max-width: 180px; max-height: 70px; object-fit: contain;">
+                    <span style="font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;">Incogni</span>
                 </div>
             </a>
             <a href="prospectus.pdf" target="_blank" style="text-decoration: none; color: inherit; display: block;">
@@ -1506,7 +1567,7 @@
 
     <!-- PROBLEM -->
     <section id="problem">
-        <div class="section-label">01 / The Challenge</div>
+        <div class="section-label">02 / The Challenge</div>
         <h2>The School Bus Routing Problem</h2>
 
         <div class="why-list">
@@ -1562,7 +1623,7 @@
 
     <!-- WHAT IS RL -->
     <section id="rl-info" style="background: rgba(26, 23, 20, 0.02);">
-        <div class="section-label">02 / AI Basics</div>
+        <div class="section-label">03 / AI Basics</div>
         <h2>What is Reinforcement Learning?</h2>
         
         <div class="why-list">
@@ -1595,7 +1656,7 @@
 
     <!-- DETAILS -->
     <section id="details">
-        <div class="section-label">03 / Details</div>
+        <div class="section-label">04 / Details</div>
         <h2>Everything You Need to Know</h2>
 
         <div class="problem-grid">
@@ -1742,7 +1803,8 @@
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/sim-engine.js"></script>
+<script src="js/scenario_data.js"></script>
+<script src="js/sim-engine.js"></script>
     <script src="js/agents.js"></script>
     <script src="js/map-renderer.js"></script>
     <script src="js/controls.js"></script>
@@ -1761,7 +1823,7 @@
 
             const state = engine.getState();
             mapRenderer.renderNetwork(state.network);
-            mapRenderer.renderSchool(state.school);
+            mapRenderer.renderSchools(state.schools);
             mapRenderer.renderStudents(state.students);
             mapRenderer.renderBuses(state.buses);
             renderBusFleet(state.buses);
@@ -1800,18 +1862,18 @@
                 }
             });
 
-            window._onReset = async () => {
+            window._onReset = () => {
                 document.getElementById('event-log').innerHTML = '';
                 document.getElementById('event-banners').innerHTML = '';
-                await engine.loadScenario('data/scenario_default.json');
+                engine.reset();
                 const s = engine.getState();
                 mapRenderer.renderNetwork(s.network);
-                mapRenderer.renderSchool(s.school);
+                mapRenderer.renderSchools(s.schools);
                 mapRenderer.renderStudents(s.students);
                 mapRenderer.renderBuses(s.buses);
                 renderBusFleet(s.buses);
                 window._simBuses = s.buses;
-                updateClock(420);
+                updateClock(390);
                 resetMetrics();
             };
 
@@ -1828,6 +1890,7 @@
                 el.textContent = val;
                 if (cls !== undefined) el.className = 'sim-metric-val ' + cls;
             }
+
 
             function updateMetrics(m) {
                 setVal('metric-delivered', m.delivered);
