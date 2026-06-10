@@ -10,29 +10,103 @@ import matplotlib.pyplot as plt
 # Import the environment and baselines
 from sbrp_env import SchoolBusRoutingEnv
 from agents import NearestNeighborAgent, ORToolsStaticAgent, RandomAgent
-
+from agents import BaseAgent
 # Set random seed for reproducibility
 SEED = 42
 random.seed(SEED)
 np.random.seed(SEED)
 torch.manual_seed(SEED)
 
-class QNetwork(nn.Module):
-    """Deep Q-Network for School Bus Routing."""
+class DuelingQNetwork(nn.Module):
+    """Dueling Deep Q-Network for School Bus Routing."""
     def __init__(self, input_dim, output_dim):
         super().__init__()
-        self.fc = nn.Sequential(
+        # Common feature layer
+        self.feature_layer = nn.Sequential(
             nn.Linear(input_dim, 256),
             nn.ReLU(),
             nn.Linear(256, 256),
+            nn.ReLU()
+        )
+        
+        # State-Value stream V(s)
+        self.value_stream = nn.Sequential(
+            nn.Linear(256, 128),
             nn.ReLU(),
+            nn.Linear(128, 1)
+        )
+        
+        # Advantage stream A(s, a)
+        self.advantage_stream = nn.Sequential(
             nn.Linear(256, 128),
             nn.ReLU(),
             nn.Linear(128, output_dim)
         )
 
     def forward(self, x):
-        return self.fc(x)
+        features = self.feature_layer(x)
+        values = self.value_stream(features)
+        advantages = self.advantage_stream(features)
+        # Combine value and advantage: Q(s, a) = V(s) + (A(s, a) - mean(A(s, a')))
+        q_values = values + (advantages - advantages.mean(dim=-1, keepdim=True))
+        return q_values
+
+
+def compute_shaped_step_reward(env, prev_student_statuses, prev_distance, prev_time, action, action_mask):
+    """Computes a consistent, shaped step reward with school-clustering and ride-time urgency."""
+    shaped_reward = 0.0
+    
+    # 1. Travel mileage cost (-10.0 per mile driven in this step)
+    step_distance = env.total_distance - prev_distance
+    shaped_reward -= step_distance * 10.0
+    
+    # 2. Action mask violation penalty
+    if action_mask[action] == 0.0:
+        shaped_reward -= 100.0
+        
+    # 3. Student pickup and delivery rewards
+    for s_idx, student in enumerate(env.students):
+        prev_status = prev_student_statuses[s_idx]
+        curr_status = student["status"]
+        
+        # A. Successful student pickup
+        if prev_status in ["waiting", "stranded"] and curr_status == "picked_up":
+            if prev_status == "stranded":
+                shaped_reward += 120.0  # Enhanced rescue bonus
+            else:
+                shaped_reward += 50.0   # Standard student pickup bonus
+                
+            # School-clustering pickup bonus/penalty
+            bus = next((b for b in env.buses if b["id"] == student["bus_id"]), None)
+            if bus is not None:
+                other_passengers = [p_id for p_id in bus["passengers"] if p_id != student["id"]]
+                if len(other_passengers) > 0:
+                    other_schools = [next(s for s in env.students if s["id"] == p_id)["school_id"] for p_id in other_passengers]
+                    if any(s_school != student["school_id"] for s_school in other_schools):
+                        # Mixed passenger penalty (-15)
+                        shaped_reward -= 15.0
+                    else:
+                        # School clustering bonus (+15)
+                        shaped_reward += 15.0
+                        
+        # B. Successful student delivery
+        if prev_status == "picked_up" and curr_status in ["delivered", "late"]:
+            if curr_status == "delivered":
+                shaped_reward += 250.0  # Big bonus for on-time delivery
+            else:
+                sch = env.schools_data[student["school_id"]]
+                lateness_mins = student["delivery_time"] - sch["bell_time"]
+                # Late delivery bonus (200.0 minus 5.0 per minute late, total +250.0 relative to undelivered)
+                shaped_reward += max(0.0, 200.0 - lateness_mins * 5.0)
+                
+    # 4. Ride-time urgency penalty (-2 points per minute on board over 25 mins)
+    step_time = env.current_time - prev_time
+    for student in env.students:
+        if student["status"] == "picked_up":
+            if student["ride_time"] > 25.0:
+                shaped_reward -= 2.0 * (student["ride_time"] - 25.0) * step_time
+                
+    return shaped_reward
 
 
 class ReplayBuffer:
@@ -61,17 +135,18 @@ class ReplayBuffer:
         return len(self.buffer)
 
 
-class DQNAgent:
+class DQNAgent(BaseAgent):
     """Centralized DQN Agent with Action Masking."""
     def __init__(self, state_dim, action_dim, lr=1e-4, gamma=0.99, buffer_capacity=10000):
+        super().__init__("DQN Agent")
         self.state_dim = state_dim
         self.action_dim = action_dim
         self.gamma = gamma
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
         # Policy and Target Networks
-        self.policy_net = QNetwork(state_dim, action_dim).to(self.device)
-        self.target_net = QNetwork(state_dim, action_dim).to(self.device)
+        self.policy_net = DuelingQNetwork(state_dim, action_dim).to(self.device)
+        self.target_net = DuelingQNetwork(state_dim, action_dim).to(self.device)
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.target_net.eval()
         
@@ -251,30 +326,14 @@ def pretrain_agent(env, agent, num_episodes=50):
             # Step the environment to get the shaped step reward
             prev_student_statuses = [s["status"] for s in env.students]
             prev_distance = env.total_distance
+            prev_time = env.current_time
             
             next_obs_dict, step_reward, terminated, truncated, info = env.step(action)
             next_state_flat = env.get_flat_observation(next_obs_dict)
             next_action_mask = next_obs_dict["action_mask"]
             
             # Compute mathematically consistent shaped step reward
-            shaped_reward = 0.0
-            step_distance = env.total_distance - prev_distance
-            shaped_reward -= step_distance * 10.0
-            if action_mask[action] == 0.0:
-                shaped_reward -= 100.0
-                
-            for s_idx, student in enumerate(env.students):
-                prev_status = prev_student_statuses[s_idx]
-                curr_status = student["status"]
-                if prev_status in ["waiting", "stranded"] and curr_status == "picked_up":
-                    shaped_reward += 80.0 if prev_status == "stranded" else 50.0
-                if prev_status == "picked_up" and curr_status in ["delivered", "late"]:
-                    if curr_status == "delivered":
-                        shaped_reward += 250.0
-                    else:
-                        sch = env.schools_data[student["school_id"]]
-                        lateness_mins = student["delivery_time"] - sch["bell_time"]
-                        shaped_reward += max(0.0, 200.0 - lateness_mins * 5.0)
+            shaped_reward = compute_shaped_step_reward(env, prev_student_statuses, prev_distance, prev_time, action, action_mask)
             
             episode_transitions.append({
                 "state": state_flat,
@@ -422,7 +481,7 @@ def main():
     agent.save(model_path)
     print(f"Initial best reward set to {best_reward:.2f}. Saved baseline checkpoint.")
     
-    num_episodes = 350
+    num_episodes = 30
     batch_size = 64
     target_update_frequency = 5 # target net updates every 5 episodes
     
@@ -450,44 +509,15 @@ def main():
             # Keep track of states before the step to shape intermediate rewards
             prev_student_statuses = [s["status"] for s in env.students]
             prev_distance = env.total_distance
+            prev_time = env.current_time
             
             # Step the environment
             next_obs_dict, step_reward, terminated, truncated, info = env.step(action)
             next_state_flat = env.get_flat_observation(next_obs_dict)
             next_action_mask = next_obs_dict["action_mask"]
             
-            # 1. Compute mathematically consistent shaped step reward
-            shaped_reward = 0.0
-            
-            # Travel mileage cost (-10.0 per mile driven in this step)
-            step_distance = env.total_distance - prev_distance
-            shaped_reward -= step_distance * 10.0
-            
-            # Action mask violation penalty
-            if action_mask[action] == 0.0:
-                shaped_reward -= 100.0
-                
-            # Student pickup and delivery rewards
-            for s_idx, student in enumerate(env.students):
-                prev_status = prev_student_statuses[s_idx]
-                curr_status = student["status"]
-                
-                # A. Successful student pickup
-                if prev_status in ["waiting", "stranded"] and curr_status == "picked_up":
-                    if prev_status == "stranded":
-                        shaped_reward += 80.0  # High bonus for rescuing a stranded student!
-                    else:
-                        shaped_reward += 50.0  # Standard student pickup bonus
-                        
-                # B. Successful student delivery
-                if prev_status == "picked_up" and curr_status in ["delivered", "late"]:
-                    if curr_status == "delivered":
-                        shaped_reward += 250.0  # Big bonus for on-time delivery (total +300.0)
-                    else:
-                        sch = env.schools_data[student["school_id"]]
-                        lateness_mins = student["delivery_time"] - sch["bell_time"]
-                        # Late delivery bonus (200.0 minus 5.0 per minute late, total +250.0 relative to undelivered)
-                        shaped_reward += max(0.0, 200.0 - lateness_mins * 5.0)
+            # Compute mathematically consistent shaped step reward
+            shaped_reward = compute_shaped_step_reward(env, prev_student_statuses, prev_distance, prev_time, action, action_mask)
             
             # Store in replay buffer
             agent.memory.store(
