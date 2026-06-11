@@ -145,14 +145,14 @@ def main():
             "id": "school_hms",
             "name": "Hackensack Middle School",
             "node": "node_22",
-            "bell_time": 510.0, # 8:30 AM
+            "bell_time": 500.0, # 8:20 AM
             "type": "middle"
         },
         "school_fes": {
             "id": "school_fes",
             "name": "Fairmount Elementary School",
             "node": "node_31",
-            "bell_time": 540.0, # 9:00 AM
+            "bell_time": 520.0, # 8:40 AM
             "type": "elementary"
         }
     }
@@ -168,8 +168,8 @@ def main():
     }
 
     # 4. Generate Students (stochastically placed and assigned to schools)
-    # Total of 30 students to make it computationally manageable but complex
-    num_students = 30
+    # Total of 45 students to make it computationally manageable but complex
+    num_students = 45
     students = []
     
     # Pre-determined home nodes (avoiding school nodes directly)
@@ -184,18 +184,18 @@ def main():
         if school_choice == 0:
             assigned_school = "school_hhs"
             # Pickup window in minutes since 7:00 AM (420 mins)
-            # High School bell is at 8:00 AM (480 mins). Window: 7:15 AM - 7:35 AM (435 - 455 mins)
-            window_start = float(random.randint(430, 445))
+            # High School bell is at 8:00 AM (480 mins). Window: 7:00 AM - 7:35 AM (420 - 455 mins)
+            window_start = float(random.randint(420, 440))
             window_end = window_start + 15.0
         elif school_choice == 1:
             assigned_school = "school_hms"
-            # Middle School bell is at 8:30 AM (510 mins). Window: 7:45 AM - 8:05 AM (465 - 485 mins)
-            window_start = float(random.randint(460, 475))
+            # Middle School bell is at 8:20 AM (500 mins). Window: 7:15 AM - 7:50 AM (435 - 470 mins)
+            window_start = float(random.randint(435, 455))
             window_end = window_start + 15.0
         else:
             assigned_school = "school_fes"
-            # Elementary School bell is at 9:00 AM (540 mins). Window: 8:15 AM - 8:35 AM (495 - 515 mins)
-            window_start = float(random.randint(490, 505))
+            # Elementary School bell is at 8:40 AM (520 mins). Window: 7:30 AM - 8:05 AM (450 - 485 mins)
+            window_start = float(random.randint(450, 470))
             window_end = window_start + 15.0
             
         students.append({
@@ -218,7 +218,7 @@ def main():
             "id": f"bus_{i+1}",
             "name": f"School Bus {i+1}",
             "depot_id": "depot_1",
-            "capacity": 12, # Bus capacity limit
+            "capacity": 8, # Bus capacity limit
             "color": bus_colors[i]
         })
 

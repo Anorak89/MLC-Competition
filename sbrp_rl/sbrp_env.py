@@ -331,12 +331,21 @@ class SchoolBusRoutingEnv(gym.Env):
         self.total_distance = 0.0
         self.step_count = 0
         self.active_bus_idx = -1
-        self.weather_multiplier = 1.0
+        
+        # Stochastically choose weather multiplier
+        weather_roll = random.random()
+        if weather_roll < 0.60:
+            self.weather_multiplier = 1.0  # Clear
+        elif weather_roll < 0.90:
+            self.weather_multiplier = 1.25 # Rain
+        else:
+            self.weather_multiplier = 1.50 # Snow
+            
         self.active_road_closures = []
         self.active_traffic_spikes = []
         self.state_history = []  # To record detailed tick-by-tick snapshots for visualization
         
-        # Reset the road network to base state
+        # Reset the road network to base state and apply weather/initial traffic
         self._build_graph()
         
         # Reset Students with stochastic attendance and no-shows
@@ -393,13 +402,13 @@ class SchoolBusRoutingEnv(gym.Env):
 
         # Pre-schedule road closures and traffic spikes to happen dynamically
         self.scheduled_closures = []
-        # Stochastically schedule 1-2 road closures
-        num_closures = random.randint(1, 2)
+        # Stochastically schedule 2-3 road closures (more complex)
+        num_closures = random.randint(2, 3)
         candidate_edges = [e for e in self.edges_data if e["street_type"] == "arterial"]
         for _ in range(num_closures):
             edge = random.choice(candidate_edges)
             close_time = float(random.randint(440, 500)) # Between 7:20 and 8:20 AM
-            duration = float(random.randint(20, 50))
+            duration = float(random.randint(30, 60)) # Longer duration (30-60 mins)
             self.scheduled_closures.append({
                 "time": close_time,
                 "duration": duration,
@@ -415,7 +424,7 @@ class SchoolBusRoutingEnv(gym.Env):
             "start_time": 450.0, # 7:30 AM
             "peak_time": 480.0,  # 8:00 AM
             "end_time": 510.0,   # 8:30 AM
-            "max_multiplier": 2.2,
+            "max_multiplier": 2.5, # Increased traffic congestion multiplier (2.5x)
             "active": False
         }
 
@@ -425,6 +434,9 @@ class SchoolBusRoutingEnv(gym.Env):
             self.breakdown_bus_id = f"bus_{random.randint(1, self.num_buses)}"
             self.breakdown_time = float(random.randint(450, 490)) # Breaks down between 7:30 and 8:10 AM
             self.breakdown_triggered = False
+
+        # Apply initial weather/traffic updates now that all scheduling data is initialized
+        self._update_traffic()
 
         # Find initial active bus
         self._update_active_bus()

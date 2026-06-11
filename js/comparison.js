@@ -36,7 +36,7 @@ class ComparisonMode {
             this.mapRenderer2 = new MapRenderer('map2');
             const state = this.engine2.getState();
             this.mapRenderer2.renderNetwork(state.network);
-            this.mapRenderer2.renderSchool(state.school);
+            this.mapRenderer2.renderSchools(state.schools);
             this.mapRenderer2.renderStudents(state.students);
             this.mapRenderer2.renderBuses(state.buses);
         }

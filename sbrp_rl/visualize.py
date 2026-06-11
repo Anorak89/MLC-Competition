@@ -6,6 +6,10 @@ import numpy as np
 import torch
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+import json
+
+import math
+import urllib.request
 
 # Import env and agents
 from sbrp_env import SchoolBusRoutingEnv
@@ -17,6 +21,58 @@ plt.style.use('dark_background')
 GRID_COLOR = '#1e293b'
 ACCENT_COLOR = '#38bdf8'
 TEXT_COLOR = '#f8fafc'
+
+def get_cartodb_basemap(lat_bounds, lng_bounds, zoom=14):
+    def deg2num(lat_deg, lon_deg, zoom):
+        lat_rad = math.radians(lat_deg)
+        n = 2.0 ** zoom
+        xtile = int((lon_deg + 180.0) / 360.0 * n)
+        ytile = int((1.0 - math.asinh(math.tan(lat_rad)) / math.pi) / 2.0 * n)
+        return (xtile, ytile)
+
+    def num2deg(xtile, ytile, zoom):
+        n = 2.0 ** zoom
+        lon_deg = xtile / n * 360.0 - 180.0
+        lat_rad = math.atan(math.sinh(math.pi * (1 - 2 * ytile / n)))
+        lat_deg = math.degrees(lat_rad)
+        return (lat_deg, lon_deg)
+
+    x_min, y_max = deg2num(lat_bounds[0], lng_bounds[0], zoom)
+    x_max, y_min = deg2num(lat_bounds[1], lng_bounds[1], zoom)
+    
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    cache_dir = os.path.join(base_dir, "cache")
+    os.makedirs(cache_dir, exist_ok=True)
+    
+    images = []
+    for y in range(y_min, y_max + 1):
+        row = []
+        for x in range(x_min, x_max + 1):
+            url = f"https://a.basemaps.cartocdn.com/dark_all/{zoom}/{x}/{y}.png"
+            tile_path = os.path.join(cache_dir, f"tile_{zoom}_{x}_{y}.png")
+            if not os.path.exists(tile_path):
+                try:
+                    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                    with urllib.request.urlopen(req) as response, open(tile_path, 'wb') as out_file:
+                        out_file.write(response.read())
+                except Exception as e:
+                    print(f"Warning: Failed to download tile {x},{y}: {e}")
+                    row.append(np.zeros((256, 256, 4), dtype=np.float32))
+                    continue
+            img = plt.imread(tile_path)
+            # Ensure 4 channels
+            if img.shape[2] == 3:
+                img = np.dstack((img, np.ones((256, 256), dtype=img.dtype)))
+            row.append(img)
+        images.append(np.hstack(row))
+    
+    full_image = np.vstack(images)
+    
+    lat_max_tile, lng_min_tile = num2deg(x_min, y_min, zoom)
+    lat_min_tile, lng_max_tile = num2deg(x_max + 1, y_max + 1, zoom)
+    
+    extent = [lng_min_tile, lng_max_tile, lat_min_tile, lat_max_tile]
+    return full_image, extent
 
 class SimulationVisualizer:
     def __init__(self, agent_type="nn", seed=42):
@@ -92,6 +148,59 @@ class SimulationVisualizer:
         self.final_metrics = info
         self.final_vrp_reward = self.env.compute_final_reward()
         
+        # --- POST-PROCESS HISTORY FOR CURVY BUS MOVEMENT ---
+        try:
+            base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            with open(os.path.join(base_dir, 'data', 'edge_geometries.json'), 'r') as f:
+                self.edge_geometries = json.load(f)
+        except:
+            self.edge_geometries = {}
+            
+        def interpolate_along_line(line_coords, frac):
+            if frac <= 0: return line_coords[0]
+            if frac >= 1: return line_coords[-1]
+            def dist(p1, p2): return math.hypot(p1[0]-p2[0], p1[1]-p2[1])
+            total_len = sum(dist(line_coords[i], line_coords[i+1]) for i in range(len(line_coords)-1))
+            if total_len == 0: return line_coords[0]
+            target_len = total_len * frac
+            curr_len = 0.0
+            for i in range(len(line_coords)-1):
+                d = dist(line_coords[i], line_coords[i+1])
+                if curr_len + d >= target_len:
+                    seg_frac = (target_len - curr_len) / d
+                    lng = line_coords[i][0] + seg_frac * (line_coords[i+1][0] - line_coords[i][0])
+                    lat = line_coords[i][1] + seg_frac * (line_coords[i+1][1] - line_coords[i][1])
+                    return [lng, lat]
+                curr_len += d
+            return line_coords[-1]
+
+        # Map linear history to curvy OSRM paths
+        last_node = {b["id"]: b.get("node", self.env.depots_data["depot_1"]["node"]) for b in self.env.buses_data}
+        for state in self.history:
+            for b in state["buses"]:
+                dest = b["destination"]
+                if not dest: continue
+                prev = last_node[b["id"]]
+                
+                dest_lat = self.nodes[dest]["lat"]
+                dest_lng = self.nodes[dest]["lng"]
+                if math.isclose(b["lat"], dest_lat, abs_tol=1e-5) and math.isclose(b["lng"], dest_lng, abs_tol=1e-5):
+                    last_node[b["id"]] = dest
+                    continue
+                    
+                if prev == dest: continue
+                
+                edge_id = f"{prev}_{dest}"
+                if edge_id in self.edge_geometries:
+                    prev_lat = self.nodes[prev]["lat"]
+                    prev_lng = self.nodes[prev]["lng"]
+                    straight_dist = math.hypot(dest_lat - prev_lat, dest_lng - prev_lng)
+                    if straight_dist > 0:
+                        curr_dist = math.hypot(b["lat"] - prev_lat, b["lng"] - prev_lng)
+                        frac = max(0.0, min(1.0, curr_dist / straight_dist))
+                        new_pos = interpolate_along_line(self.edge_geometries[edge_id], frac)
+                        b["lng"], b["lat"] = new_pos[0], new_pos[1]
+        
         print(f"Episode simulated in {step_count} decisions. Total ticks: {len(self.history)}")
         print(f"Final VRP Reward: {self.final_vrp_reward}")
         print(f"Delivered: {info['delivered_count']} / {self.env.num_students}")
@@ -111,20 +220,33 @@ class SimulationVisualizer:
         # --- 1. PLOT STATIC MAP COMPONENTS ---
         ax_map.set_title(f"Hackensack School Bus Routing ({self.agent.name})", color=TEXT_COLOR, fontsize=14, fontweight='bold', pad=15)
         
+        # Load and draw genuine map tiles from CartoDB (Dark Matter)
+        try:
+            img, extent = get_cartodb_basemap(self.env.lat_bounds, self.env.lng_bounds, zoom=14)
+            ax_map.imshow(img, extent=extent, zorder=0, alpha=0.9, aspect='auto')
+        except Exception as e:
+            print(f"Warning: Could not load map tiles: {e}")
+        
         # Draw roads (edges)
         edge_plots = {}
         for edge in self.edges:
             u, v = edge["from"], edge["to"]
+            edge_id = edge["id"]
             n_u = self.nodes[u]
             n_v = self.nodes[v]
             
+            if hasattr(self, 'edge_geometries') and edge_id in self.edge_geometries:
+                coords = self.edge_geometries[edge_id]
+                xs, ys = zip(*coords)
+            else:
+                xs, ys = [n_u["lng"], n_v["lng"]], [n_u["lat"], n_v["lat"]]
+                
             # Default style: thin dark gray
             line, = ax_map.plot(
-                [n_u["lng"], n_v["lng"]], 
-                [n_u["lat"], n_v["lat"]], 
+                xs, ys, 
                 color='#334155', 
-                linewidth=1.2, 
-                alpha=0.6, 
+                linewidth=1.8, 
+                alpha=0.9, 
                 zorder=1
             )
             # Map edge keys for dynamic updating

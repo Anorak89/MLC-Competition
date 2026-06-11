@@ -151,6 +151,7 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="js/scenario_data.js"></script>
     <script src="js/sim-engine.js"></script>
     <script src="js/agents.js"></script>
     <script src="js/map-renderer.js"></script>
@@ -177,7 +178,7 @@
 
             const state = engine.getState();
             mapRenderer.renderNetwork(state.network);
-            mapRenderer.renderSchool(state.school);
+            mapRenderer.renderSchools(state.schools);
             mapRenderer.renderStudents(state.students);
             mapRenderer.renderBuses(state.buses);
             renderBusFleet(state.buses);
