@@ -41,13 +41,14 @@ def main():
         if old_final == final_data and old_dev == dev_data:
             data_changed = False
 
-    # If data hasn't changed and it's the same day, keep the existing timestamp
+    # If data hasn't changed and it's the same day, do nothing
     if not data_changed and existing_data and 'last_updated' in existing_data:
         old_timestamp_str = existing_data['last_updated']
         try:
             old_time = datetime.fromisoformat(old_timestamp_str.replace('Z', '+00:00'))
             if old_time.date() == now.date():
-                new_timestamp = old_timestamp_str
+                print("No changes in leaderboard data and still the same day. Skipping write.")
+                return
         except Exception:
             pass
     
