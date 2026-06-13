@@ -104,6 +104,7 @@
             text-decoration: none;
 
             transition: color 0.2s;
+            white-space: nowrap;
         }
 
         .nav-links a:hover {
@@ -127,6 +128,28 @@
 
         .nav-cta:hover {
             background: var(--accent);
+        }
+
+        /* Hamburger menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--ink);
+            margin-bottom: 5px;
+            transition: 0.3s;
+        }
+        
+        .mobile-menu-btn span:last-child {
+            margin-bottom: 0;
         }
 
         .hero {
@@ -263,15 +286,25 @@
         }
 
         .btn-register {
-            background: rgba(200, 75, 47, 0.05);
-            color: var(--accent);
-            border: 1px dashed var(--accent);
+            background: var(--ink);
+            color: var(--cream);
+            border: 1px solid var(--ink);
+            border-radius: 4px;
+            font-family: var(--sans);
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 0.02em;
+            text-transform: none;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 12px rgba(26, 23, 20, 0.1);
         }
 
         .btn-register:hover {
             background: var(--accent);
+            border-color: var(--accent);
             color: var(--cream);
-            border-style: solid;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(200, 75, 47, 0.2);
         }
 
         .auth-buttons {
@@ -832,8 +865,22 @@
                 padding: 1rem 1.5rem;
             }
 
+            .mobile-menu-btn {
+                display: block;
+            }
+
             .nav-links {
                 display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 1.5rem;
+                padding-top: 1.5rem;
+                padding-bottom: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
             }
 
             .hero {
@@ -1413,18 +1460,28 @@
 
     <nav>
 
-        <div class="nav-logo">
-            <img src="bca-logo.png" alt="BCA Logo" class="logo" onerror="this.style.display='none'">
-            <span>Project OmniBus</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <div class="nav-logo">
+                <img src="bca-logo.png" alt="BCA Logo" class="logo" onerror="this.style.display='none'">
+                <span>Project OmniBus</span>
+            </div>
+            
+            <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
 
         <ul class="nav-links">
             <li><a href="https://www.codabench.org/competitions/16945/" target="_blank" rel="noopener noreferrer" style="color:var(--accent); font-weight: 500;">Competition ↗</a></li>
+            <li><a href="#opening-ceremony">Kickoff</a></li>
+            <li><a href="#sponsors">Sponsors</a></li>
             <li><a href="#problem">Problem</a></li>
+            <li><a href="#rl-info">AI Basics</a></li>
             <li><a href="#details">Details</a></li>
             <li><a href="#simulator">Simulator</a></li>
             <li><a href="standings.html">Standings</a></li>
-            <li><a href="#sponsors">Sponsors</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
 
@@ -1459,10 +1516,11 @@
             </p>
 
             <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 680px; margin: 2.5rem auto 0 auto; opacity: 0; animation: rise 0.9s ease forwards 0.8s;">
-                <div class="hero-actions" style="display: flex; width: 100%; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 0; margin-bottom: 1rem; opacity: 1; animation: none;">
+                <div class="hero-actions" style="display: flex; width: 100%; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 0; margin-bottom: 1.5rem; opacity: 1; animation: none;">
                     <a href="https://www.codabench.org/competitions/16945/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-accent" style="width: 100%;">Enter Competition</button></a>
                     <a href="#simulator" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-primary" style="width: 100%;">Try Simulator</button></a>
                     <a href="#details" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-ghost" style="width: 100%;">Read Details</button></a>
+                    <a href="standings.html" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-ghost" style="width: 100%;">Leaderboard</button></a>
                 </div>
                 <a href="https://forms.gle/woD4Tzpib9aafzK36" target="_blank" rel="noopener noreferrer" style="text-decoration: none; width: 100%;">
                     <button class="btn-register" style="width: 100%;">Register / Sign Up Here ↗</button>
