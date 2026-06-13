@@ -35,7 +35,11 @@ def fetch_phase(phase_id):
 
 def main():
     final_data = fetch_phase(FINAL_PHASE)
-    dev_data = fetch_phase(DEV_PHASE)
+    final_has_data = bool(final_data and final_data.get('submissions'))
+    
+    dev_data = None
+    if not final_has_data:
+        dev_data = fetch_phase(DEV_PHASE)
     
     now = datetime.now(timezone.utc)
     new_timestamp = now.isoformat()
@@ -72,9 +76,11 @@ def main():
     # Store data with the calculated timestamp
     leaderboard_data = {
         str(FINAL_PHASE): final_data,
-        str(DEV_PHASE): dev_data,
         "last_updated": new_timestamp
     }
+    
+    if not final_has_data and dev_data is not None:
+        leaderboard_data[str(DEV_PHASE)] = dev_data
     
     os.makedirs('data', exist_ok=True)
     
