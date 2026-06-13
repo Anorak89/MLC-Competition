@@ -1,165 +1,27 @@
 {
   "28294": {
-    "title": "Results",
-    "id": 28294,
-    "submissions": [],
-    "tasks": [
-      {
-        "name": "Final Routing Task",
-        "id": 33925,
-        "colWidth": 3,
-        "columns": [
-          {
-            "id": 81870,
-            "computation": null,
-            "computation_indexes": null,
-            "title": "Score",
-            "key": "score",
-            "sorting": "desc",
-            "index": 0,
-            "hidden": false,
-            "precision": 2
-          },
-          {
-            "id": 81871,
-            "computation": null,
-            "computation_indexes": null,
-            "title": "Mean reward",
-            "key": "mean_reward",
-            "sorting": "desc",
-            "index": 1,
-            "hidden": false,
-            "precision": 2
-          },
-          {
-            "id": 81872,
-            "computation": null,
-            "computation_indexes": null,
-            "title": "Episodes",
-            "key": "episodes",
-            "sorting": "desc",
-            "index": 2,
-            "hidden": false,
-            "precision": 2
-          }
-        ]
-      }
-    ],
-    "fact_sheet_keys": null,
-    "primary_index": 0,
-    "count": 0,
-    "page_size": "50",
-    "next": null,
-    "previous": null,
-    "allowed_page_sizes": [
-      50,
-      100,
-      500,
-      "all"
-    ]
+    "submissions": []
   },
   "28293": {
-    "title": "Results",
-    "id": 28293,
     "submissions": [
       {
-        "id": 780086,
         "owner": "kevin_2005",
         "scores": [
           {
-            "id": 1994946,
-            "index": 0,
-            "score": "301.0",
             "column_key": "score",
-            "precision": 2,
-            "is_primary": true,
-            "task_id": 33924
+            "score": "301.0"
           },
           {
-            "id": 1994947,
-            "index": 1,
-            "score": "301.0",
             "column_key": "mean_reward",
-            "precision": 2,
-            "is_primary": false,
-            "task_id": 33924
+            "score": "301.0"
           },
           {
-            "id": 1994948,
-            "index": 2,
-            "score": "10.0",
             "column_key": "episodes",
-            "precision": 2,
-            "is_primary": false,
-            "task_id": 33924
-          }
-        ],
-        "detailed_results": [
-          {
-            "task": 33924,
-            "id": 780086
-          }
-        ],
-        "fact_sheet_answers": null,
-        "slug_url": "/profiles/user/kevin_2005/",
-        "organization": null,
-        "created_when": "2026-06-04T18:14:12.831079Z"
-      }
-    ],
-    "tasks": [
-      {
-        "name": "Dev Routing Task",
-        "id": 33924,
-        "colWidth": 3,
-        "columns": [
-          {
-            "id": 81870,
-            "computation": null,
-            "computation_indexes": null,
-            "title": "Score",
-            "key": "score",
-            "sorting": "desc",
-            "index": 0,
-            "hidden": false,
-            "precision": 2
-          },
-          {
-            "id": 81871,
-            "computation": null,
-            "computation_indexes": null,
-            "title": "Mean reward",
-            "key": "mean_reward",
-            "sorting": "desc",
-            "index": 1,
-            "hidden": false,
-            "precision": 2
-          },
-          {
-            "id": 81872,
-            "computation": null,
-            "computation_indexes": null,
-            "title": "Episodes",
-            "key": "episodes",
-            "sorting": "desc",
-            "index": 2,
-            "hidden": false,
-            "precision": 2
+            "score": "10.0"
           }
         ]
       }
-    ],
-    "fact_sheet_keys": null,
-    "primary_index": 0,
-    "count": 1,
-    "page_size": "50",
-    "next": null,
-    "previous": null,
-    "allowed_page_sizes": [
-      50,
-      100,
-      500,
-      "all"
     ]
   },
-  "last_updated": "2026-06-13T20:29:31.661845+00:00"
+  "last_updated": "2026-06-13T21:16:50.335019+00:00"
 }
