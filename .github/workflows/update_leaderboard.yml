@@ -2,7 +2,7 @@ name: Update Leaderboard
 
 on:
   schedule:
-    - cron: '*/30 * * * *' # Runs every 30 minutes
+    - cron: '*/30 12-23,0-3 * * *' # Runs every 30 minutes from 8 AM to 11 PM EDT
   workflow_dispatch: # Allows manual trigger
 
 jobs:
