@@ -188,6 +188,26 @@
             color: var(--muted);
         }
 
+        .controls-right {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .leaderboard-footer {
+            width: 100%;
+            max-width: 900px;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .update-text {
+            font-family: var(--mono);
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
         @media (max-width: 768px) {
             nav {
                 padding: 1rem 1.5rem;
@@ -197,8 +217,19 @@
                 display: none;
             }
 
-        .leaderboard-table td {
+            .container {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .leaderboard-table th,
+            .leaderboard-table td {
                 padding: 0.75rem 1rem;
+            }
+            
+            .leaderboard-footer {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 0.3rem;
             }
         }
 
@@ -248,11 +279,6 @@
         .btn-secondary:hover {
             background: rgba(26, 23, 20, 0.05);
         }
-        
-        .controls-right {
-            display: flex;
-            gap: 1rem;
-        }
     </style>
 </head>
 
@@ -281,7 +307,6 @@
             <h2 id="phase-title" class="phase-title">Final Phase</h2>
             <div class="controls-right">
                 <button id="show-final-btn" class="btn btn-secondary" style="display: none;">Show Final Leaderboard</button>
-                <div id="last-updated-text" style="font-family: var(--mono); color: var(--muted); font-size: 0.85rem; display: flex; align-items: center;"></div>
             </div>
         </div>
 
@@ -304,6 +329,11 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <div class="leaderboard-footer">
+            <div id="last-updated-text" class="update-text"></div>
+            <div id="next-update-text" class="update-text"></div>
         </div>
     </div>
 
@@ -331,7 +361,10 @@
                 return;
             }
 
-            phaseData.submissions.forEach((sub, index) => {
+            // Limit to top 10 entries
+            const submissionsToRender = phaseData.submissions.slice(0, 10);
+
+            submissionsToRender.forEach((sub, index) => {
                 const row = document.createElement('tr');
                 
                 let score = '-';
@@ -364,10 +397,33 @@
             tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 3rem; font-family: var(--mono); color: var(--muted);">Loading leaderboard data...</td></tr>';
         }
 
+        function getNextUpdateTime() {
+            const now = new Date();
+            let next = new Date(now);
+            
+            // Go to the next 30 minute boundary
+            if (now.getMinutes() < 30) {
+                next.setMinutes(30, 0, 0);
+            } else {
+                next.setHours(now.getHours() + 1, 0, 0, 0);
+            }
+            
+            // Our cron runs between 12:00 UTC and 03:30 UTC.
+            // If the calculated next time falls between 04:00 UTC and 11:30 UTC, 
+            // the actual next run is at 12:00 UTC.
+            const utcHour = next.getUTCHours();
+            if (utcHour > 3 && utcHour < 12) {
+                next.setUTCHours(12, 0, 0, 0);
+            }
+            
+            return next;
+        }
+
         function updateUI(phase, lastUpdatedIso) {
             const phaseTitle = document.getElementById('phase-title');
             const showFinalBtn = document.getElementById('show-final-btn');
             const lastUpdatedText = document.getElementById('last-updated-text');
+            const nextUpdateText = document.getElementById('next-update-text');
 
             if (phase === FINAL_PHASE) {
                 phaseTitle.textContent = "Final Phase";
@@ -379,9 +435,27 @@
 
             if (lastUpdatedIso) {
                 const date = new Date(lastUpdatedIso);
+                const now = new Date();
                 const timeString = date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-                lastUpdatedText.textContent = `Last updated at ${timeString}`;
+
+                if (date.toDateString() === now.toDateString()) {
+                    lastUpdatedText.textContent = `Last update: ${timeString}`;
+                } else {
+                    const yesterday = new Date(now);
+                    yesterday.setDate(now.getDate() - 1);
+                    
+                    if (date.toDateString() === yesterday.toDateString()) {
+                        lastUpdatedText.textContent = `Last update: Yesterday at ${timeString}`;
+                    } else {
+                        const dateString = date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+                        lastUpdatedText.textContent = `Last update: ${dateString} at ${timeString}`;
+                    }
+                }
             }
+
+            const nextTime = getNextUpdateTime();
+            const nextTimeString = nextTime.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+            nextUpdateText.textContent = `Next update: ${nextTimeString}`;
         }
 
         async function loadLeaderboard(forcePhase = null) {
