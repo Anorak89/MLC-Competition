@@ -127,9 +127,11 @@
             background: white;
             border: 1px solid var(--rule);
             border-radius: 8px;
-            overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
+
+        .leaderboard-table th:first-child { border-top-left-radius: 8px; }
+        .leaderboard-table th:last-child { border-top-right-radius: 8px; }
 
         .leaderboard-table {
             width: 100%;
@@ -279,6 +281,54 @@
         .btn-secondary:hover {
             background: rgba(26, 23, 20, 0.05);
         }
+
+        .search-input {
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            outline: none;
+            width: 200px;
+            background: white;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--ink);
+        }
+
+        .pagination-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--rule);
+            background: rgba(245, 240, 232, 0.95);
+            backdrop-filter: blur(5px);
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .page-info {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .btn-page {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-page:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: transparent;
+        }
     </style>
 </head>
 
@@ -306,6 +356,7 @@
         <div class="leaderboard-controls">
             <h2 id="phase-title" class="phase-title">Final Phase</h2>
             <div class="controls-right">
+                <input type="text" id="search-input" class="search-input" placeholder="Search users..." />
                 <button id="show-final-btn" class="btn btn-secondary" style="display: none;">Show Final Leaderboard</button>
             </div>
         </div>
@@ -329,6 +380,11 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="pagination-controls" id="pagination-controls" style="display: none;">
+                <button id="prev-page-btn" class="btn btn-secondary btn-page">Previous</button>
+                <div id="page-info" class="page-info">Page 1 of 1</div>
+                <button id="next-page-btn" class="btn btn-secondary btn-page">Next</button>
+            </div>
         </div>
 
         <div class="leaderboard-footer">
@@ -340,7 +396,13 @@
     <script>
         const FINAL_PHASE = "28294";
         const DEV_PHASE = "28293";
+        const ITEMS_PER_PAGE = 10;
+        
         let cachedData = null;
+        let currentPhaseSubmissions = [];
+        let currentPage = 1;
+        let searchQuery = "";
+        let currentEmptyMessage = "No submissions yet.";
 
         async function fetchLeaderboardData() {
             if (cachedData) return cachedData;
@@ -352,19 +414,42 @@
             return cachedData;
         }
 
-        function renderTable(phaseData, emptyMessage) {
+        function applyFiltersAndPaginate() {
             const tbody = document.getElementById('leaderboard-body');
-            tbody.innerHTML = ''; // Clear loading message
+            const paginationControls = document.getElementById('pagination-controls');
+            tbody.innerHTML = '';
 
-            if (!phaseData || !phaseData.submissions || phaseData.submissions.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 3rem; font-family: var(--mono); color: var(--muted);">${emptyMessage}</td></tr>`;
+            let filtered = currentPhaseSubmissions;
+            
+            if (searchQuery) {
+                const lowerQuery = searchQuery.toLowerCase();
+                filtered = filtered.filter(sub => sub.owner.toLowerCase().includes(lowerQuery));
+            }
+
+            if (filtered.length === 0) {
+                const msg = searchQuery ? "No users found matching your search." : currentEmptyMessage;
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 3rem; font-family: var(--mono); color: var(--muted);">${msg}</td></tr>`;
+                paginationControls.style.display = 'none';
                 return;
             }
 
-            // Limit to top 10 entries
-            const submissionsToRender = phaseData.submissions.slice(0, 10);
+            const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
 
-            submissionsToRender.forEach((sub, index) => {
+            const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+            const paginated = filtered.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+            if (totalPages <= 1) {
+                paginationControls.style.display = 'none';
+            } else {
+                paginationControls.style.display = 'flex';
+                document.getElementById('page-info').textContent = `Page ${currentPage} of ${totalPages}`;
+                document.getElementById('prev-page-btn').disabled = currentPage === 1;
+                document.getElementById('next-page-btn').disabled = currentPage === totalPages;
+            }
+
+            paginated.forEach((sub) => {
                 const row = document.createElement('tr');
                 
                 let score = '-';
@@ -382,7 +467,7 @@
                 }
 
                 row.innerHTML = `
-                    <td class="rank-col">#${index + 1}</td>
+                    <td class="rank-col">#${sub.globalRank}</td>
                     <td class="user-col">${sub.owner}</td>
                     <td class="score-col">${score}</td>
                     <td class="metric-col">${meanReward}</td>
@@ -392,8 +477,23 @@
             });
         }
 
+        function loadPhaseData(phaseData, emptyMessage) {
+            currentEmptyMessage = emptyMessage;
+            if (!phaseData || !phaseData.submissions || phaseData.submissions.length === 0) {
+                currentPhaseSubmissions = [];
+            } else {
+                currentPhaseSubmissions = phaseData.submissions.map((sub, index) => {
+                    sub.globalRank = index + 1;
+                    return sub;
+                });
+            }
+            currentPage = 1;
+            applyFiltersAndPaginate();
+        }
+
         function setLoadingState() {
             const tbody = document.getElementById('leaderboard-body');
+            document.getElementById('pagination-controls').style.display = 'none';
             tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 3rem; font-family: var(--mono); color: var(--muted);">Loading leaderboard data...</td></tr>';
         }
 
@@ -468,7 +568,7 @@
                 if (forcePhase === FINAL_PHASE) {
                     const finalData = data[FINAL_PHASE];
                     updateUI(FINAL_PHASE, lastUpdated);
-                    renderTable(finalData, "No submissions yet in the Final phase.");
+                    loadPhaseData(finalData, "No submissions yet in the Final phase.");
                     return;
                 }
 
@@ -477,30 +577,53 @@
                 
                 if (finalData && finalData.submissions && finalData.submissions.length > 0) {
                     updateUI(FINAL_PHASE, lastUpdated);
-                    renderTable(finalData, "No submissions yet.");
+                    loadPhaseData(finalData, "No submissions yet.");
                 } else {
                     // Final is empty, try Development
                     const devData = data[DEV_PHASE];
                     
                     if (devData && devData.submissions && devData.submissions.length > 0) {
                         updateUI(DEV_PHASE, lastUpdated);
-                        renderTable(devData, "No submissions yet.");
+                        loadPhaseData(devData, "No submissions yet.");
                     } else {
                         // Both are empty
                         updateUI(FINAL_PHASE, lastUpdated);
-                        renderTable(finalData, "No submissions yet in the Final phase.");
+                        loadPhaseData(finalData, "No submissions yet in the Final phase.");
                     }
                 }
 
             } catch (error) {
                 console.error('Error loading leaderboard:', error);
                 const tbody = document.getElementById('leaderboard-body');
+                document.getElementById('pagination-controls').style.display = 'none';
                 tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 3rem; font-family: var(--mono); color: var(--accent);">Failed to load leaderboard data. Please try again later.</td></tr>';
             }
         }
 
         // Event Listeners
-        document.getElementById('show-final-btn').addEventListener('click', () => loadLeaderboard(FINAL_PHASE));
+        document.getElementById('show-final-btn').addEventListener('click', () => {
+            searchQuery = "";
+            document.getElementById('search-input').value = "";
+            loadLeaderboard(FINAL_PHASE);
+        });
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            currentPage = 1;
+            applyFiltersAndPaginate();
+        });
+
+        document.getElementById('prev-page-btn').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                applyFiltersAndPaginate();
+            }
+        });
+
+        document.getElementById('next-page-btn').addEventListener('click', () => {
+            currentPage++;
+            applyFiltersAndPaginate();
+        });
 
         // Load data when page loads
         document.addEventListener('DOMContentLoaded', () => loadLeaderboard());

@@ -11,7 +11,24 @@ def fetch_phase(phase_id):
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     try:
         with urllib.request.urlopen(req) as response:
-            return json.loads(response.read().decode())
+            raw_data = json.loads(response.read().decode())
+            
+            # Prune data to only what the website shows
+            pruned_submissions = []
+            for sub in raw_data.get('submissions', []):
+                pruned_scores = []
+                for s in sub.get('scores', []):
+                    if s.get('column_key') in ['score', 'mean_reward', 'episodes']:
+                        pruned_scores.append({
+                            'column_key': s.get('column_key'),
+                            'score': s.get('score')
+                        })
+                pruned_submissions.append({
+                    'owner': sub.get('owner', 'Unknown'),
+                    'scores': pruned_scores
+                })
+                
+            return {'submissions': pruned_submissions}
     except Exception as e:
         print(f"Error fetching phase {phase_id}: {e}")
         return None
