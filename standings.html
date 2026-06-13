@@ -120,14 +120,70 @@
             font-size: 1.1rem;
         }
 
-        .leaderboard-placeholder {
+        .leaderboard-container {
             margin-top: 4rem;
             width: 100%;
-            max-width: 800px;
-            border: 1px dashed var(--muted);
-            padding: 4rem;
+            max-width: 900px;
+            background: white;
+            border: 1px solid var(--rule);
             border-radius: 8px;
-            background: rgba(26, 23, 20, 0.02);
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .leaderboard-table th,
+        .leaderboard-table td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .leaderboard-table th {
+            background: rgba(245, 240, 232, 0.5);
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .leaderboard-table td {
+            font-size: 1.05rem;
+        }
+
+        .leaderboard-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .leaderboard-table tbody tr:hover {
+            background: rgba(245, 240, 232, 0.3);
+        }
+
+        .rank-col {
+            font-family: var(--mono);
+            color: var(--muted);
+            font-weight: 500;
+            width: 80px;
+        }
+
+        .user-col {
+            font-weight: 500;
+            color: var(--ink);
+        }
+
+        .score-col {
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .metric-col {
             font-family: var(--mono);
             color: var(--muted);
         }
@@ -141,9 +197,61 @@
                 display: none;
             }
 
-            .container {
-                padding: 6rem 1.5rem 3rem;
+        .leaderboard-table td {
+                padding: 0.75rem 1rem;
             }
+        }
+
+        .leaderboard-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .phase-title {
+            font-family: var(--serif);
+            font-size: 1.8rem;
+            color: var(--ink);
+            margin: 0;
+        }
+
+        .btn {
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--ink);
+            color: var(--cream);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid var(--rule);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(26, 23, 20, 0.05);
+        }
+        
+        .controls-right {
+            display: flex;
+            gap: 1rem;
         }
     </style>
 </head>
@@ -166,14 +274,163 @@
     </nav>
 
     <div class="container">
-        <h1>Coming Soon</h1>
-        <p>The competition leaderboard will be available here once the dataset is officially launched and the
-            competition begins on Kaggle.</p>
+        <h1>Leaderboard</h1>
+        <p>Live rankings for the BCA Bus Routing Challenge on Codabench.</p>
 
-        <div class="leaderboard-placeholder">
-            [ Live Kaggle Leaderboard Stats Will Appear Here ]
+        <div class="leaderboard-controls">
+            <h2 id="phase-title" class="phase-title">Final Phase</h2>
+            <div class="controls-right">
+                <button id="show-final-btn" class="btn btn-secondary" style="display: none;">Show Final Leaderboard</button>
+                <div id="last-updated-text" style="font-family: var(--mono); color: var(--muted); font-size: 0.85rem; display: flex; align-items: center;"></div>
+            </div>
+        </div>
+
+        <div class="leaderboard-container" style="margin-top: 0;">
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>User</th>
+                        <th>Score</th>
+                        <th>Mean Reward</th>
+                        <th>Episodes</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 3rem; font-family: var(--mono); color: var(--muted);">
+                            Loading leaderboard data...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+
+    <script>
+        const FINAL_PHASE = "28294";
+        const DEV_PHASE = "28293";
+        let cachedData = null;
+
+        async function fetchLeaderboardData() {
+            if (cachedData) return cachedData;
+            const response = await fetch('data/leaderboard.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            cachedData = await response.json();
+            return cachedData;
+        }
+
+        function renderTable(phaseData, emptyMessage) {
+            const tbody = document.getElementById('leaderboard-body');
+            tbody.innerHTML = ''; // Clear loading message
+
+            if (!phaseData || !phaseData.submissions || phaseData.submissions.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 3rem; font-family: var(--mono); color: var(--muted);">${emptyMessage}</td></tr>`;
+                return;
+            }
+
+            phaseData.submissions.forEach((sub, index) => {
+                const row = document.createElement('tr');
+                
+                let score = '-';
+                let meanReward = '-';
+                let episodes = '-';
+
+                if (sub.scores) {
+                    const scoreObj = sub.scores.find(s => s.column_key === 'score');
+                    const meanRewardObj = sub.scores.find(s => s.column_key === 'mean_reward');
+                    const episodesObj = sub.scores.find(s => s.column_key === 'episodes');
+
+                    if (scoreObj) score = parseFloat(scoreObj.score).toFixed(2);
+                    if (meanRewardObj) meanReward = parseFloat(meanRewardObj.score).toFixed(2);
+                    if (episodesObj) episodes = parseInt(episodesObj.score, 10);
+                }
+
+                row.innerHTML = `
+                    <td class="rank-col">#${index + 1}</td>
+                    <td class="user-col">${sub.owner}</td>
+                    <td class="score-col">${score}</td>
+                    <td class="metric-col">${meanReward}</td>
+                    <td class="metric-col">${episodes}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function setLoadingState() {
+            const tbody = document.getElementById('leaderboard-body');
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 3rem; font-family: var(--mono); color: var(--muted);">Loading leaderboard data...</td></tr>';
+        }
+
+        function updateUI(phase, lastUpdatedIso) {
+            const phaseTitle = document.getElementById('phase-title');
+            const showFinalBtn = document.getElementById('show-final-btn');
+            const lastUpdatedText = document.getElementById('last-updated-text');
+
+            if (phase === FINAL_PHASE) {
+                phaseTitle.textContent = "Final Phase";
+                showFinalBtn.style.display = 'none';
+            } else {
+                phaseTitle.textContent = "Development Phase";
+                showFinalBtn.style.display = 'block';
+            }
+
+            if (lastUpdatedIso) {
+                const date = new Date(lastUpdatedIso);
+                const timeString = date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+                lastUpdatedText.textContent = `Last updated at ${timeString}`;
+            }
+        }
+
+        async function loadLeaderboard(forcePhase = null) {
+            setLoadingState();
+            
+            try {
+                const data = await fetchLeaderboardData();
+                const lastUpdated = data.last_updated;
+
+                if (forcePhase === FINAL_PHASE) {
+                    const finalData = data[FINAL_PHASE];
+                    updateUI(FINAL_PHASE, lastUpdated);
+                    renderTable(finalData, "No submissions yet in the Final phase.");
+                    return;
+                }
+
+                // Initial page load logic: Try Final first
+                const finalData = data[FINAL_PHASE];
+                
+                if (finalData && finalData.submissions && finalData.submissions.length > 0) {
+                    updateUI(FINAL_PHASE, lastUpdated);
+                    renderTable(finalData, "No submissions yet.");
+                } else {
+                    // Final is empty, try Development
+                    const devData = data[DEV_PHASE];
+                    
+                    if (devData && devData.submissions && devData.submissions.length > 0) {
+                        updateUI(DEV_PHASE, lastUpdated);
+                        renderTable(devData, "No submissions yet.");
+                    } else {
+                        // Both are empty
+                        updateUI(FINAL_PHASE, lastUpdated);
+                        renderTable(finalData, "No submissions yet in the Final phase.");
+                    }
+                }
+
+            } catch (error) {
+                console.error('Error loading leaderboard:', error);
+                const tbody = document.getElementById('leaderboard-body');
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 3rem; font-family: var(--mono); color: var(--accent);">Failed to load leaderboard data. Please try again later.</td></tr>';
+            }
+        }
+
+        // Event Listeners
+        document.getElementById('show-final-btn').addEventListener('click', () => loadLeaderboard(FINAL_PHASE));
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', () => loadLeaderboard());
+    </script>
 </body>
 
 </html>
