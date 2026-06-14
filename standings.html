@@ -49,7 +49,7 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 100;
+            z-index: 9999;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -90,10 +90,28 @@
             color: var(--muted);
             text-decoration: none;
             transition: color 0.2s;
+            white-space: nowrap;
         }
 
         .nav-links a:hover {
             color: var(--ink);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--ink);
+            margin-bottom: 5px;
+            transition: 0.3s;
         }
 
         .container {
@@ -199,9 +217,7 @@
             width: 100%;
             max-width: 900px;
             margin-top: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: right;
         }
 
         .update-text {
@@ -217,6 +233,23 @@
 
             .nav-links {
                 display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 1.5rem;
+                padding-top: 1.5rem;
+                padding-bottom: 1rem;
+                border-bottom: none;
+                position: static;
+                background: transparent;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
             }
 
             .container {
@@ -226,12 +259,6 @@
             .leaderboard-table th,
             .leaderboard-table td {
                 padding: 0.75rem 1rem;
-            }
-            
-            .leaderboard-footer {
-                flex-direction: column;
-                align-items: flex-end;
-                gap: 0.3rem;
             }
         }
 
@@ -334,17 +361,28 @@
 
 <body>
     <nav>
-        <a href="index.html" class="nav-logo">
-            <img src="bca-logo.png" alt="BCA Logo" class="logo" onerror="this.style.display='none'">
-            <span>BCA Bus Routing Challenge</span>
-        </a>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <div class="nav-logo" style="cursor: pointer;" onclick="window.location.href='index.html'">
+                <img src="bca-logo.png" alt="BCA Logo" class="logo" onerror="this.style.display='none'">
+                <span>Project OmniBus</span>
+            </div>
+            
+            <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
         <ul class="nav-links">
             <li><a href="https://www.codabench.org/competitions/16945/" target="_blank" rel="noopener noreferrer" style="color:var(--accent); font-weight: 500;">Competition ↗</a></li>
-            <li><a href="index.html#problem">Problem</a></li>
-            <li><a href="index.html#details">Details</a></li>
-            <li><a href="simulator.html">Simulator</a></li>
-            <li><a href="standings.html">Standings</a></li>
+            <li><a href="index.html#opening-ceremony">Kickoff</a></li>
             <li><a href="index.html#sponsors">Sponsors</a></li>
+            <li><a href="index.html#problem">Problem</a></li>
+            <li><a href="index.html#rl-info">AI Basics</a></li>
+            <li><a href="index.html#details">Details</a></li>
+            <li><a href="index.html#simulator">Simulator</a></li>
+            <li><a href="standings.html">Standings</a></li>
             <li><a href="index.html#contact">Contact</a></li>
         </ul>
     </nav>
@@ -389,7 +427,6 @@
 
         <div class="leaderboard-footer">
             <div id="last-updated-text" class="update-text"></div>
-            <div id="next-update-text" class="update-text"></div>
         </div>
     </div>
 
@@ -497,33 +534,10 @@
             tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 3rem; font-family: var(--mono); color: var(--muted);">Loading leaderboard data...</td></tr>';
         }
 
-        function getNextUpdateTime() {
-            const now = new Date();
-            let next = new Date(now);
-            
-            // Go to the next 30 minute boundary
-            if (now.getMinutes() < 30) {
-                next.setMinutes(30, 0, 0);
-            } else {
-                next.setHours(now.getHours() + 1, 0, 0, 0);
-            }
-            
-            // Our cron runs between 12:00 UTC and 03:30 UTC.
-            // If the calculated next time falls between 04:00 UTC and 11:30 UTC, 
-            // the actual next run is at 12:00 UTC.
-            const utcHour = next.getUTCHours();
-            if (utcHour > 3 && utcHour < 12) {
-                next.setUTCHours(12, 0, 0, 0);
-            }
-            
-            return next;
-        }
-
         function updateUI(phase, lastUpdatedIso) {
             const phaseTitle = document.getElementById('phase-title');
             const showFinalBtn = document.getElementById('show-final-btn');
             const lastUpdatedText = document.getElementById('last-updated-text');
-            const nextUpdateText = document.getElementById('next-update-text');
 
             if (phase === FINAL_PHASE) {
                 phaseTitle.textContent = "Final Phase";
@@ -552,10 +566,6 @@
                     }
                 }
             }
-
-            const nextTime = getNextUpdateTime();
-            const nextTimeString = nextTime.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-            nextUpdateText.textContent = `Next update: ${nextTimeString}`;
         }
 
         async function loadLeaderboard(forcePhase = null) {
