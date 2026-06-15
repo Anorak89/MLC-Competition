@@ -2,6 +2,7 @@ import urllib.request
 import json
 import os
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 FINAL_PHASE = 28294
 DEV_PHASE = 28293
@@ -41,8 +42,8 @@ def main():
     if not final_has_data:
         dev_data = fetch_phase(DEV_PHASE)
     
-    now = datetime.now(timezone.utc)
-    new_timestamp = now.isoformat()
+    now_utc = datetime.now(timezone.utc)
+    new_timestamp = now_utc.isoformat()
     
     DATA_FILE = 'data/leaderboard.json'
     
@@ -62,13 +63,18 @@ def main():
         if old_final == final_data and old_dev == dev_data:
             data_changed = False
 
-    # If data hasn't changed and it's the same day, do nothing
+    # If data hasn't changed and it's the same day in Eastern Time, do nothing
     if not data_changed and existing_data and 'last_updated' in existing_data:
         old_timestamp_str = existing_data['last_updated']
         try:
-            old_time = datetime.fromisoformat(old_timestamp_str.replace('Z', '+00:00'))
-            if old_time.date() == now.date():
-                print("No changes in leaderboard data and still the same day. Skipping write.")
+            old_time_utc = datetime.fromisoformat(old_timestamp_str.replace('Z', '+00:00'))
+            
+            eastern = ZoneInfo("America/New_York")
+            old_time_est = old_time_utc.astimezone(eastern)
+            now_est = now_utc.astimezone(eastern)
+            
+            if old_time_est.date() == now_est.date():
+                print("No changes in leaderboard data and still the same day (EST). Skipping write.")
                 return
         except Exception:
             pass
