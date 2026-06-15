@@ -1,27 +1,41 @@
 {
   "28294": {
-    "submissions": []
-  },
-  "28293": {
     "submissions": [
       {
-        "owner": "kevin_2005",
+        "owner": "anorak89",
         "scores": [
           {
             "column_key": "score",
-            "score": "301.0"
+            "score": "-74.14"
           },
           {
             "column_key": "mean_reward",
-            "score": "301.0"
+            "score": "-74.14"
           },
           {
             "column_key": "episodes",
-            "score": "10.0"
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "pytorchbest",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-79.23"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-79.23"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
           }
         ]
       }
     ]
   },
-  "last_updated": "2026-06-13T21:16:50.335019+00:00"
+  "last_updated": "2026-06-15T17:04:36.679630+00:00"
 }
