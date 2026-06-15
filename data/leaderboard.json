@@ -2,6 +2,23 @@
   "28294": {
     "submissions": [
       {
+        "owner": "anorak89",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-74.14"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-74.14"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "pytorchbest",
         "scores": [
           {
@@ -20,5 +37,5 @@
       }
     ]
   },
-  "last_updated": "2026-06-15T07:11:40.160595+00:00"
+  "last_updated": "2026-06-15T17:04:36.679630+00:00"
 }
