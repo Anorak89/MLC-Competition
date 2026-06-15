@@ -1,27 +1,24 @@
 {
   "28294": {
-    "submissions": []
-  },
-  "last_updated": "2026-06-15T01:44:39.996323+00:00",
-  "28293": {
     "submissions": [
       {
-        "owner": "kevin_2005",
+        "owner": "pytorchbest",
         "scores": [
           {
             "column_key": "score",
-            "score": "301.0"
+            "score": "-79.23"
           },
           {
             "column_key": "mean_reward",
-            "score": "301.0"
+            "score": "-79.23"
           },
           {
             "column_key": "episodes",
-            "score": "10.0"
+            "score": "30.0"
           }
         ]
       }
     ]
-  }
+  },
+  "last_updated": "2026-06-15T07:11:40.160595+00:00"
 }
