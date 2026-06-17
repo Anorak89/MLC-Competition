@@ -36,6 +36,40 @@
         ]
       },
       {
+        "owner": "shazaib",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-76.55"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-76.55"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "cruise",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-78.33"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-78.33"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "pytorchbest",
         "scores": [
           {
@@ -51,8 +85,161 @@
             "score": "30.0"
           }
         ]
+      },
+      {
+        "owner": "cruzoliveira",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-80.06"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-80.06"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "ashley",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-82.5"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-82.5"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "ayush24",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-82.52"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-82.52"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "jitkhil",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-84.2"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-84.2"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "Dax Flame",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-87.65"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-87.65"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "coolguy1234",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-87.83"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-87.83"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "gabeowner",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-88.64"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-88.64"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "Aubrey Graham",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-91.31"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-91.31"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "marry",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-104.03"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-104.03"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
       }
     ]
   },
-  "last_updated": "2026-06-17T08:29:51.687645+00:00"
+  "last_updated": "2026-06-17T20:04:27.185734+00:00"
 }
