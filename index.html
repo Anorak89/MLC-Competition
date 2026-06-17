@@ -307,6 +307,34 @@
             box-shadow: 0 6px 16px rgba(200, 75, 47, 0.2);
         }
 
+        .btn-discord {
+            background: #5865F2;
+            color: var(--cream);
+            border: 1px solid #5865F2;
+            border-radius: 4px;
+            font-family: var(--sans);
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 0.02em;
+            text-transform: none;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 12px rgba(88, 101, 242, 0.2);
+            cursor: pointer;
+            transition: 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .btn-discord:hover {
+            background: #4752C4;
+            border-color: #4752C4;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(88, 101, 242, 0.3);
+            color: var(--cream);
+        }
+
         .auth-buttons {
             display: flex;
             gap: 1rem;
@@ -1482,6 +1510,7 @@
             <li><a href="#details">Details</a></li>
             <li><a href="#simulator">Simulator</a></li>
             <li><a href="standings.html">Standings</a></li>
+            <li><a href="https://discord.gg/bx4Ha3DWx" target="_blank" rel="noopener noreferrer" style="color: #5865F2; font-weight: 500;">Discord</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
 
@@ -1524,9 +1553,19 @@
                     <a href="#details" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-ghost" style="width: 100%;">Read Details</button></a>
                     <a href="standings.html" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-ghost" style="width: 100%;">Leaderboard</button></a>
                 </div>
-                <a href="https://forms.gle/woD4Tzpib9aafzK36" target="_blank" rel="noopener noreferrer" style="text-decoration: none; width: 100%;">
-                    <button class="btn-register" style="width: 100%;">Register / Sign Up Here ↗</button>
-                </a>
+                <div style="display: flex; gap: 1rem; width: 100%; flex-wrap: wrap;">
+                    <a href="https://forms.gle/woD4Tzpib9aafzK36" target="_blank" rel="noopener noreferrer" style="text-decoration: none; flex: 1; min-width: 250px;">
+                        <button class="btn-register" style="width: 100%;">Register / Sign Up Here ↗</button>
+                    </a>
+                    <a href="https://discord.gg/bx4Ha3DWx" target="_blank" rel="noopener noreferrer" style="text-decoration: none; flex: 1; min-width: 250px;">
+                        <button class="btn-discord" style="width: 100%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059 9 9 0 0 1-1.226-.588.05.05 0 0 1-.004-.083c.085-.063.169-.129.25-.196a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .051.007c.081.067.165.133.25.196a.05.05 0 0 1-.004.083 9 9 0 0 1-1.226.588.05.05 0 0 0-.01.059c.236.466.51.909.818 1.329a.05.05 0 0 0 .056.019 13.3 13.3 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019zM5.89 8.131c-.679 0-1.228-.61-1.228-1.36 0-.75.541-1.36 1.228-1.36.69 0 1.235.618 1.228 1.36 0 .75-.538 1.36-1.228 1.36m4.22 0c-.679 0-1.228-.61-1.228-1.36 0-.75.541-1.36 1.228-1.36.69 0 1.235.618 1.228 1.36 0 .75-.538 1.36-1.228 1.36"/>
+                            </svg>
+                            Join Discord
+                        </button>
+                    </a>
+                </div>
             </div>
 
             <!-- COUNTDOWN -->
@@ -1879,16 +1918,21 @@
     <section id="contact" style="padding-bottom: 6rem;">
         <div class="section-label">05 / Contact</div>
         <h2>Get in Touch</h2>
-        <div class="contact-grid-2">
+        <div class="contact-grid">
             <div class="contact-card" style="text-align: center;">
                 <h3>Email Us</h3>
                 <p><a href="mailto:machinelearningclubbca@bergen.org"
-                        style="font-size: 1.2rem;">machinelearningclubbca@bergen.org</a></p>
+                        style="font-size: 1.1rem;">machinelearningclubbca@bergen.org</a></p>
+            </div>
+            <div class="contact-card" style="text-align: center;">
+                <h3>Join Discord</h3>
+                <p><a href="https://discord.gg/bx4Ha3DWx" target="_blank" rel="noopener noreferrer"
+                        style="font-size: 1.1rem; color: #5865F2;">Get help and team up with others</a></p>
             </div>
             <div class="contact-card" style="text-align: center;">
                 <h3>Machine Learning Club</h3>
                 <p><a href="https://bcamlc.com" target="_blank" rel="noopener noreferrer"
-                        style="font-size: 1.2rem;">Click here to learn more about the Machine Learning Club</a></p>
+                        style="font-size: 1.1rem;">Click here to learn more about the Machine Learning Club</a></p>
             </div>
         </div>
     </section>
