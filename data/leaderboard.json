@@ -53,6 +53,23 @@
         ]
       },
       {
+        "owner": "first_month",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-77.51"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-77.51"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "cruise",
         "scores": [
           {
@@ -172,6 +189,23 @@
         ]
       },
       {
+        "owner": "davinci69",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-87.82"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-87.82"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "coolguy1234",
         "scores": [
           {
@@ -198,6 +232,23 @@
           {
             "column_key": "mean_reward",
             "score": "-88.64"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "pair-toll",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-90.85"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-90.85"
           },
           {
             "column_key": "episodes",
@@ -241,5 +292,5 @@
       }
     ]
   },
-  "last_updated": "2026-06-17T20:04:27.185734+00:00"
+  "last_updated": "2026-06-18T04:17:04.477962+00:00"
 }
