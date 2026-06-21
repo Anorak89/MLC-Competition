@@ -19,6 +19,23 @@
         ]
       },
       {
+        "owner": "autumn28",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-64.08"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-64.08"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "anorak89",
         "scores": [
           {
@@ -292,5 +309,5 @@
       }
     ]
   },
-  "last_updated": "2026-06-21T06:51:26.719529+00:00"
+  "last_updated": "2026-06-21T23:04:21.034893+00:00"
 }
