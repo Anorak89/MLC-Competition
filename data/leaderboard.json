@@ -19,6 +19,23 @@
         ]
       },
       {
+        "owner": "ayanokoji",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-59.88"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-59.88"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "autumn28",
         "scores": [
           {
@@ -309,5 +326,5 @@
       }
     ]
   },
-  "last_updated": "2026-06-22T07:32:12.461218+00:00"
+  "last_updated": "2026-06-23T02:36:41.066015+00:00"
 }
