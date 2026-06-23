@@ -1547,7 +1547,7 @@
                 <div class="hero-actions" style="display: flex; width: 100%; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 0; margin-bottom: 1.5rem; opacity: 1; animation: none;">
                     <a href="https://www.codabench.org/competitions/16945/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-accent" style="width: 100%;">Enter Competition</button></a>
                     <a href="#simulator" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-primary" style="width: 100%;">Try Simulator</button></a>
-                    <a href="#details" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-ghost" style="width: 100%;">Read Details</button></a>
+                    <a href="#details=" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-ghost" style="width: 100%;">Read Details</button></a>
                     <a href="standings.html" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-ghost" style="width: 100%;">Leaderboard</button></a>
                 </div>
                 <div style="display: flex; gap: 1rem; width: 100%; flex-wrap: wrap;">
@@ -1572,7 +1572,7 @@
                     <span class="dates-sep"></span>
                     <span>Jun 10, 2026</span>
                     <span>→</span>
-                    <span>Jul 10, 2026</span>
+                    <span>Aug 1, 2026</span>
                 </div>
                 <div class="countdown-card" id="countdown-card">
                     <div class="countdown-header">
@@ -1973,10 +1973,10 @@
     </script>
 
     <script>
-        /* ── Live countdown to June 8 2026 12:00 AM EDT ── */
+        /* ── Live countdown to August 1 2026 12:00 AM EDT ── */
         (function initCountdown() {
             const START = new Date('2026-06-10T04:00:00Z');   // Jun 10 12:00 AM EST (UTC-5)
-            const END   = new Date('2026-07-11T04:59:59Z');   // Jul 10 11:59 PM EST (UTC-5)
+            const END   = new Date('2026-08-02T04:59:59Z');   // Aug 1 11:59 PM EST (UTC-5)
 
             const daysEl  = document.getElementById('cd-days');
             const hoursEl = document.getElementById('cd-hours');
@@ -2013,12 +2013,12 @@
                 } else if (msToEnd > 0) {
                     /* --- During competition: show LIVE badge --- */
                     unitsEl.innerHTML = '<div class="countdown-live"><div class="countdown-live-dot"></div>Competition is LIVE</div>';
-                    label.textContent = 'Running Jun 10 – Jul 10, 2026';
+                    label.textContent = 'Running Jun 10 – Aug 1, 2026';
                     pulse.style.background = '#2a7a50';
 
                 } else {
                     /* --- Competition ended --- */
-                    unitsEl.innerHTML = '<div class="countdown-ended">Competition ended Jul 10, 2026</div>';
+                    unitsEl.innerHTML = '<div class="countdown-ended">Competition ended Aug 1, 2026</div>';
                     label.textContent = 'Thank you to all participants!';
                     pulse.style.background = 'var(--muted)';
                     pulse.style.animation = 'none';
