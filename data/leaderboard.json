@@ -53,6 +53,23 @@
         ]
       },
       {
+        "owner": "dharma_zr",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-72.78"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-72.78"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "anorak89",
         "scores": [
           {
@@ -377,5 +394,5 @@
       }
     ]
   },
-  "last_updated": "2026-06-24T16:37:18.866211+00:00"
+  "last_updated": "2026-06-24T21:52:33.549349+00:00"
 }
