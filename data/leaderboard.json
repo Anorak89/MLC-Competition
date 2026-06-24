@@ -87,6 +87,23 @@
         ]
       },
       {
+        "owner": "nicbob",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-76.72"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-76.72"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "first_month",
         "scores": [
           {
@@ -104,6 +121,23 @@
         ]
       },
       {
+        "owner": "nicholasbobo",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-77.59"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-77.59"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "cruise",
         "scores": [
           {
@@ -113,6 +147,23 @@
           {
             "column_key": "mean_reward",
             "score": "-78.33"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "nikolaki",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-79.11"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-79.11"
           },
           {
             "column_key": "episodes",
@@ -326,5 +377,5 @@
       }
     ]
   },
-  "last_updated": "2026-06-24T06:39:53.450813+00:00"
+  "last_updated": "2026-06-24T16:37:18.866211+00:00"
 }
