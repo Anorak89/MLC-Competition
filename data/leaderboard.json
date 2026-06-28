@@ -19,6 +19,23 @@
         ]
       },
       {
+        "owner": "autumn28",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-59.37"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-59.37"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "ayanokoji",
         "scores": [
           {
@@ -28,23 +45,6 @@
           {
             "column_key": "mean_reward",
             "score": "-59.66"
-          },
-          {
-            "column_key": "episodes",
-            "score": "30.0"
-          }
-        ]
-      },
-      {
-        "owner": "autumn28",
-        "scores": [
-          {
-            "column_key": "score",
-            "score": "-64.08"
-          },
-          {
-            "column_key": "mean_reward",
-            "score": "-64.08"
           },
           {
             "column_key": "episodes",
@@ -394,5 +394,5 @@
       }
     ]
   },
-  "last_updated": "2026-06-28T06:11:17.275999+00:00"
+  "last_updated": "2026-06-28T23:00:57.239488+00:00"
 }
