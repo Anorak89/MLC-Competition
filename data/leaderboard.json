@@ -2,6 +2,23 @@
   "28294": {
     "submissions": [
       {
+        "owner": "n1ktoo00",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-53.67"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-53.67"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "rishim",
         "scores": [
           {
@@ -411,5 +428,5 @@
       }
     ]
   },
-  "last_updated": "2026-07-20T05:02:00.516669+00:00"
+  "last_updated": "2026-07-20T13:52:14.199604+00:00"
 }
