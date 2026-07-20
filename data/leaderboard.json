@@ -40,11 +40,11 @@
         "scores": [
           {
             "column_key": "score",
-            "score": "-58.46"
+            "score": "-56.29"
           },
           {
             "column_key": "mean_reward",
-            "score": "-58.46"
+            "score": "-56.29"
           },
           {
             "column_key": "episodes",
@@ -428,5 +428,5 @@
       }
     ]
   },
-  "last_updated": "2026-07-20T15:46:07.465476+00:00"
+  "last_updated": "2026-07-20T19:29:12.316760+00:00"
 }
