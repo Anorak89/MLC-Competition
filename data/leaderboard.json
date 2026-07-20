@@ -53,6 +53,23 @@
         ]
       },
       {
+        "owner": "miscusi",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-58.38"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-58.38"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "autumn28",
         "scores": [
           {
@@ -428,5 +445,5 @@
       }
     ]
   },
-  "last_updated": "2026-07-20T19:29:12.316760+00:00"
+  "last_updated": "2026-07-20T20:49:02.958616+00:00"
 }
