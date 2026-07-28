@@ -36,6 +36,23 @@
         ]
       },
       {
+        "owner": "musliadi",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-54.69"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-54.69"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "rishim",
         "scores": [
           {
@@ -45,23 +62,6 @@
           {
             "column_key": "mean_reward",
             "score": "-56.29"
-          },
-          {
-            "column_key": "episodes",
-            "score": "30.0"
-          }
-        ]
-      },
-      {
-        "owner": "musliadi",
-        "scores": [
-          {
-            "column_key": "score",
-            "score": "-56.67"
-          },
-          {
-            "column_key": "mean_reward",
-            "score": "-56.67"
           },
           {
             "column_key": "episodes",
@@ -445,5 +445,5 @@
       }
     ]
   },
-  "last_updated": "2026-07-28T05:28:21.895244+00:00"
+  "last_updated": "2026-07-28T13:47:04.331022+00:00"
 }
