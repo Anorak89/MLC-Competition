@@ -70,6 +70,23 @@
         ]
       },
       {
+        "owner": "vibsvinod",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-54.63"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-54.63"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "miscusi",
         "scores": [
           {
@@ -479,5 +496,5 @@
       }
     ]
   },
-  "last_updated": "2026-07-31T21:35:43.907659+00:00"
+  "last_updated": "2026-07-31T23:55:48.021280+00:00"
 }
