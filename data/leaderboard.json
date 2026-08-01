@@ -23,45 +23,11 @@
         "scores": [
           {
             "column_key": "score",
-            "score": "-49.76"
+            "score": "-49.4"
           },
           {
             "column_key": "mean_reward",
-            "score": "-49.76"
-          },
-          {
-            "column_key": "episodes",
-            "score": "30.0"
-          }
-        ]
-      },
-      {
-        "owner": "n1ktoo00",
-        "scores": [
-          {
-            "column_key": "score",
-            "score": "-50.45"
-          },
-          {
-            "column_key": "mean_reward",
-            "score": "-50.45"
-          },
-          {
-            "column_key": "episodes",
-            "score": "30.0"
-          }
-        ]
-      },
-      {
-        "owner": "musliadi",
-        "scores": [
-          {
-            "column_key": "score",
-            "score": "-54.58"
-          },
-          {
-            "column_key": "mean_reward",
-            "score": "-54.58"
+            "score": "-49.4"
           },
           {
             "column_key": "episodes",
@@ -74,11 +40,62 @@
         "scores": [
           {
             "column_key": "score",
-            "score": "-54.63"
+            "score": "-49.41"
           },
           {
             "column_key": "mean_reward",
-            "score": "-54.63"
+            "score": "-49.41"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "n1ktoo00",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-49.43"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-49.43"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "dragonfye",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-51.12"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-51.12"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "musliadi",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-54.35"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-54.35"
           },
           {
             "column_key": "episodes",
@@ -96,6 +113,23 @@
           {
             "column_key": "mean_reward",
             "score": "-58.38"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
+        "owner": "cold10",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-59.2"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-59.2"
           },
           {
             "column_key": "episodes",
@@ -130,23 +164,6 @@
           {
             "column_key": "mean_reward",
             "score": "-60.42"
-          },
-          {
-            "column_key": "episodes",
-            "score": "30.0"
-          }
-        ]
-      },
-      {
-        "owner": "dragonfye",
-        "scores": [
-          {
-            "column_key": "score",
-            "score": "-72.39"
-          },
-          {
-            "column_key": "mean_reward",
-            "score": "-72.39"
           },
           {
             "column_key": "episodes",
@@ -496,5 +513,5 @@
       }
     ]
   },
-  "last_updated": "2026-08-01T02:11:05.811138+00:00"
+  "last_updated": "2026-08-01T05:39:14.341011+00:00"
 }
