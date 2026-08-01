@@ -2,6 +2,23 @@
   "28294": {
     "submissions": [
       {
+        "owner": "rishim",
+        "scores": [
+          {
+            "column_key": "score",
+            "score": "-49.37"
+          },
+          {
+            "column_key": "mean_reward",
+            "score": "-49.37"
+          },
+          {
+            "column_key": "episodes",
+            "score": "30.0"
+          }
+        ]
+      },
+      {
         "owner": "autumn28",
         "scores": [
           {
@@ -28,23 +45,6 @@
           {
             "column_key": "mean_reward",
             "score": "-50.45"
-          },
-          {
-            "column_key": "episodes",
-            "score": "30.0"
-          }
-        ]
-      },
-      {
-        "owner": "rishim",
-        "scores": [
-          {
-            "column_key": "score",
-            "score": "-53.87"
-          },
-          {
-            "column_key": "mean_reward",
-            "score": "-53.87"
           },
           {
             "column_key": "episodes",
@@ -496,5 +496,5 @@
       }
     ]
   },
-  "last_updated": "2026-07-31T23:55:48.021280+00:00"
+  "last_updated": "2026-08-01T02:11:05.811138+00:00"
 }
