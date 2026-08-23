@@ -10,7 +10,7 @@
     <meta property="og:image" content="logo.jpg" />
 
     <meta name="description"
-        content="A machine learning competition focused on school bus routing and reinforcement learning." />
+        content="Project OmniBus — a concluded machine learning competition focused on school bus routing and reinforcement learning. View final standings and the closing ceremony." />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1503,7 +1503,7 @@
 
         <ul class="nav-links">
             <li><a href="https://www.codabench.org/competitions/16945/" target="_blank" rel="noopener noreferrer" style="color:var(--accent); font-weight: 500;">Competition ↗</a></li>
-            <li><a href="#opening-ceremony">Kickoff</a></li>
+            <li><a href="#closing-ceremony">Closing Ceremony</a></li>
             <li><a href="#sponsors">Sponsors</a></li>
             <li><a href="information.html">Information</a></li>
             <li><a href="#simulator">Simulator</a></li>
@@ -1520,8 +1520,9 @@
         <div
             style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 1200px; margin: 0 auto; text-align: center; padding-bottom: 4rem;">
             
-            <div class="hero-eyebrow" style="margin-bottom: 0; position: relative; top: 1.5rem;">
+            <div class="hero-eyebrow" style="margin-bottom: 0; position: relative; top: 1.5rem; display: flex; align-items: center; gap: 0.75rem; justify-content: center;">
                 MACHINE LEARNING COMPETITION
+                <span style="display: inline-block; font-family: var(--mono); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; background: var(--muted); color: var(--cream); padding: 0.2rem 0.55rem; border-radius: 2px;">Concluded</span>
             </div>
 
             <div style="opacity: 0; animation: rise 0.9s ease forwards 0.4s; width: 100%; display: flex; justify-content: center; margin-top: -1rem; margin-bottom: 0;">
@@ -1540,20 +1541,17 @@
             </div>
 
             <p class="hero-sub" style="margin-top: 1rem; max-width: 800px; margin-left: auto; margin-right: auto; opacity: 0; animation: rise 0.9s ease forwards 0.6s; font-size: 1.1rem;">
-                Reinforcement learning for dynamic school bus routing, scheduling, and real-time replanning.
+                Reinforcement learning for dynamic school bus routing, scheduling, and real-time replanning. The competition ran Jun 10 – Aug 1, 2026.
             </p>
 
             <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 680px; margin: 2.5rem auto 0 auto; opacity: 0; animation: rise 0.9s ease forwards 0.8s;">
                 <div class="hero-actions" style="display: flex; width: 100%; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 0; margin-bottom: 1.5rem; opacity: 1; animation: none;">
-                    <a href="https://www.codabench.org/competitions/16945/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-accent" style="width: 100%;">Enter Competition</button></a>
-                    <a href="#simulator" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-primary" style="width: 100%;">Try Simulator</button></a>
-                    <a href="#details=" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-ghost" style="width: 100%;">Read Details</button></a>
-                    <a href="standings.html" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-ghost" style="width: 100%;">Leaderboard</button></a>
+                    <a href="standings.html" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-accent" style="width: 100%;">Final Results</button></a>
+                    <a href="#closing-ceremony" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-primary" style="width: 100%;">Closing Ceremony</button></a>
+                    <a href="#simulator" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-ghost" style="width: 100%;">Try Simulator</button></a>
+                    <a href="information.html" style="text-decoration: none; flex: 1; min-width: 180px;"><button class="btn-ghost" style="width: 100%;">Read Details</button></a>
                 </div>
-                <div style="display: flex; gap: 1rem; width: 100%; flex-wrap: wrap;">
-                    <a href="https://forms.gle/woD4Tzpib9aafzK36" target="_blank" rel="noopener noreferrer" style="text-decoration: none; flex: 1; min-width: 250px;">
-                        <button class="btn-register" style="width: 100%;">Register / Sign Up Here ↗</button>
-                    </a>
+                <div style="display: flex; gap: 1rem; width: 100%; flex-wrap: wrap; justify-content: center;">
                     <a href="https://discord.gg/bx4Ha3DWx" target="_blank" rel="noopener noreferrer" style="text-decoration: none; flex: 1; min-width: 250px;">
                         <button class="btn-discord" style="width: 100%;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
@@ -1565,8 +1563,8 @@
                 </div>
             </div>
 
-            <!-- COUNTDOWN -->
-            <div class="countdown-wrapper" id="countdown-wrapper">
+            <!-- CONCLUDED BANNER -->
+            <div class="countdown-wrapper">
                 <div class="competition-dates">
                     <span class="dates-accent">Competition</span>
                     <span class="dates-sep"></span>
@@ -1574,31 +1572,14 @@
                     <span>→</span>
                     <span>Aug 1, 2026</span>
                 </div>
-                <div class="countdown-card" id="countdown-card">
+                <div class="countdown-card" style="text-align: center;">
                     <div class="countdown-header">
-                        <div class="countdown-pulse" id="countdown-pulse"></div>
-                        <span id="countdown-label">Competition starts in</span>
+                        <div class="countdown-pulse" style="background: var(--muted); animation: none;"></div>
+                        <span style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;">Thank you to all participants!</span>
                     </div>
-                    <div class="countdown-units" id="countdown-units">
-                        <div class="countdown-unit">
-                            <span class="countdown-val" id="cd-days">--</span>
-                            <span class="countdown-lbl">Days</span>
-                        </div>
-                        <span class="countdown-colon">:</span>
-                        <div class="countdown-unit">
-                            <span class="countdown-val" id="cd-hours">--</span>
-                            <span class="countdown-lbl">Hours</span>
-                        </div>
-                        <span class="countdown-colon">:</span>
-                        <div class="countdown-unit">
-                            <span class="countdown-val" id="cd-mins">--</span>
-                            <span class="countdown-lbl">Mins</span>
-                        </div>
-                        <span class="countdown-colon">:</span>
-                        <div class="countdown-unit">
-                            <span class="countdown-val" id="cd-secs">--</span>
-                            <span class="countdown-lbl">Secs</span>
-                        </div>
+                    <div style="padding: 0.75rem 0 0.25rem;">
+                        <div class="countdown-ended" style="font-size: 1.05rem; font-family: var(--serif); color: var(--ink); font-weight: 600;">Competition Concluded &mdash; Aug 1, 2026</div>
+                        <div style="font-family: var(--mono); font-size: 0.68rem; color: var(--muted); margin-top: 0.4rem; letter-spacing: 0.06em;">VIEW THE <a href="standings.html" style="color: var(--accent); text-decoration: none;">FINAL STANDINGS ↗</a></div>
                     </div>
                 </div>
             </div>
@@ -1607,20 +1588,33 @@
 
     </div>
 
-    <!-- OPENING CEREMONY -->
-    <section id="opening-ceremony" style="background: rgba(26, 23, 20, 0.02);">
-        <div class="section-label">Opening Ceremony</div>
-        <h2 style="margin-bottom: 3rem;">Watch the Kickoff</h2>
+    <!-- CLOSING CEREMONY -->
+    <section id="closing-ceremony" style="background: rgba(26, 23, 20, 0.02);">
+        <div class="section-label">Closing Ceremony</div>
+        <h2 style="margin-bottom: 3rem;">Watch the Closing Ceremony</h2>
         
         <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border: 1px solid var(--rule); border-radius: 4px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); background: #000;">
             <iframe 
                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" 
-                src="https://www.youtube.com/embed/IXhIw7YqCJU" 
-                title="Opening Ceremony" 
+                src="https://www.youtube.com/embed/CmK-9YC6a9Q" 
+                title="Closing Ceremony" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen>
             </iframe>
         </div>
+
+        <details style="margin-top: 2rem; font-family: var(--mono); font-size: 0.78rem; color: var(--muted);">
+            <summary style="cursor: pointer; user-select: none; letter-spacing: 0.05em; text-transform: uppercase;">Opening Ceremony ↓</summary>
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border: 1px solid var(--rule); border-radius: 4px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); background: #000; margin-top: 1rem;">
+                <iframe 
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" 
+                    src="https://www.youtube.com/embed/IXhIw7YqCJU" 
+                    title="Opening Ceremony" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </details>
     </section>
     <!-- SPONSORS -->
     <section id="sponsors">
@@ -1678,22 +1672,7 @@
                     <span style="font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;">Incogni</span>
                 </div>
             </a>
-            <a href="prospectus.pdf" target="_blank" style="text-decoration: none; color: inherit; display: block;">
-                <div class="sponsor-card">
-                    <span style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                        <h3>Sponsorships Available</h3>
-                        <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase;">View Prospectus ↗</span>
-                    </span>
-                </div>
-            </a>
-            <a href="https://forms.gle/E51645fgagFCjVtc6" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block;">
-                <div class="sponsor-card">
-                    <span style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                        <h3>Interested?</h3>
-                        <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase;">Click Here ↗</span>
-                    </span>
-                </div>
-            </a>
+
         </div>
     </section>
 
@@ -1973,10 +1952,10 @@
     </script>
 
     <script>
-        /* ── Live countdown to August 1 2026 12:00 AM EDT ── */
+        /* ── Countdown removed — competition concluded Aug 1, 2026 ── */
         (function initCountdown() {
-            const START = new Date('2026-06-10T04:00:00Z');   // Jun 10 12:00 AM EST (UTC-5)
-            const END   = new Date('2026-08-02T04:59:59Z');   // Aug 1 11:59 PM EST (UTC-5)
+            const START = new Date('2026-06-10T04:00:00Z');
+            const END   = new Date('2026-08-02T04:59:59Z');
 
             const daysEl  = document.getElementById('cd-days');
             const hoursEl = document.getElementById('cd-hours');
